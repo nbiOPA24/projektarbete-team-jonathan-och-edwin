@@ -8,15 +8,17 @@ using System.Drawing;
 public class Character
 {
     
-    public string Name { get; set; }
-    public static double AccountBalance { get; set; }
-    public static List<Merchandise> PlayerInventory { get; set; }
+    public string Name {get; set;}
+    public static double AccountBalance {get; set;}
+  
+    public static List<Merchandise> PlayerInventory {get; set;}
 
     public Character(string name, double accountBalance)
     {
         Name = name;
         AccountBalance = accountBalance;
         PlayerInventory = new List<Merchandise>();
+       
     }
 
     // public void Buy()
@@ -69,5 +71,11 @@ public class Character
             }
 
         }
+    }
+
+   
+    public void MoveCharacter()
+    {
+      
     }
 }

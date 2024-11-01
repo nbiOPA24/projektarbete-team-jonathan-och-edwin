@@ -1,16 +1,10 @@
 ﻿using System;
+using System.Security;
 using System.Threading;
 
-Character TheWealthyBuyer = new Character("The Wealthy (but dumb) Buyer", 1500);
-Character TheSkillfulNegotiator = new Character("The Skillful Negotiator", 700);
-Character TheBalancedTrader = new Character("The Balanced Trader", 1000);
-
-
+//Skapar två olika handlare som säljer olika metaller
 Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
 Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
-
-Market market = new Market();
-
 
 // Skapar nya objekt av klassen Merchandise, med egenskaper Namn, värde, lägsta siffra (procent den kan minska med), högsta siffra och mängd som finns i lager
 Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, 10);
@@ -33,7 +27,48 @@ VolatileMetalMerchant.ItemsForSale.Add(Indium);
 VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
 
+Character character = new Character("Player1", 1000);
+int posX = 1;
+int posY = 1;
 
-System.Console.WriteLine("Spelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
-Thread.Sleep(3500);
-market.RandomizeNumberOfRounds();
+ConsoleKeyInfo keyInfo;
+
+// Spelets loop körs om och om igen tills spelaren trycker "esc"
+while (true)
+{
+    Console.Clear(); // Rensar brädet inför varje nytt varv i loopen, annars blir det ett nytt bräde varje gång spelaren interagerar med spelet
+    Market market = new Market(40, 80); // skapar en instans av Market som heter market
+    market.DisplayMarket(); // kallar på metoden "DisplayMarket()" som skriver ut spelplanen
+
+    Console.SetCursorPosition(posX, posY); // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
+    System.Console.WriteLine("🧑");
+
+    keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
+
+    switch (keyInfo.Key)
+    {
+        case ConsoleKey.UpArrow: // Så länge muspekarens Y-värde (lodrätt) är större än 1 får spelaren gå uppåt. Detta kontrollerar att användaren inte går utanför banan uppåt
+            if (posY > 1) posY--;
+            break;
+
+        case ConsoleKey.DownArrow:// Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
+            if (posY >= 0 && posY <= 39) posY++; 
+            break;
+
+        case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
+            if (posX >= 0 && posX <= 76) posX++;
+            break;
+
+        case ConsoleKey.LeftArrow: // Samma som "UpArrow" fast vågrätt
+            if (posX > 1) posX--;
+            break;
+
+        case ConsoleKey.Escape:
+            Environment.Exit(0);
+            return;
+    }
+}
+
+
+
+
