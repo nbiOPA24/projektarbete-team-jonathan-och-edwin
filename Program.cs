@@ -39,7 +39,7 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
         // Introduktion
-        
+        Console.Clear();
         Console.WriteLine("\nSpelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
         Thread.Sleep(6000);
         market.RandomizeNumberOfRounds();
@@ -58,7 +58,7 @@ public class Program
         Thread.Sleep(360);
         TypeWrite("finns det mycket som kan gå fel...\n");
         Thread.Sleep(1800);
-        TypeWrite("Står du redo att göra ditt drag?\n");
+        TypeWrite("Står du redo för att göra ditt drag?\n");
         Thread.Sleep(1200);
         TypeWrite("Var försiktig; marknaden kan vara nyckfull, ");
         Thread.Sleep(360);
