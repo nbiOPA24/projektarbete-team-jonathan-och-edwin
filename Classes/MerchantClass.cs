@@ -63,11 +63,6 @@ public class Merchant
         }
     }
 
-    // public void UpdatePriceHigherSide()
-    // {
-
-    // }
-
     
     // Nedanstående metod gör att "Merchanten" kan sälja produkter. Saker tas från "ItemsForSale" och läggs i "PlayerInventory"
     // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
@@ -77,7 +72,8 @@ public class Merchant
     {
         while (true)
         {
-            System.Console.WriteLine("Vilken ädelmetall vill du köpa? Skriv 1-8 beroende plats på listan.");
+            // Console.SetCursorPosition(100, 3);
+            System.Console.WriteLine("Vilken ädelmetall vill du köpa? Skriv 1-4 beroende plats på listan.");
             DisplayAllItems();
             int chosenMetal = int.Parse(Console.ReadLine());
 
@@ -125,16 +121,6 @@ public class Merchant
             break;
         }
     }
+    
 
-    public void PlaceMerchant(int xPos, int yPos)
-    {
-        Console.SetCursorPosition(XPos, YPos);
-        // Logik för att placera handlaren, Jonathan fortsätter här tisdag
-    }
-
-    public void MovementPatternMerchant()
-    {
-        // Logik för att låta handlaren röra sig, Jonathan fortsätter här tisdag
-    }
-   
 }

@@ -33,12 +33,26 @@ int posY = 1;
 
 ConsoleKeyInfo keyInfo;
 
-// Spelets loop körs om och om igen tills spelaren trycker "esc"
 while (true)
 {
     Console.Clear(); // Rensar brädet inför varje nytt varv i loopen, annars blir det ett nytt bräde varje gång spelaren interagerar med spelet
+
     Market market = new Market(40, 80); // skapar en instans av Market som heter market
     market.DisplayMarket(); // kallar på metoden "DisplayMarket()" som skriver ut spelplanen
+
+    // Placerar hus för handlarna
+    Market.PlaceMerchantsBuilding(67, 34);
+    Market.PlaceMerchantsBuilding(67, 38);
+    Market.PlaceMerchantsBuilding(67, 1);
+    Market.PlaceMerchantsBuilding(67, 5);
+
+    Market.PlaceDecoration(58, 40); // placerar guldmynt längst ner på skärmen
+
+    Console.SetCursorPosition(75, 3); // placerar handlaren som säljer volatila metaller
+    System.Console.WriteLine("🧙");
+
+    Console.SetCursorPosition(75, 36); // placerar handlaren som säljer stabila metaller
+    System.Console.WriteLine("👴");
 
     Console.SetCursorPosition(posX, posY); // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
     System.Console.WriteLine("🧑");
@@ -51,8 +65,8 @@ while (true)
             if (posY > 1) posY--;
             break;
 
-        case ConsoleKey.DownArrow:// Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
-            if (posY >= 0 && posY <= 39) posY++; 
+        case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
+            if (posY >= 0 && posY <= 39) posY++;
             break;
 
         case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
@@ -66,6 +80,11 @@ while (true)
         case ConsoleKey.Escape:
             Environment.Exit(0);
             return;
+    }
+
+    if (Math.Abs(posX - 74) < 1 && Math.Abs(posY - 3) <= 1)
+    {
+        VolatileMetalMerchant.Sell();
     }
 }
 

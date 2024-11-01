@@ -7,9 +7,9 @@ using System.Security.Cryptography.X509Certificates;
 public class Market
 {
 
-    public int Height {get; set;}
-    public int Width {get; set;}
-    private char [,] market;
+    public int Height { get; set; }
+    public int Width { get; set; }
+    private char[,] market;
 
     public Market(int height, int width)
     {
@@ -51,4 +51,26 @@ public class Market
 
         return numberOfRounds;
     }
+
+    public static void PlaceMerchantsBuilding(int xPos, int yPos)
+    {
+        Console.SetCursorPosition(xPos, yPos);
+
+        for (int x = 0; x < 12; x++)
+        {
+            System.Console.Write("-");
+        }
+    }
+
+    public static void PlaceDecoration(int xPos, int yPos)
+    {
+        Console.SetCursorPosition(xPos, yPos);
+
+        for (int x = 0; x < 10; x++)
+        {
+            Console.Write("🪙");
+        }
+    }
+
+    
 }
