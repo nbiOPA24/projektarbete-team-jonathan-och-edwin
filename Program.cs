@@ -66,7 +66,7 @@ public class Program
         Console.ReadKey();
         Thread.Sleep(1200);
         Console.Clear();
-        string audioFile = @"C:\Users\edwin\Documents\Projects\MarketMasterConsole\projektarbete-team-jonathan-och-edwin\Ye-Olde-Pub_Looping.wav";
+        string audioFile = @"C:\Users\edwin\Documents\Projects\MarketMasterConsole\projektarbete-team-jonathan-och-edwin\MarketPirate.wav";
         using (SoundPlayer player = new SoundPlayer(audioFile))
         {
             player.Load();    // Load the file
@@ -80,7 +80,9 @@ public class Program
         Thread.Sleep(900);
         TypeWrite("'Kom och köp,' ropar en man. 'Endast de smartaste överlever här!'.\n");
         Thread.Sleep(900);
-        TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \nPress [Enter] för att pröva lyckan...");
+        TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \n");
+        Thread.Sleep(900);
+        TypeWrite("Press [Enter] för att pröva lyckan...");
         Console.ReadKey();
 
         Thread.Sleep(1800);
