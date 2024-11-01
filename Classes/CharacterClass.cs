@@ -21,17 +21,13 @@ public class Character
        
     }
 
-    // public void Buy()
-    // {
-
-    // }
 
     // Visar spelarens inventory
     public void DisplayPlayerInventory()
     {
-        foreach (var m in PlayerInventory)
+        foreach (var metal in PlayerInventory)
         {
-            System.Console.WriteLine(m);
+            System.Console.WriteLine(metal);
         }
     }
 
@@ -73,7 +69,7 @@ public class Character
         }
     }
 
-   
+    
     public void MoveCharacter()
     {
       

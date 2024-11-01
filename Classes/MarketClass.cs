@@ -1,76 +1,53 @@
-// Jonathan jobbar här
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO.Compression;
-using System.Security.Cryptography.X509Certificates;
 public class Market
 {
-
     public int Height { get; set; }
     public int Width { get; set; }
-    private char[,] market;
+    private string[,] market;
 
     public Market(int height, int width)
     {
         Height = height;
         Width = width;
+
     }
 
     public void DisplayMarket()
     {
-        for (int x = 0; x < Width; x++)
-        {
-            System.Console.Write("-");
-        }
 
-        System.Console.WriteLine();
-
-        for (int z = 0; z < 40; z++)
-        {
-            System.Console.Write("|");
-
-            for (int u = 0; u < 1; u++)
-            {
-                System.Console.WriteLine("                                                                              |");
-            }
-        }
-
-        for (int x = 0; x < Width; x++)
-        {
-            System.Console.Write("-");
-        }
-
-        System.Console.WriteLine();
-        System.Console.WriteLine("");
     }
+
+    public void PlaceMerchant(int xPos, int yPos, string symbol)
+    {
+        if (xPos >= 0 && xPos < Width && yPos >= 0 && yPos < Height)
+        {
+            market[yPos, xPos] = symbol; // Placera handlarens symbol på marknaden
+        }
+    }
+
     public int RandomizeNumberOfRounds()
     {
         Random random = new Random();
         int numberOfRounds = random.Next(10, 21);
-
         return numberOfRounds;
     }
 
     public static void PlaceMerchantsBuilding(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
-
         for (int x = 0; x < 12; x++)
         {
-            System.Console.Write("-");
+            Console.Write("-");
         }
     }
 
     public static void PlaceDecoration(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
-
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 30; x++)
         {
             Console.Write("🪙");
         }
     }
 
-    
+   
 }

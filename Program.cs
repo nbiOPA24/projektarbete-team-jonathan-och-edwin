@@ -26,32 +26,65 @@ StableMetalMerchant.ItemsForSale.Add(Palladium);
 VolatileMetalMerchant.ItemsForSale.Add(Indium);
 VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
+Market market = new Market(40, 80); // skapar en instans av Market som heter market
 
-Character character = new Character("Player1", 1000);
-int posX = 1;
-int posY = 1;
+Character character = new Character("Busiga investeraren", 1000);
+int posX = 2;
+int posY = 2;
 
 ConsoleKeyInfo keyInfo;
 
+// Kontrollerar att spelaren inte går på någon av försäljarna
+bool IsCollision(int newX, int newY)
+{
+    if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
+    {
+        return true;
+    }
+
+    return false;
+}
+
 while (true)
 {
-    Console.Clear(); // Rensar brädet inför varje nytt varv i loopen, annars blir det ett nytt bräde varje gång spelaren interagerar med spelet
+    Console.Clear();
 
-    Market market = new Market(40, 80); // skapar en instans av Market som heter market
-    market.DisplayMarket(); // kallar på metoden "DisplayMarket()" som skriver ut spelplanen
+    // Ritar ut ramen
+    for (int x = 0; x < market.Width; x++)
+    {
+        Console.Write("-");
+    }
+    Console.WriteLine();
 
-    // Placerar hus för handlarna
-    Market.PlaceMerchantsBuilding(67, 34);
-    Market.PlaceMerchantsBuilding(67, 38);
-    Market.PlaceMerchantsBuilding(67, 1);
-    Market.PlaceMerchantsBuilding(67, 5);
+    for (int z = 0; z < market.Height; z++)
+    {
+        Console.Write("|");
+        System.Console.WriteLine("                                                                              |");
+    }
 
-    Market.PlaceDecoration(58, 40); // placerar guldmynt längst ner på skärmen
+    for (int x = 0; x < market.Width; x++)
+    {
+        Console.Write("-");
+    }
+    Console.WriteLine();
+    // ritat färdigt ramen
 
-    Console.SetCursorPosition(75, 3); // placerar handlaren som säljer volatila metaller
-    System.Console.WriteLine("🧙");
+    // Trollkarlen
+    Market.PlaceMerchantsBuilding(66, 1);
+    Market.PlaceMerchantsBuilding(66, 5);
 
-    Console.SetCursorPosition(75, 36); // placerar handlaren som säljer stabila metaller
+    // Gubben
+    Market.PlaceMerchantsBuilding(66, 26);
+    Market.PlaceMerchantsBuilding(66, 30);
+
+    Market.PlaceDecoration(11, 38);
+
+    // Målar ut försäljare av volatila metaller
+    Console.SetCursorPosition(70, 3);
+    System.Console.WriteLine("🧙‍♂️");
+
+    // Målar ut försäljare av stabila metaller
+    Console.SetCursorPosition(70, 28);
     System.Console.WriteLine("👴");
 
     Console.SetCursorPosition(posX, posY); // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
@@ -59,10 +92,12 @@ while (true)
 
     keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
 
+  
+
     switch (keyInfo.Key)
     {
         case ConsoleKey.UpArrow: // Så länge muspekarens Y-värde (lodrätt) är större än 1 får spelaren gå uppåt. Detta kontrollerar att användaren inte går utanför banan uppåt
-            if (posY > 1) posY--;
+            if (posY > 1 && posY != 3 || posX != 70) posY--;
             break;
 
         case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
@@ -82,12 +117,39 @@ while (true)
             return;
     }
 
-    if (Math.Abs(posX - 74) < 1 && Math.Abs(posY - 3) <= 1)
+    
+
+    if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 3) <= 1)
     {
         VolatileMetalMerchant.Sell();
+    }
+
+     if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 28) <= 1)
+    {
+        StableMetalMerchant.Sell();
+    }
+
+    int newX = posX;
+    int newY = posY;
+
+    if (!IsCollision(newX, newY))
+    {
+        posX = newX;
+        posY = newY;
     }
 }
 
 
 
 
+
+
+
+
+
+// int bufferHeight = Console.BufferHeight;
+// int bufferWidth = Console.BufferWidth;
+// int windowHeight = Console.WindowHeight;
+// int windowWidth = Console.WindowWidth;
+
+// System.Console.WriteLine($"{bufferHeight} {bufferWidth} {windowHeight} {windowWidth}");
