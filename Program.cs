@@ -6,6 +6,7 @@ public class Program
 {
     public static void Main()
     {
+        
         // Skapa karaktärer
         Character TheWealthyBuyer = new Character("The Wealthy (but dumb) Buyer", 1500);
         Character TheSkillfulNegotiator = new Character("The Skillful Negotiator", 700);
@@ -38,6 +39,7 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
         // Introduktion
+        
         Console.WriteLine("\nSpelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
         Thread.Sleep(6000);
         market.RandomizeNumberOfRounds();

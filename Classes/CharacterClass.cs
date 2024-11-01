@@ -7,7 +7,7 @@ using System.Drawing;
 
 public class Character
 {
-    
+
     public string Name { get; set; }
     public static double AccountBalance { get; set; }
     public static List<Merchandise> PlayerInventory { get; set; }
@@ -19,18 +19,24 @@ public class Character
         PlayerInventory = new List<Merchandise>();
     }
 
-    // public void Buy()
-    // {
-
-    // }
+    public static void AddToInventory(Merchandise item, int quantity)
+    {
+        item.Quantity = quantity;
+        PlayerInventory.Add(item);
+    }
 
     // Visar spelarens inventory
     public void DisplayPlayerInventory()
     {
-        foreach (var m in PlayerInventory)
+        System.Console.WriteLine("===== Spelarens Inventarie =====");
+        System.Console.WriteLine("| Item Name          | Quantity |");
+        System.Console.WriteLine("|--------------------|----------|");
+        foreach (var metal in Character.PlayerInventory)
         {
-            System.Console.WriteLine(m);
+            double totalValue = metal.Value * metal.Quantity;
+            System.Console.WriteLine($"| {metal.Name,-18} | {metal.Quantity,8} | {metal.Value,14:F2} | {totalValue,11:F2} | {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
         }
+        System.Console.WriteLine("===============================");
     }
 
     // Låter spelaren sälja saker, just nu kommer de tas bort från "PlayerInventory" och läggas till i "ItemsForSale"
@@ -54,7 +60,7 @@ public class Character
                 System.Console.WriteLine("Du måste skriva en siffra!");
                 continue;
             }
-            
+
             if (amountToSell > PlayerInventory[itemToSell - 1].AmountAvailable)
             {
                 System.Console.WriteLine("Du kan inte sälja fler än du har... eller hur?");
