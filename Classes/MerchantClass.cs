@@ -63,12 +63,12 @@ public class Merchant
         }
     }
 
-    // public void UpdatePriceHigherSide()
-    // {
-
-    // }
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
     // Nedanstående metod gör att "Merchanten" kan sälja produkter. Saker tas från "ItemsForSale" och läggs i "PlayerInventory"
     // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
 
@@ -77,7 +77,8 @@ public class Merchant
     {
         while (true)
         {
-            System.Console.WriteLine("Vilken ädelmetall vill du köpa? Skriv 1-8 beroende plats på listan.");
+            Console.SetCursorPosition(100, 3);
+            System.Console.WriteLine("Vilken ädelmetall vill du köpa? Skriv 1-4 beroende plats på listan.");
             DisplayAllItems();
             int chosenMetal = int.Parse(Console.ReadLine());
 
@@ -101,16 +102,19 @@ public class Merchant
             }
 
             // Kontrollerar att värdet på mängden metall användaren köper inte överstiger användarens kontobalans
-            if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > Character.AccountBalance)
+            else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > Character.AccountBalance)
             {
                 double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - Character.AccountBalance;
                 System.Console.WriteLine($"Du har för lite pengar. Det saknas tyvärr {missingMoney}kr för att du ska ha råd.");
                 continue;
             }
 
-            System.Console.WriteLine($"Okej, du vill köpa {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
-            System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}.");
+            else
+            {
+                System.Console.WriteLine($"Okej, du vill köpa {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
+                System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}.");
 
+<<<<<<< HEAD
             // Uppdaterar lager och balans
             ItemsForSale[chosenMetal - 1].AmountAvailable -= amountOfMetal;
             Character.AccountBalance -= ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
@@ -118,22 +122,31 @@ public class Merchant
 
             System.Console.WriteLine($"Ditt konto: {Character.AccountBalance}kr");
             System.Console.WriteLine($"Säljarens konto: {MerchantAccountBalance}kr");
+=======
+                int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
+                ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
 
-            Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
-            System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
-            break;
+                double updatedAccountBalance = Character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+                double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+
+                System.Console.WriteLine($"Ditt konto: {updatedAccountBalance}kr");
+                System.Console.WriteLine($"Säljarens konto: {updatedMerchantAccountBalance}kr");
+>>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
+
+                Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
+                System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
+                break;
+            }
         }
     }
 
-    public void PlaceMerchant(int xPos, int yPos)
-    {
-        Console.SetCursorPosition(XPos, YPos);
-        // Logik för att placera handlaren, Jonathan fortsätter här tisdag
-    }
 
+<<<<<<< HEAD
     public void MovementPatternMerchant()
     {
         // Logik för att låta handlaren röra sig, Jonathan fortsätter här tisdag
     }
 
+=======
+>>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 }
