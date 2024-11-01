@@ -70,7 +70,7 @@ public class Program
         using (SoundPlayer player = new SoundPlayer(audioFile))
         {
             player.Load();    // Load the file
-            player.Play();    // Play the audio (PlaySync() to wait until it's finished)
+            player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
         }
         TypeWrite("Du står vid marknadens port,");
         Thread.Sleep(900);
@@ -86,6 +86,8 @@ public class Program
         Console.ReadKey();
 
         Thread.Sleep(1800);
+
+        
 
 
 
