@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Media;
 
 public class Program
 {
@@ -36,15 +37,14 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
-        // Resten av introduktion
-        System.Console.Clear();
+        // Introduktion
         Console.WriteLine("\nSpelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
         Thread.Sleep(6000);
         market.RandomizeNumberOfRounds();
-        System.Console.Clear();
-        Console.WriteLine("***************************************");
-        Console.WriteLine("* Välkommen till Market Master! *");
-        Console.WriteLine("***************************************");
+        Console.Clear();
+        Console.WriteLine("****************************************");
+        Console.WriteLine("   * Välkommen till Market Master! *");
+        Console.WriteLine("****************************************");
         Thread.Sleep(4500);
         Console.Clear();
         Console.WriteLine("\n");
@@ -65,6 +65,13 @@ public class Program
         Console.WriteLine("Press [Enter] för att kliva in i marknadens djungel...");
         Console.ReadKey();
         Thread.Sleep(1200);
+        Console.Clear();
+        string audioFile = @"C:\Users\edwin\Documents\Projects\MarketMasterConsole\projektarbete-team-jonathan-och-edwin\Ye-Olde-Pub_Looping.wav";
+        using (SoundPlayer player = new SoundPlayer(audioFile))
+        {
+            player.Load();    // Load the file
+            player.Play();    // Play the audio (PlaySync() to wait until it's finished)
+        }
         TypeWrite("Du står vid marknadens port,");
         Thread.Sleep(900);
         TypeWrite(" en tyngd av mynt klirrar i fickan.\n");
