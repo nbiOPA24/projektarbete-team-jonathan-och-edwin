@@ -3,12 +3,11 @@ using System.Security;
 using System.Threading;
 using System.Media;
 
-<<<<<<< HEAD
 public class Program
 {
     public static void Main()
     {
-        
+        Market market = new Market(40, 80); // skapar en instans av Market som heter market
         // Skapa karaktärer
         Character TheWealthyBuyer = new Character("The Wealthy (but dumb) Buyer", 1500);
         Character TheSkillfulNegotiator = new Character("The Skillful Negotiator", 700);
@@ -19,7 +18,7 @@ public class Program
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
 
         // Skapa marknad och metaller
-        Market market = new Market();
+
 
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, 10);
         Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, 10);
@@ -88,27 +87,14 @@ public class Program
         Thread.Sleep(900);
         TypeWrite("Press [Enter] för att pröva lyckan...");
         Console.ReadKey();
-=======
 //Skapar två olika handlare som säljer olika metaller
-Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
-Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
 
-// Skapar nya objekt av klassen Merchandise, med egenskaper Namn, värde, lägsta siffra (procent den kan minska med), högsta siffra och mängd som finns i lager
-Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, 10);
-Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, 10);
-Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, 10);
-Merchandise Copper = new Merchandise("Copper", 120, 0.85, 1.15, 10);
-Merchandise Platinum = new Merchandise("Platinum", 300, 0.92, 1.08, 10);
-Merchandise Palladium = new Merchandise("Palladium", 250, 0.9, 1.1, 10);
-Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, 10);
-Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, 10);
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 
         Thread.Sleep(1800);
 
         
 
-Market market = new Market(40, 80); // skapar en instans av Market som heter market
+
 
 Character character = new Character("Busiga investeraren", 1000);
 int posX = 2;
@@ -222,7 +208,6 @@ while (true)
 }
 
 
-<<<<<<< HEAD
     }
 
     // Metod för skrivmaskinseffekt
@@ -235,7 +220,6 @@ while (true)
         }
     }
 }
-=======
 
 
 
@@ -249,4 +233,3 @@ while (true)
 // int windowWidth = Console.WindowWidth;
 
 // System.Console.WriteLine($"{bufferHeight} {bufferWidth} {windowHeight} {windowWidth}");
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8

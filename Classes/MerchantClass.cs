@@ -65,10 +65,7 @@ public class Merchant
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
     // Nedanstående metod gör att "Merchanten" kan sälja produkter. Saker tas från "ItemsForSale" och läggs i "PlayerInventory"
     // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
 
@@ -114,7 +111,6 @@ public class Merchant
                 System.Console.WriteLine($"Okej, du vill köpa {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
                 System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}.");
 
-<<<<<<< HEAD
             // Uppdaterar lager och balans
             ItemsForSale[chosenMetal - 1].AmountAvailable -= amountOfMetal;
             Character.AccountBalance -= ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
@@ -122,16 +118,6 @@ public class Merchant
 
             System.Console.WriteLine($"Ditt konto: {Character.AccountBalance}kr");
             System.Console.WriteLine($"Säljarens konto: {MerchantAccountBalance}kr");
-=======
-                int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
-                ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
-
-                double updatedAccountBalance = Character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
-                double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
-
-                System.Console.WriteLine($"Ditt konto: {updatedAccountBalance}kr");
-                System.Console.WriteLine($"Säljarens konto: {updatedMerchantAccountBalance}kr");
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 
                 Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
                 System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
@@ -141,12 +127,9 @@ public class Merchant
     }
 
 
-<<<<<<< HEAD
     public void MovementPatternMerchant()
     {
         // Logik för att låta handlaren röra sig, Jonathan fortsätter här tisdag
     }
 
-=======
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 }
