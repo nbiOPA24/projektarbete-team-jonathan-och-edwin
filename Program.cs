@@ -45,30 +45,45 @@ public class Program
         Console.WriteLine("***************************************");
         Console.WriteLine("* Välkommen till Market Master! *");
         Console.WriteLine("***************************************");
-        Thread.Sleep(3500);
+        Thread.Sleep(4500);
+        Console.Clear();
         Console.WriteLine("\n");
-        TypeWrite("I en värld där guld skimrar, silver lockar och platina står på spel finns det mycket som kan gå fel...\n");
+        TypeWrite("I en värld där guld skimrar, ");
+        Thread.Sleep(360);
+        TypeWrite("silver lockar");
+        Thread.Sleep(360);
+        TypeWrite(" och platina står på spel ");
+        Thread.Sleep(360);
+        TypeWrite("finns det mycket som kan gå fel...\n");
         Thread.Sleep(1800);
-        TypeWrite("Står du redo att göra ditt drag? Var försiktig; marknaden kan vara nyckfull,\n");
+        TypeWrite("Står du redo att göra ditt drag?\n");
+        Thread.Sleep(1200);
+        TypeWrite("Var försiktig; marknaden kan vara nyckfull, ");
+        Thread.Sleep(360);
         TypeWrite("men för den listige väntar stora vinster!\n");
-        Thread.Sleep(1800);
-        System.Console.WriteLine("Press [Enter] för att kliva in i marknadens djungel...");
+        Thread.Sleep(2100);
+        Console.WriteLine("Press [Enter] för att kliva in i marknadens djungel...");
         Console.ReadKey();
-        TypeWrite("Du står vid marknadens port, en tyngd av mynt klirrar i fickan.\nHandlare viskar om dagens bästa fynd, men vem kan du lita på?");
+        Thread.Sleep(1200);
+        TypeWrite("Du står vid marknadens port,");
         Thread.Sleep(900);
-        TypeWrite("'Kom och köp,' ropar en man. 'Endast de smartaste överlever här.'");
-        Thread.Sleep(600);
-        TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \nPress[Enter] för att pröva lyckan...");
+        TypeWrite(" en tyngd av mynt klirrar i fickan.\n");
+        Thread.Sleep(900);
+        TypeWrite("Handlare viskar om dagens bästa fynd, men vem kan du lita på?\n");
+        Thread.Sleep(900);
+        TypeWrite("'Kom och köp,' ropar en man. 'Endast de smartaste överlever här!'.\n");
+        Thread.Sleep(900);
+        TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \nPress [Enter] för att pröva lyckan...");
         Console.ReadKey();
 
-        Thread.Sleep(900);
+        Thread.Sleep(1800);
 
 
 
     }
 
     // Metod för skrivmaskinseffekt
-    public static void TypeWrite(string text, int delay = 36)
+    public static void TypeWrite(string text, int delay = 45)
     {
         foreach (char c in text)
         {
