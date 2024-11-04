@@ -7,18 +7,10 @@ using System.Drawing;
 
 public class Character
 {
-<<<<<<< HEAD
 
     public string Name { get; set; }
     public static double AccountBalance { get; set; }
     public static List<Merchandise> PlayerInventory { get; set; }
-=======
-    
-    public string Name {get; set;}
-    public static double AccountBalance {get; set;}
-  
-    public static List<Merchandise> PlayerInventory {get; set;}
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 
     public Character(string name, double accountBalance)
     {
@@ -28,19 +20,15 @@ public class Character
        
     }
 
-<<<<<<< HEAD
     public static void AddToInventory(Merchandise item, int quantity)
     {
         item.Quantity = quantity;
         PlayerInventory.Add(item);
     }
-=======
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
 
     // Visar spelarens inventory
     public void DisplayPlayerInventory()
     {
-<<<<<<< HEAD
         Console.SetCursorPosition(60,0);
         System.Console.WriteLine("============================ Spelarens Inventarie =============================");
         System.Console.WriteLine("|     Item Name      | Quantity |    Värde   |Totalt värde |    Volatilitet   |");
@@ -49,11 +37,6 @@ public class Character
         {
             double totalValue = metal.Value * metal.Quantity;
             System.Console.WriteLine($"| {metal.Name,-18} | {metal.Quantity,8} | {metal.Value,14:F2} | {totalValue,11:F2} | {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
-=======
-        foreach (var metal in PlayerInventory)
-        {
-            System.Console.WriteLine(metal);
->>>>>>> 37a2d3a73c011a88ba170e6c2ec7acd65cfa8bd8
         }
         Console.SetCursorPosition(60, Console.CursorTop);
         System.Console.WriteLine("===============================================================================");
