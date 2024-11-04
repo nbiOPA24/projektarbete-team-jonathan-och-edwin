@@ -26,10 +26,17 @@ public class Merchant
 
     public void DisplayAllItems()
     {
+        int y = 1;
+        int j = 6;
+
         foreach (var i in ItemsForSale)
         {
-            System.Console.WriteLine(i.Name);
-            System.Console.WriteLine(i.Value);
+            Market.AdjustTextToTheRight(j);
+            System.Console.Write(y + ". " + "Metall: " + i.Name + ", Nuvarande värde: " + i.Value + "kr");
+            
+        
+            j += 3;
+            y++;
         }
     }
 
@@ -73,18 +80,29 @@ public class Merchant
     {
         while (true)
         {
-            Console.SetCursorPosition(100, 3);
-            System.Console.WriteLine("Vilken ädelmetall vill du köpa? Skriv 1-4 beroende plats på listan.");
+            Market.AdjustTextToTheRight(2);
+            System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
+            Market.AdjustTextToTheRight(3);
+            System.Console.WriteLine("Skriv 1-4 beroende plats på listan.");
+            
             DisplayAllItems();
+            System.Console.WriteLine();
             int chosenMetal = int.Parse(Console.ReadLine());
 
-            if (chosenMetal < 1 || chosenMetal > 8)
+            if (chosenMetal < 1 || chosenMetal > 4)
             {
-                System.Console.WriteLine("Välj en siffra mellan 1-8.");
+                Market.AdjustTextToTheRight(28);
+                System.Console.WriteLine("Välj en siffra mellan 1-4.");
                 continue;
             }
 
-            System.Console.WriteLine($"Okej! Du vill köpa {ItemsForSale[chosenMetal - 1].Name}! Vi får se om det är ett bra köp...");
+
+
+            Market.AdjustTextToTheRight(20);
+            System.Console.WriteLine($"Okej! Du vill köpa {ItemsForSale[chosenMetal - 1].Name}!");
+            Market.AdjustTextToTheRight(21);
+            System.Console.WriteLine("Vi får se om det är ett bra köp...");
+            Market.AdjustTextToTheRight(22);
             System.Console.WriteLine($"Hur många {ItemsForSale[chosenMetal - 1].Name} vill du köpa?");
 
             int amountOfMetal = int.Parse(Console.ReadLine());

@@ -26,13 +26,12 @@ StableMetalMerchant.ItemsForSale.Add(Palladium);
 VolatileMetalMerchant.ItemsForSale.Add(Indium);
 VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
-Market market = new Market(40, 80); // skapar en instans av Market som heter market
+// skapar en instans av Market som heter market
+Market market = new Market(25, 80);
 
 Character character = new Character("Busiga investeraren", 1000);
 int posX = 2;
 int posY = 2;
-
-ConsoleKeyInfo keyInfo;
 
 // Kontrollerar att spelaren inte går på någon av försäljarna
 bool IsCollision(int newX, int newY)
@@ -45,9 +44,12 @@ bool IsCollision(int newX, int newY)
     return false;
 }
 
+
+
 while (true)
 {
     Console.Clear();
+    
 
     // Ritar ut ramen
     for (int x = 0; x < market.Width; x++)
@@ -66,33 +68,36 @@ while (true)
     {
         Console.Write("-");
     }
-    Console.WriteLine();
+
+    System.Console.WriteLine();
+    System.Console.WriteLine();
+    System.Console.WriteLine();
     // ritat färdigt ramen
+
+    // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
+    Console.SetCursorPosition(posX, posY);
+    System.Console.WriteLine("🧑");
 
     // Trollkarlen
     Market.PlaceMerchantsBuilding(66, 1);
     Market.PlaceMerchantsBuilding(66, 5);
 
     // Gubben
-    Market.PlaceMerchantsBuilding(66, 26);
-    Market.PlaceMerchantsBuilding(66, 30);
+    Market.PlaceMerchantsBuilding(66, 13);
+    Market.PlaceMerchantsBuilding(66, 17);
 
-    Market.PlaceDecoration(11, 38);
+    // Market.PlaceDecoration(11, 38);
 
     // Målar ut försäljare av volatila metaller
     Console.SetCursorPosition(70, 3);
     System.Console.WriteLine("🧙‍♂️");
 
     // Målar ut försäljare av stabila metaller
-    Console.SetCursorPosition(70, 28);
+    Console.SetCursorPosition(70, 15);
     System.Console.WriteLine("👴");
 
-    Console.SetCursorPosition(posX, posY); // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
-    System.Console.WriteLine("🧑");
-
+    ConsoleKeyInfo keyInfo;
     keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
-
-  
 
     switch (keyInfo.Key)
     {
@@ -101,7 +106,7 @@ while (true)
             break;
 
         case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
-            if (posY >= 0 && posY <= 39) posY++;
+            if (posY >= 0 && posY <= 24) posY++;
             break;
 
         case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
@@ -117,25 +122,14 @@ while (true)
             return;
     }
 
-    
-
     if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 3) <= 1)
     {
         VolatileMetalMerchant.Sell();
     }
 
-     if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 28) <= 1)
+    if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 15) <= 1)
     {
         StableMetalMerchant.Sell();
-    }
-
-    int newX = posX;
-    int newY = posY;
-
-    if (!IsCollision(newX, newY))
-    {
-        posX = newX;
-        posY = newY;
     }
 }
 

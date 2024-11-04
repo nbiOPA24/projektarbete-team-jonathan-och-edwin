@@ -49,5 +49,9 @@ public class Market
         }
     }
 
-   
+    // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
+    public static void AdjustTextToTheRight(int y)
+    {
+        Console.SetCursorPosition(90, y);
+    } 
 }
