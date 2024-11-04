@@ -33,8 +33,7 @@ public class Merchant
         {
             Market.AdjustTextToTheRight(j);
             System.Console.Write(y + ". " + "Metall: " + i.Name + ", Nuvarande värde: " + i.Value + "kr");
-            
-        
+  
             j += 3;
             y++;
         }
