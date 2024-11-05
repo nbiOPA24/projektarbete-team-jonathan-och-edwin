@@ -1,24 +1,123 @@
 ﻿using System;
-using System.Security;
-using System.Threading;
+
 using System.Media;
 using System.Security.Cryptography;
+using MarketMaster1.Classes;
+
 
 public class Program
 {
-    public static List<Merchandise> ItemsForDisplay = new List<Merchandise>(); 
+    public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
     public static void Main()
     {
-        // skapar en instans av Market som heter market
-        Market market = new Market(25, 80);
+
         // Skapa karaktärer
         Character TheWealthyBuyer = new Character("The Wealthy (but dumb) Buyer", 1500);
         Character TheSkillfulNegotiator = new Character("The Skillful Negotiator", 700);
         Character TheBalancedTrader = new Character("The Balanced Trader", 1000);
 
+        // Introduktion
+        Console.Clear();
+        MenuClass.StartMenu();
+        NewDayLoop();
+        //Skapar två olika handlare som säljer olika metaller
+
+
+
+        Thread.Sleep(1800);
+
+
+        // Kontrollerar att spelaren inte går på någon av försäljarna
+        bool IsCollision(int newX, int newY)
+        {
+            if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+    }
+
+    //Kod för meddelande som visas efter ny påbörjad dag.
+    //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
+    //Även en loop inlagd så att det blir en ny dag.
+    public static void NewDayLoop()
+    {
+        Random random = new Random();
+        int NumberOfRounds = 10;
+        for (int day = 1; day <= NumberOfRounds; day++)
+        {
+            Console.Clear();
+
+            System.Console.WriteLine($"======================= DAG {day} =======================");
+            System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej. Små bokstäver.");
+            //Ändrar om inmatningen till små bokstäver för att minska redundans.
+            string answer = Console.ReadLine().ToLower();
+            if (answer == "ja")
+            {
+                string[] yesMessage = {
+                    "Perfekt, solen skiner och marknaden väntar på dig! Nu är det dags att göra några riktigt smarta affärer!",
+                    "Modigt val! Marknadens dörrar öppnas för dig, och spänningen av köp och sälj ligger i luften. Låt oss se vad du kan göra!",
+                    "Du hör hur marknadens sorl växer när du närmar dig. Handlarna är redo att förhandla, och guldet lockar. Lycka till!",
+                    "Fantastiskt! Marknaden är full av möjligheter, och det är upp till dig att gripa dem. Låt äventyret börja!",
+                    "Marknaden öppnar upp som en färgstark värld fylld av ljud och dofter. Du känner adrenalinet pumpa - det är dags för handel!"
+                };
+
+                System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
+                GameLoop();
+
+
+            }
+            else if (answer == "nej")
+            {
+                string[] noMessage = {
+                    "Kanske är det bäst att ta en lugn dag. Vem vet, marknaden är en riskabel plats och ibland är det bättre att hålla pengarna i fickan.",
+                    "Ett klokt beslut, alla dagar behöver inte innebära äventyr. En dag att vila kan vara precis vad du behöver.",
+                    "Du ser mot marknaden, men något säger dig att idag inte är dagen. Du vänder tillbaka för att samla dina tankar inför framtida affärer.",
+                    "Att inte gå till marknaden kan ibland vara det smartaste draget av alla. Ingen risk idag, bara trygghet. Imorgon kan vara din dag.",
+                    "Du väljer att stanna borta från marknadens tumult. Lugnet idag kan ge dig fördelar när du nästa gång kliver in i handelsvärlden."
+            };
+                System.Console.WriteLine(noMessage[random.Next(noMessage.Length)]);
+                System.Console.WriteLine("Press [Enter] för att gå vidare till nästa dag...");
+                System.Console.ReadKey();
+                //continue för att gå vidare till nästa dag.
+                continue;
+            }
+            else
+            {
+                System.Console.WriteLine("Ogiltigt svar. Skriv 'ja' eller 'nej'");
+                //Här lägger vi en 'day--' för att inte gå vidare till nästa dag om användaren skrivit fel val.
+                day--;
+                continue;
+            }
+        }
+        System.Console.WriteLine("Nu är alla spelrundor slut! Hur bra gick det för dig? Press [Enter] för att få ditt slutgiltiga inventory, sedan [Enter] igen för att avsluta spelet!");
+        System.Console.ReadKey();
+        System.Console.Clear();
+        Character.DisplayPlayerInventory();
+        System.Console.ReadKey();
+
+
+
+
+
+    }
+    //Metod för att få skrivmaskinseffekten på text. dvs en bokstav(char) i taget med 45 millisekunders mellanrum mellan varje utskrift.
+
+    public static void GameLoop()
+    {
+        // skapar en instans av Market som heter market
+        Market market = new Market(25, 80);
+
         // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
+        //Skapa player character samt ger den en position på spelbrädet.
+        Character character = new Character("Busiga investeraren", 1000);
+        int posX = 2;
+        int posY = 2;
 
         // Skapa marknad och metaller
 
@@ -42,77 +141,10 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
-        // Lägg till metaller i en lista som sedan ska agera som "display" för användaren
-        ItemsForDisplay.Add(Gold);
-        ItemsForDisplay.Add(Silver);
-        ItemsForDisplay.Add(Bronze);
-        ItemsForDisplay.Add(Copper);
-        ItemsForDisplay.Add(Platinum);
-        ItemsForDisplay.Add(Palladium);
-        ItemsForDisplay.Add(Indium);
-        ItemsForDisplay.Add(Tin);
-
-        // Kommentera tillbaka detta nedan
-
-        // // Introduktion
-        // Console.Clear();
-        // Console.WriteLine("\nSpelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
-        // Thread.Sleep(6000);
-        // market.RandomizeNumberOfRounds();
-        // Console.Clear();
-        // Console.WriteLine("****************************************");
-        // Console.WriteLine("   * Välkommen till Market Master! *");
-        // Console.WriteLine("****************************************");
-        // Thread.Sleep(4500);
-        // Console.Clear();
-        // Console.WriteLine("\n");
-        // TypeWrite("I en värld där guld skimrar, ");
-        // Thread.Sleep(360);
-        // TypeWrite("silver lockar");
-        // Thread.Sleep(360);
-        // TypeWrite(" och platina står på spel ");
-        // Thread.Sleep(360);
-        // TypeWrite("finns det mycket som kan gå fel...\n");
-        // Thread.Sleep(1800);
-        // TypeWrite("Står du redo för att göra ditt drag?\n");
-        // Thread.Sleep(1200);
-        // TypeWrite("Var försiktig; marknaden kan vara nyckfull, ");
-        // Thread.Sleep(360);
-        // TypeWrite("men för den listige väntar stora vinster!\n");
-        // Thread.Sleep(2100);
-        // Console.WriteLine("Press [Enter] för att kliva in i marknadens djungel...");
-        // Console.ReadKey();
-        // Thread.Sleep(1200);
-        // Console.Clear();
-        // string audioFile = @"C:\Users\jonat\AProject\MarketMaster1\MarketPirate.wav";
-        // using (SoundPlayer player = new SoundPlayer(audioFile))
-        // {
-        //     player.Load();    // Load the file
-        //     player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
-        // }
-        // TypeWrite("Du står vid marknadens port,");
-        // Thread.Sleep(900);
-        // TypeWrite(" en tyngd av mynt klirrar i fickan.\n");
-        // Thread.Sleep(900);
-        // TypeWrite("Handlare viskar om dagens bästa fynd, men vem kan du lita på?\n");
-        // Thread.Sleep(900);
-        // TypeWrite("'Kom och köp,' ropar en man. 'Endast de smartaste överlever här!'.\n");
-        // Thread.Sleep(900);
-        // TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \n");
-        // Thread.Sleep(900);
-        // TypeWrite("Press [Enter] för att pröva lyckan...");
-        // Console.ReadKey();
-
-        Thread.Sleep(1800);
-
-        Character character = new Character("Busiga investeraren", 1000);
-        int posX = 2;
-        int posY = 2;
-    
         while (true)
         {
-            Console.Clear();
 
+            System.Console.Clear();
 
             // Ritar ut ramen
             for (int x = 0; x < market.Width; x++)
@@ -153,7 +185,7 @@ public class Program
 
             // Market.PlaceDecoration(11, 38);
 
-          
+
 
             // Målar ut försäljare av volatila metaller
             Console.SetCursorPosition(70, 3);
@@ -188,6 +220,12 @@ public class Program
                     if (posX > 1) posX--;
                     break;
 
+                case ConsoleKey.I:
+                    Character.DisplayPlayerInventory();
+                    System.Console.WriteLine();
+                    System.Console.ReadKey();
+                    break;
+
                 case ConsoleKey.Escape:
                     Environment.Exit(0);
                     return;
@@ -213,6 +251,7 @@ public class Program
 
         }
     }
+
     public static void TypeWrite(string text, int delay = 45)
     {
         foreach (char c in text)
@@ -222,7 +261,7 @@ public class Program
         }
     }
 
-    
+
 }
 
 

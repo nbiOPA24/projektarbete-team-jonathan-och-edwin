@@ -28,19 +28,22 @@ public class Character
     }
 
     // Visar spelarens inventory
-    public void DisplayPlayerInventory()
+    public static void DisplayPlayerInventory()
     {
-        Console.SetCursorPosition(60,0);
-        System.Console.WriteLine("============================ Spelarens Inventarie =============================");
-        System.Console.WriteLine("|     Item Name      | Quantity |    Värde   |Totalt värde |    Volatilitet   |");
-        System.Console.WriteLine("|--------------------|----------|------------|-------------|------------------|");
+        Console.SetCursorPosition(81,1);
+        System.Console.WriteLine("========================== Spelarens Inventarie ===========================");
+        Console.SetCursorPosition(81,Console.CursorTop);
+        System.Console.WriteLine("|    Item Name     | Quantity |    Värde   |Totalt värde |   Volatilitet  |");
+        Console.SetCursorPosition(81,Console.CursorTop);
+        System.Console.WriteLine("|------------------|----------|------------|-------------|----------------|");
         foreach (var metal in Character.PlayerInventory)
         {
             double totalValue = metal.Value * metal.Quantity;
-            System.Console.WriteLine($"| {metal.Name,-18} | {metal.Quantity,8} | {metal.Value,14:F2} | {totalValue,11:F2} | {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
+            Console.SetCursorPosition(81,Console.CursorTop);
+            System.Console.WriteLine($"| {metal.Name,-16} | {metal.Quantity,8} | {metal.Value,10:F2} | {totalValue,11:F2} | {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
         }
-        Console.SetCursorPosition(60, Console.CursorTop);
-        System.Console.WriteLine("===============================================================================");
+        Console.SetCursorPosition(81, Console.CursorTop);
+        System.Console.WriteLine("===========================================================================");
     }
 
     // Låter spelaren sälja saker, just nu kommer de tas bort från "PlayerInventory" och läggas till i "ItemsForSale"
