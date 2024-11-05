@@ -2,6 +2,8 @@
 using System.Security;
 using System.Threading;
 using System.Media;
+using MarketMaster1.Classes;
+using System.Globalization;
 
 public class Program
 {
@@ -42,60 +44,17 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        Console.WriteLine("\nSpelet kommer pågå någonstans mellan 10-20 rundor.\nI varje runda kan du köpa, sälja eller passa.\n\n... Randomiserar antalet rundor...");
-        Thread.Sleep(6000);
-        market.RandomizeNumberOfRounds();
-        Console.Clear();
-        Console.WriteLine("****************************************");
-        Console.WriteLine("   * Välkommen till Market Master! *");
-        Console.WriteLine("****************************************");
-        Thread.Sleep(4500);
-        Console.Clear();
-        Console.WriteLine("\n");
-        TypeWrite("I en värld där guld skimrar, ");
-        Thread.Sleep(360);
-        TypeWrite("silver lockar");
-        Thread.Sleep(360);
-        TypeWrite(" och platina står på spel ");
-        Thread.Sleep(360);
-        TypeWrite("finns det mycket som kan gå fel...\n");
-        Thread.Sleep(1800);
-        TypeWrite("Står du redo för att göra ditt drag?\n");
-        Thread.Sleep(1200);
-        TypeWrite("Var försiktig; marknaden kan vara nyckfull, ");
-        Thread.Sleep(360);
-        TypeWrite("men för den listige väntar stora vinster!\n");
-        Thread.Sleep(2100);
-        Console.WriteLine("Press [Enter] för att kliva in i marknadens djungel...");
-        Console.ReadKey();
-        Thread.Sleep(1200);
-        Console.Clear();
-        string audioFile = @"C:\Users\edwin\Documents\Projects\MarketMasterConsole\projektarbete-team-jonathan-och-edwin\MarketPirate.wav";
-        using (SoundPlayer player = new SoundPlayer(audioFile))
-        {
-            player.Load();    // Load the file
-            player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
-        }
-        TypeWrite("Du står vid marknadens port,");
-        Thread.Sleep(900);
-        TypeWrite(" en tyngd av mynt klirrar i fickan.\n");
-        Thread.Sleep(900);
-        TypeWrite("Handlare viskar om dagens bästa fynd, men vem kan du lita på?\n");
-        Thread.Sleep(900);
-        TypeWrite("'Kom och köp,' ropar en man. 'Endast de smartaste överlever här!'.\n");
-        Thread.Sleep(900);
-        TypeWrite("Törs du satsa stort eller väljer du att spela försiktigt? \n");
-        Thread.Sleep(900);
-        TypeWrite("Press [Enter] för att pröva lyckan...");
-        Console.ReadKey();
+        int NumberOfRounds = market.RandomizeNumberOfRounds();
         //Skapar två olika handlare som säljer olika metaller
 
+        MenuClass.StartMenu();
 
         Thread.Sleep(1800);
 
         Character character = new Character("Busiga investeraren", 1000);
         int posX = 2;
         int posY = 2;
+
 
         // Kontrollerar att spelaren inte går på någon av försäljarna
         bool IsCollision(int newX, int newY)
@@ -108,97 +67,143 @@ public class Program
             return false;
         }
 
-
-        while (true)
+        //Kod för meddelande som visas efter ny påbörjad dag.
+        //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
+        for (int day = 1; day <= NumberOfRounds; day++)
         {
-            Console.Clear();
-
-
-            // Ritar ut ramen
-            for (int x = 0; x < market.Width; x++)
+            while (day <= NumberOfRounds)
             {
-                Console.Write("-");
-            }
-            Console.WriteLine();
+                Console.Clear();
+                Random random = new Random();
+                System.Console.WriteLine($"======================= DAG {day} =======================");
+                System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv true eller false. Små bokstäver.");
+                //Ändrar om inmatningen till små bokstäver för att minska redundans.
+                string answer = Console.ReadLine().ToLower();
+                if (answer == "ja")
+                {
+                    string[] yesMessages = {
+                    "Perfekt, solen skiner och marknaden väntar på dig! Nu är det dags att göra några riktigt smarta affärer!",
+                    "Modigt val! Marknadens dörrar öppnas för dig, och spänningen av köp och sälj ligger i luften. Låt oss se vad du kan göra!",
+                    "Du hör hur marknadens sorl växer när du närmar dig. Handlarna är redo att förhandla, och guldet lockar. Lycka till!",
+                    "Fantastiskt! Marknaden är full av möjligheter, och det är upp till dig att gripa dem. Låt äventyret börja!",
+                    "Marknaden öppnar upp som en färgstark värld fylld av ljud och dofter. Du känner adrenalinet pumpa - det är dags för handel!"
+                };
 
-            for (int z = 0; z < market.Height; z++)
-            {
-                Console.Write("|");
-                System.Console.WriteLine("                                                                              |");
-            }
+                    System.Console.WriteLine(yesMessages[random.Next(yesMessages.Length)]);
 
-            for (int x = 0; x < market.Width; x++)
-            {
-                Console.Write("-");
-            }
 
-            System.Console.WriteLine();
-            System.Console.WriteLine();
-            System.Console.WriteLine();
-            // ritat färdigt ramen
-
-            // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
-            Console.SetCursorPosition(posX, posY);
-            System.Console.WriteLine("🧑");
-
-            // Trollkarlen
-            Market.PlaceMerchantsBuilding(66, 1);
-            Market.PlaceMerchantsBuilding(66, 5);
-
-            // Gubben
-            Market.PlaceMerchantsBuilding(66, 13);
-            Market.PlaceMerchantsBuilding(66, 17);
-
-            // Market.PlaceDecoration(11, 38);
-
-            // Målar ut försäljare av volatila metaller
-            Console.SetCursorPosition(70, 3);
-            System.Console.WriteLine("🧙‍♂️");
-
-            // Målar ut försäljare av stabila metaller
-            Console.SetCursorPosition(70, 15);
-            System.Console.WriteLine("👴");
-
-            ConsoleKeyInfo keyInfo;
-            keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
-
-            switch (keyInfo.Key)
-            {
-                case ConsoleKey.UpArrow: // Så länge muspekarens Y-värde (lodrätt) är större än 1 får spelaren gå uppåt. Detta kontrollerar att användaren inte går utanför banan uppåt
-                    if (posY > 1 && posY != 3 || posX != 70) posY--;
-                    break;
-
-                case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
-                    if (posY >= 0 && posY <= 24) posY++;
-                    break;
-
-                case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
-                    if (posX >= 0 && posX <= 76) posX++;
-                    break;
-
-                case ConsoleKey.LeftArrow: // Samma som "UpArrow" fast vågrätt
-                    if (posX > 1) posX--;
-                    break;
-
-                case ConsoleKey.Escape:
-                    Environment.Exit(0);
-                    return;
+                }
+                else if (answer == "nej")
+                {
+                    string[] noMessages = {
+                    "Kanske är det bäst att ta en lugn dag. Vem vet, marknaden är en riskabel plats och ibland är det bättre att hålla pengarna i fickan.",
+                    "Ett klokt beslut, alla dagar behöver inte innebära äventyr. En dag att vila kan vara precis vad du behöver.",
+                    "Du ser mot marknaden, men något säger dig att idag inte är dagen. Du vänder tillbaka för att samla dina tankar inför framtida affärer.",
+                    "Att inte gå till marknaden kan ibland vara det smartaste draget av alla. Ingen risk idag, bara trygghet. Imorgon kan vara din dag.",
+                    "Du väljer att stanna borta från marknadens tumult. Lugnet idag kan ge dig fördelar när du nästa gång kliver in i handelsvärlden."
+            };
+                    System.Console.WriteLine(noMessages[random.Next(noMessages.Length)]);
+                }
+                else
+                {
+                    System.Console.WriteLine("Ogiltigt svar. Skriv 'ja' eller 'nej'");
+                }
             }
 
 
-            if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 3) <= 1)
+
+            while (true)
             {
-                VolatileMetalMerchant.Sell();
+                Console.Clear();
+
+
+                // Ritar ut ramen
+                for (int x = 0; x < market.Width; x++)
+                {
+                    Console.Write("-");
+                }
+                Console.WriteLine();
+
+                for (int z = 0; z < market.Height; z++)
+                {
+                    Console.Write("|");
+                    System.Console.WriteLine("                                                                              |");
+                }
+
+                for (int x = 0; x < market.Width; x++)
+                {
+                    Console.Write("-");
+                }
+
+                System.Console.WriteLine();
+                System.Console.WriteLine();
+                System.Console.WriteLine();
+                // ritat färdigt ramen
+
+                // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
+                Console.SetCursorPosition(posX, posY);
+                System.Console.WriteLine("🧑");
+
+                // Trollkarlen
+                Market.PlaceMerchantsBuilding(66, 1);
+                Market.PlaceMerchantsBuilding(66, 5);
+
+                // Gubben
+                Market.PlaceMerchantsBuilding(66, 13);
+                Market.PlaceMerchantsBuilding(66, 17);
+
+                // Market.PlaceDecoration(11, 38);
+
+                // Målar ut försäljare av volatila metaller
+                Console.SetCursorPosition(70, 3);
+                System.Console.WriteLine("🧙‍♂️");
+
+                // Målar ut försäljare av stabila metaller
+                Console.SetCursorPosition(70, 15);
+                System.Console.WriteLine("👴");
+
+                ConsoleKeyInfo keyInfo;
+                keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
+
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow: // Så länge muspekarens Y-värde (lodrätt) är större än 1 får spelaren gå uppåt. Detta kontrollerar att användaren inte går utanför banan uppåt
+                        if (posY > 1 && posY != 3 || posX != 70) posY--;
+                        break;
+
+                    case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
+                        if (posY >= 0 && posY <= 24) posY++;
+                        break;
+
+                    case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
+                        if (posX >= 0 && posX <= 76) posX++;
+                        break;
+
+                    case ConsoleKey.LeftArrow: // Samma som "UpArrow" fast vågrätt
+                        if (posX > 1) posX--;
+                        break;
+
+                    case ConsoleKey.Escape:
+                        Environment.Exit(0);
+                        return;
+                }
+
+
+                if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 3) <= 1)
+                {
+                    VolatileMetalMerchant.Sell();
+                }
+
+                if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 15) <= 1)
+                {
+                    StableMetalMerchant.Sell();
+                }
+
+
             }
-
-            if (Math.Abs(posX - 70) < 1 && Math.Abs(posY - 15) <= 1)
-            {
-                StableMetalMerchant.Sell();
-            }
-
-
         }
     }
+    //Metod för att få skrivmaskinseffekten på text. dvs en bokstav(char) i taget med 45 millisekunders mellanrum mellan varje utskrift.
     public static void TypeWrite(string text, int delay = 45)
     {
         foreach (char c in text)
