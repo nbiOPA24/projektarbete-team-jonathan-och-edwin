@@ -14,6 +14,7 @@ vecka 45:
 []. [E]. Fixa så att spelplanen inte skimrar.
 
 []. [E] Kolla om man kan förstora ikoner för gubbar osv.
+
 []. [JE] Kolla in Json.
 
 
