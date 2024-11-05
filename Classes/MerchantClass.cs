@@ -13,6 +13,7 @@ public class Merchant
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
+    
 
     public Merchant(string name, int xPos, int yPos, double merchantAccountBalance)
     {
@@ -80,13 +81,16 @@ public class Merchant
     {
         while (true)
         {
-            Market.AdjustTextToTheRight(2);
-            System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
-            Market.AdjustTextToTheRight(3);
-            System.Console.WriteLine("Skriv 1-4 beroende plats på listan.");
+            
             
             DisplayAllItems();
-            System.Console.WriteLine();
+            Market.AdjustTextToTheRight(20);
+            System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
+            Market.AdjustTextToTheRight(21);
+            System.Console.WriteLine("Skriv 1-4 beroende plats på listan.");
+            Market.AdjustTextToTheRight(23);
+            System.Console.WriteLine("Ditt svar (ange 1-4): ");
+            Market.AdjustTextToTheRight(24);
             int chosenMetal = int.Parse(Console.ReadLine());
 
             if (chosenMetal < 1 || chosenMetal > 4)
@@ -98,12 +102,17 @@ public class Merchant
 
 
 
-            Market.AdjustTextToTheRight(20);
+            Market.AdjustTextToTheRight(26);
             System.Console.WriteLine($"Okej! Du vill köpa {ItemsForSale[chosenMetal - 1].Name}!");
-            Market.AdjustTextToTheRight(21);
+            Market.AdjustTextToTheRight(27);
             System.Console.WriteLine("Vi får se om det är ett bra köp...");
-            Market.AdjustTextToTheRight(22);
+            Market.AdjustTextToTheRight(29);
             System.Console.WriteLine($"Hur många {ItemsForSale[chosenMetal - 1].Name} vill du köpa?");
+            Market.AdjustTextToTheRight(30);
+            System.Console.WriteLine($"Just nu finns {ItemsForSale[chosenMetal - 1].AmountAvailable} kvar i lager.");
+            Market.AdjustTextToTheRight(31);
+            System.Console.WriteLine("Ditt svar (går ej att köpa fler än det finns i lager): ");
+            Market.AdjustTextToTheRight(32);
 
             int amountOfMetal = int.Parse(Console.ReadLine());
 
@@ -141,6 +150,22 @@ public class Merchant
                 System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
                 break;
             }
+        }
+    }
+
+    public static void DisplayDetailedProductInfo()
+    {
+        int x = 0; // används för att kolla varje index i itemsfordisplay-listan
+
+        foreach (var i in Program.ItemsForDisplay)
+        {
+            Market.AdjustTextToTheRight(0);
+            System.Console.WriteLine($"Metall: {Program.ItemsForDisplay[x].Name}");
+            Market.AdjustTextToTheRight(2);
+            System.Console.WriteLine($"Värde denna runda: {Program.ItemsForDisplay[x].Value}kr");
+            Market.AdjustTextToTheRight(4);
+            System.Console.WriteLine($"Prisförändring varje runda: {Program.ItemsForDisplay[x].VolatilityInAString}");
+            x++;
         }
     }
 }
