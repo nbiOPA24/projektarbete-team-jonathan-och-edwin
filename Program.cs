@@ -44,7 +44,7 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        int NumberOfRounds = market.RandomizeNumberOfRounds();
+        int NumberOfRounds = 10;
         //Skapar två olika handlare som säljer olika metaller
 
         MenuClass.StartMenu();
@@ -69,6 +69,7 @@ public class Program
 
         //Kod för meddelande som visas efter ny påbörjad dag.
         //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
+        //Även en loop inlagd så att det blir en ny dag.
         for (int day = 1; day <= NumberOfRounds; day++)
         {
             while (day <= NumberOfRounds)
