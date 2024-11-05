@@ -28,7 +28,7 @@ public class Character
     }
 
     // Visar spelarens inventory
-    public void DisplayPlayerInventory()
+    public static void DisplayPlayerInventory()
     {
         Console.SetCursorPosition(60,0);
         System.Console.WriteLine("============================ Spelarens Inventarie =============================");
