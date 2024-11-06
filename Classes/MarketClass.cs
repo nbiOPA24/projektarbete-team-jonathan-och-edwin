@@ -100,7 +100,17 @@ public class Market
             System.Console.WriteLine(r);
             y++;
         }
+
+        Console.SetCursorPosition(0, 45);
+        System.Console.WriteLine("KOMMANDON");
+        Console.SetCursorPosition(0, 46);
+        System.Console.WriteLine("i = öppna inventory");
+        Console.SetCursorPosition(0, 47);
+        System.Console.WriteLine("p = se din kontobalans");
+
     }
+
+    
     
   
 }

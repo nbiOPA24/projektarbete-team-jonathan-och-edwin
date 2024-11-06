@@ -9,7 +9,7 @@ public class Character
 {
     
     public string Name {get; set;}
-    public static double AccountBalance {get; set;}
+    public double AccountBalance {get; set;}
   
     public static List<Merchandise> PlayerInventory {get; set;}
 
@@ -31,7 +31,7 @@ public class Character
     public static void DisplayPlayerInventory()
     {
         Console.SetCursorPosition(81,1);
-        System.Console.WriteLine("========================== Spelarens Inventory ===========================");
+        System.Console.WriteLine("=========================== Spelarens Inventory ===========================");
         Console.SetCursorPosition(81,Console.CursorTop);
         System.Console.WriteLine("|    Item Name     | Quantity |    Värde   |Totalt värde |   Volatilitet  |");
         Console.SetCursorPosition(81,Console.CursorTop);
@@ -44,6 +44,25 @@ public class Character
         }
         Console.SetCursorPosition(81, Console.CursorTop);
         System.Console.WriteLine("===========================================================================");
+    }
+
+    public static void DisplayAccountBalance(Character character)
+    {
+        Console.SetCursorPosition(81, 1);
+
+        for (int i = 0; i < 23; i++)
+        {
+            System.Console.Write("=");
+        }
+        
+        Console.SetCursorPosition(81, 2);
+        System.Console.WriteLine($"| Kontobalans: {character.AccountBalance}kr |");
+
+        Console.SetCursorPosition(81, 3);
+        for (int i = 0; i < 23; i++)
+        {
+            System.Console.Write("=");
+        }
     }
 
     // Låter spelaren sälja saker, just nu kommer de tas bort från "PlayerInventory" och läggas till i "ItemsForSale"

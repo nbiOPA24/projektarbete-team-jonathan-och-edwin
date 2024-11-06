@@ -77,7 +77,7 @@ public class Merchant
     // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
 
     // VIKTIGT - Denna metod används för både "Merchant"-sell och "Character"-buy
-    public void Sell()
+    public void Sell(Character character)
     {
         while (true)
         {
@@ -157,9 +157,9 @@ public class Merchant
             }
 
             // Kontrollerar att värdet på mängden metall användaren köper inte överstiger användarens kontobalans
-            else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > Character.AccountBalance)
+            else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > character.AccountBalance)
             {
-                double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - Character.AccountBalance;
+                double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - character.AccountBalance;
                 Market.AdjustTextToTheRight(26);
                 System.Console.WriteLine("                                                             ");
                 Market.AdjustTextToTheRight(27);
@@ -186,21 +186,27 @@ public class Merchant
 
             else
             {
+                Market.AdjustTextToTheRight(34);
                 System.Console.WriteLine($"Okej, du vill köpa {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
-                System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}.");
+                Market.AdjustTextToTheRight(35);
+                System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}kr.");
 
                 int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
                 ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
 
-                double updatedAccountBalance = Character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+                double updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
                 double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
 
+                Market.AdjustTextToTheRight(36);
                 System.Console.WriteLine($"Ditt konto: {updatedAccountBalance}kr");
+                Market.AdjustTextToTheRight(37);
                 System.Console.WriteLine($"Säljarens konto: {updatedMerchantAccountBalance}kr");
 
                 Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
-                Character.PlayerInventory[chosenMetal - 1].Quantity = Character.PlayerInventory[chosenMetal - 1].Quantity + amountOfMetal;
+                Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                Market.AdjustTextToTheRight(38);
                 System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
+                Console.ReadKey();
                 break;
             }
         }

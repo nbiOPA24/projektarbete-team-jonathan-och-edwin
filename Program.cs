@@ -109,14 +109,13 @@ public class Program
         // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
+        
         //Skapa player character samt ger den en position på spelbrädet.
         Character character = new Character("Busiga investeraren", 1000);
-        int posX = 2;
-        int posY = 2;
+        int posX = 2; // här startar spelaren (bredd)
+        int posY = 2; // här startar spelaren (höjd)
 
         // Skapa marknad och metaller
-
-
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);
         Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10);
         Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10);
@@ -138,10 +137,7 @@ public class Program
 
         while (true)
         {
-
             System.Console.Clear();
-
-
 
             // Ritar ut ramen
             for (int x = 0; x < market.Width; x++)
@@ -223,6 +219,11 @@ public class Program
                     System.Console.ReadKey();
                     break;
 
+                case ConsoleKey.P:
+                    Character.DisplayAccountBalance(character);
+                    Console.ReadKey();
+                    break;
+
                 case ConsoleKey.Escape:
                     Environment.Exit(0);
                     return;
@@ -231,12 +232,12 @@ public class Program
 
             if (Math.Abs(posX - 68) < 1 && Math.Abs(posY - 3) <= 1)
             {
-                VolatileMetalMerchant.Sell();
+                VolatileMetalMerchant.Sell(character);
             }
 
             if (Math.Abs(posX - 68) < 1 && Math.Abs(posY - 15) <= 1)
             {
-                StableMetalMerchant.Sell();
+                StableMetalMerchant.Sell(character);
             }
 
             if (posX == 68 && (posY == 21 || posY == 22 || posY == 23))
