@@ -31,7 +31,7 @@ public class Character
     public static void DisplayPlayerInventory()
     {
         Console.SetCursorPosition(81,1);
-        System.Console.WriteLine("========================== Spelarens Inventarie ===========================");
+        System.Console.WriteLine("========================== Spelarens Inventory ===========================");
         Console.SetCursorPosition(81,Console.CursorTop);
         System.Console.WriteLine("|    Item Name     | Quantity |    Värde   |Totalt värde |   Volatilitet  |");
         Console.SetCursorPosition(81,Console.CursorTop);
@@ -52,7 +52,7 @@ public class Character
         while (true)
         {
             System.Console.WriteLine("Vad vill du sälja?");
-            DisplayPlayerInventory();
+            DisplayPlayerInventory();   
 
             int itemToSell = int.Parse(Console.ReadLine());
 
@@ -82,11 +82,5 @@ public class Character
             }
 
         }
-    }
-
-    
-    public void MoveCharacter()
-    {
-      
     }
 }

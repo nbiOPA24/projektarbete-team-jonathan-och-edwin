@@ -13,7 +13,7 @@ public class Merchant
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
-    
+
 
     public Merchant(string name, int xPos, int yPos, double merchantAccountBalance)
     {
@@ -34,7 +34,7 @@ public class Merchant
         {
             Market.AdjustTextToTheRight(j);
             System.Console.Write(y + ". " + "Metall: " + i.Name + ", Nuvarande värde: " + i.Value + "kr");
-  
+
             j += 3;
             y++;
         }
@@ -81,8 +81,8 @@ public class Merchant
     {
         while (true)
         {
-            
-            
+
+
             DisplayAllItems();
             Market.AdjustTextToTheRight(20);
             System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
@@ -93,12 +93,21 @@ public class Merchant
             Market.AdjustTextToTheRight(24);
             int chosenMetal = int.Parse(Console.ReadLine());
 
+
             if (chosenMetal < 1 || chosenMetal > 4)
             {
                 Market.AdjustTextToTheRight(28);
                 System.Console.WriteLine("Välj en siffra mellan 1-4.");
+                Market.AdjustTextToTheRight(29);
+                System.Console.WriteLine("Tryck på en knapp för att få välja igen.");
+                Console.ReadKey();
+                Market.AdjustTextToTheRight(28);
+                System.Console.WriteLine("                                                ");
+                Market.AdjustTextToTheRight(29);
+                System.Console.WriteLine("                                                ");
                 continue;
             }
+
 
 
 
@@ -119,8 +128,31 @@ public class Merchant
             // Kontrollerar att det finns tillräckligt många i lager...
             if (amountOfMetal > ItemsForSale[chosenMetal - 1].AmountAvailable)
             {
+                Market.AdjustTextToTheRight(33);
                 System.Console.WriteLine("Du har köpt för många...");
+                Market.AdjustTextToTheRight(34);
                 System.Console.WriteLine($"Just nu har vi bara {ItemsForSale[chosenMetal - 1].AmountAvailable} {ItemsForSale[chosenMetal - 1].Name} i lager.");
+                Market.AdjustTextToTheRight(35);
+                System.Console.WriteLine("Klicka på en tangent för att försöka igen.");
+                Console.ReadKey();
+                Market.AdjustTextToTheRight(26);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(27);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(29);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(30);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(31);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(32);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(33);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(34);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(35);
+                System.Console.WriteLine("                                                             ");
                 continue;
             }
 
@@ -128,7 +160,27 @@ public class Merchant
             else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > Character.AccountBalance)
             {
                 double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - Character.AccountBalance;
+                Market.AdjustTextToTheRight(26);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(27);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(29);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(30);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(31);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(32);
+                System.Console.WriteLine("                                                             ");
+                Market.AdjustTextToTheRight(26);
                 System.Console.WriteLine($"Du har för lite pengar. Det saknas tyvärr {missingMoney}kr för att du ska ha råd.");
+                Market.AdjustTextToTheRight(27);
+                System.Console.WriteLine("Klicka på en tangent för att försöka igen.");
+                Console.ReadKey();
+                Market.AdjustTextToTheRight(26);
+                System.Console.WriteLine("                                                                                            ");
+                Market.AdjustTextToTheRight(27);
+                System.Console.WriteLine("                                                                  ");
                 continue;
             }
 
@@ -147,6 +199,7 @@ public class Merchant
                 System.Console.WriteLine($"Säljarens konto: {updatedMerchantAccountBalance}kr");
 
                 Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
+                Character.PlayerInventory[chosenMetal - 1].Quantity = Character.PlayerInventory[chosenMetal - 1].Quantity + amountOfMetal;
                 System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
                 break;
             }

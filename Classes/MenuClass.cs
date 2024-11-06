@@ -31,12 +31,12 @@ public class MenuClass
         Console.ReadKey();
         Thread.Sleep(1200);
         Console.Clear();
-        string audioFile = @"C:\Users\jonat\AProject\MarketMaster1\MarketPirate.wav";
-        using (SoundPlayer player = new SoundPlayer(audioFile))
-        {
-            player.Load();    // Load the file
-            player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
-        }
+        // string audioFile = @"C:\Users\jonat\AProject\MarketMaster1\MarketPirate.wav";
+        // using (SoundPlayer player = new SoundPlayer(audioFile))
+        // {
+        //     player.Load();    // Load the file
+        //     player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
+        // }
         TypeWrite("Du står vid marknadens port,");
         Thread.Sleep(900);
         TypeWrite(" en tyngd av mynt klirrar i fickan.\n");

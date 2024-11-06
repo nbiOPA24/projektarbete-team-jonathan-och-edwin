@@ -18,7 +18,7 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        MenuClass.StartMenu();
+        // MenuClass.StartMenu();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
 
@@ -68,7 +68,6 @@ public class Program
                 System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
                 GameLoop();
 
-
             }
             else if (answer == "nej")
             {
@@ -98,10 +97,6 @@ public class Program
         System.Console.Clear();
         Character.DisplayPlayerInventory();
         System.Console.ReadKey();
-
-
-
-
 
     }
     //Metod för att få skrivmaskinseffekten på text. dvs en bokstav(char) i taget med 45 millisekunders mellanrum mellan varje utskrift.
@@ -146,6 +141,8 @@ public class Program
 
             System.Console.Clear();
 
+
+
             // Ritar ut ramen
             for (int x = 0; x < market.Width; x++)
             {
@@ -168,7 +165,7 @@ public class Program
             System.Console.WriteLine();
             System.Console.WriteLine();
             // ritat färdigt ramen
-
+            Market.AdjustTextToTheBottom(0);
             Market.DisplayInfo();
 
             // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
