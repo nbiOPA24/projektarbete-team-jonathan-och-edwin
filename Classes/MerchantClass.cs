@@ -66,6 +66,7 @@ public class Merchant
             Random random = new Random();
             double randomValue = RandomizePercentage(random, i.VolatilityNumLow, i.VolatilityNumHigh);
             double newPrice = randomValue * i.Value;
+            i.Value = newPrice;
             System.Console.WriteLine($"Det nya priset för {i.Name} är {newPrice}.");
         }
     }

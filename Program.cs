@@ -10,22 +10,14 @@ public class Program
     public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
     public static void Main()
     {
-
-        // Skapa karaktärer
-        Character TheWealthyBuyer = new Character("The Wealthy (but dumb) Buyer", 1500);
-        Character TheSkillfulNegotiator = new Character("The Skillful Negotiator", 700);
-        Character TheBalancedTrader = new Character("The Balanced Trader", 1000);
-
         // Introduktion
         Console.Clear();
         MenuClass.StartMenu();
+        Console.ReadKey();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
 
-
-
         Thread.Sleep(1800);
-
 
         // Kontrollerar att spelaren inte går på någon av försäljarna
         bool IsCollision(int newX, int newY)
