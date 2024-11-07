@@ -31,7 +31,7 @@ public class MenuClass
         Console.ReadKey();
         Thread.Sleep(1200);
         Console.Clear();
-        string audioFile = @"C:\Users\jonat\AProject\MarketMaster1\MarketPirate.wav";
+        string audioFile = @"C:\Users\edwin\Documents\Projects\MarketMasterConsole\projektarbete-team-jonathan-och-edwin\MarketPirate.wav";
         using (SoundPlayer player = new SoundPlayer(audioFile))
         {
             player.Load();    // Load the file

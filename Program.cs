@@ -18,7 +18,7 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        MenuClass.StartMenu();
+        // MenuClass.StartMenu();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
 
@@ -28,7 +28,7 @@ public class Program
 
 
         // Kontrollerar att spelaren inte går på någon av försäljarna
-        bool IsCollision(int newX, int newY)
+        static bool IsCollision(int newX, int newY)
         {
             if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
             {
@@ -177,22 +177,22 @@ public class Program
 
             // Trollkarlen
             Market.PlaceMerchantsBuilding(66, 1);
-            Market.PlaceMerchantsBuilding(66, 5);
+            
 
             // Gubben
             Market.PlaceMerchantsBuilding(66, 13);
-            Market.PlaceMerchantsBuilding(66, 17);
+            
 
             // Market.PlaceDecoration(11, 38);
 
 
 
             // Målar ut försäljare av volatila metaller
-            Console.SetCursorPosition(70, 3);
+            Console.SetCursorPosition(72, 5);
             System.Console.WriteLine("🧙‍♂️");
 
             // Målar ut försäljare av stabila metaller
-            Console.SetCursorPosition(70, 15);
+            Console.SetCursorPosition(72, 17);
             System.Console.WriteLine("👴");
 
             // Målar ut ett frågetecken där spelaren kan läsa om varje metall

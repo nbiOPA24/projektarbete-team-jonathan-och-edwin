@@ -1,4 +1,6 @@
 using System.Runtime.InteropServices;
+using MarketMaster1.Classes;
+using System;
 
 public class Market
 {
@@ -10,11 +12,6 @@ public class Market
     {
         Height = height;
         Width = width;
-
-    }
-
-    public void DisplayMarket()
-    {
 
     }
 
@@ -36,20 +33,37 @@ public class Market
     public static void PlaceMerchantsBuilding(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
-        for (int x = 0; x < 12; x++)
-        {
-            Console.Write("-");
-        }
+        Console.Write("  _________ ");
+        Console.SetCursorPosition(xPos, yPos + 1);
+        Console.Write(" /    /    |");
+        Console.SetCursorPosition(xPos, yPos + 2);
+        Console.Write("/____/_____|");
+        Console.SetCursorPosition(xPos, yPos + 3);
+        Console.Write("|          |");
+        Console.SetCursorPosition(xPos, yPos + 4);
+        Console.Write("           |");
+        Console.SetCursorPosition(xPos, yPos + 5);
+        Console.Write("___________|");
+
+
     }
 
     public static void PlaceDecoration(int xPos, int yPos)
     {
-        Console.SetCursorPosition(xPos, yPos);
+        
+        Random random = new Random();
+
+
+        Console.SetCursorPosition(random.Next(), yPos);
         for (int x = 0; x < 30; x++)
         {
             Console.Write("🪙");
         }
+
+
+
     }
+
 
     // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
     public static void AdjustTextToTheRight(int y)
@@ -101,6 +115,6 @@ public class Market
             y++;
         }
     }
-    
-  
+
+
 }
