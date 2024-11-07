@@ -18,7 +18,7 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        // MenuClass.StartMenu();
+        MenuClass.StartMenu();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
 
@@ -50,9 +50,9 @@ public class Program
         for (int day = 1; day <= NumberOfRounds; day++)
         {
             Console.Clear();
-
             System.Console.WriteLine($"======================= DAG {day} =======================");
             System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej. Små bokstäver.");
+
             //Ändrar om inmatningen till små bokstäver för att minska redundans.
             string answer = Console.ReadLine().ToLower();
             if (answer == "ja")
@@ -109,7 +109,7 @@ public class Program
         // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
-        
+
         //Skapa player character samt ger den en position på spelbrädet.
         Character character = new Character("Busiga investeraren", 1000);
         int posX = 2; // här startar spelaren (bredd)
@@ -162,7 +162,7 @@ public class Program
             System.Console.WriteLine();
             // ritat färdigt ramen
             Market.AdjustTextToTheBottom(0);
-            Market.DisplayInfo();
+            // Market.DisplayInfo();
 
             // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
             Console.SetCursorPosition(posX, posY);
@@ -250,16 +250,7 @@ public class Program
         }
     }
 
-    public static void TypeWrite(string text, int delay = 45)
-    {
-        foreach (char c in text)
-        {
-            Console.Write(c);
-            Thread.Sleep(delay);
-        }
-    }
-
-
+   
 }
 
 

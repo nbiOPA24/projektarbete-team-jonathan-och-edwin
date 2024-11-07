@@ -62,53 +62,53 @@ public class Market
         Console.SetCursorPosition(x, 27);
     }
 
-    public static void DisplayInfo()
-    {
-        AdjustTextToTheBottom(0);
-        System.Console.WriteLine("Spelets regler:");
-        System.Console.WriteLine();
-        DisplayRules();
+    // public static void DisplayInfo()
+    // {
+    //     AdjustTextToTheBottom(0);
+    //     System.Console.WriteLine("Spelets regler:");
+    //     System.Console.WriteLine();
+    //     DisplayRules();
 
 
 
-    }
+    // }
 
-    public static void DisplayRules()
-    {
-        List<string> ruleList = new List<string>();
+    // public static void DisplayRules()
+    // {
+    //     List<string> ruleList = new List<string>();
 
-        string text1 = "  Spelet pågår i 10 rundor...";
-        string text2 = "* Mellan varje runda kommer priset för varje metall slumpas...";
-        string text3 = "* Vissa metaller svänger mer än andra i pris.";
-        string text4 = "* För att läsa mer om volatiliteten, gå till ❓";
-        string text5 = "* Du kan alltid öppna din ryggsäck, genom att trycka på siffran i på tangentbordet";
-        string text6 = "* För att gå till nästa runda kan du alltid gå till sängen.";
-        string text7 = "  Då sover marknaden och nästa runda startar efter en kort stund...";
-        ruleList.Add(text1);
-        ruleList.Add(text2);
-        ruleList.Add(text3);
-        ruleList.Add(text4);
-        ruleList.Add(text5);
-        ruleList.Add(text6);
-        ruleList.Add(text7);
+    //     string text1 = "  Spelet pågår i 10 rundor...";
+    //     string text2 = "* Mellan varje runda kommer priset för varje metall slumpas...";
+    //     string text3 = "* Vissa metaller svänger mer än andra i pris.";
+    //     string text4 = "* För att läsa mer om volatiliteten, gå till ❓";
+    //     string text5 = "* Du kan alltid öppna din ryggsäck, genom att trycka på siffran i på tangentbordet";
+    //     string text6 = "* För att gå till nästa runda kan du alltid gå till sängen.";
+    //     string text7 = "  Då sover marknaden och nästa runda startar efter en kort stund...";
+    //     ruleList.Add(text1);
+    //     ruleList.Add(text2);
+    //     ruleList.Add(text3);
+    //     ruleList.Add(text4);
+    //     ruleList.Add(text5);
+    //     ruleList.Add(text6);
+    //     ruleList.Add(text7);
 
-        int y = 1;
+    //     int y = 1;
 
-        foreach (var r in ruleList)
-        {
+    //     foreach (var r in ruleList)
+    //     {
 
-            System.Console.WriteLine(r);
-            y++;
-        }
+    //         System.Console.WriteLine(r);
+    //         y++;
+    //     }
 
-        Console.SetCursorPosition(0, 45);
-        System.Console.WriteLine("KOMMANDON");
-        Console.SetCursorPosition(0, 46);
-        System.Console.WriteLine("i = öppna inventory");
-        Console.SetCursorPosition(0, 47);
-        System.Console.WriteLine("p = se din kontobalans");
+    //     Console.SetCursorPosition(0, 45);
+    //     System.Console.WriteLine("KOMMANDON");
+    //     Console.SetCursorPosition(0, 46);
+    //     System.Console.WriteLine("i = öppna inventory");
+    //     Console.SetCursorPosition(0, 47);
+    //     System.Console.WriteLine("p = se din kontobalans");
 
-    }
+    // }
 
     
     
