@@ -30,31 +30,44 @@ public class Market
         return numberOfRounds;
     }
 
-    public static void PlaceMerchantsBuilding(int xPos, int yPos)
+    public static void PlaceMerchantsBuildings(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
         Console.Write("  _________ ");
         Console.SetCursorPosition(xPos, yPos + 1);
-        Console.Write(" /    /    |");
+        Console.Write(" /    /    \\");
         Console.SetCursorPosition(xPos, yPos + 2);
-        Console.Write("/____/_____|");
+        Console.Write("/____/______\\");
         Console.SetCursorPosition(xPos, yPos + 3);
-        Console.Write("|          |");
-        Console.SetCursorPosition(xPos, yPos + 4);
-        Console.Write("           |");
-        Console.SetCursorPosition(xPos, yPos + 5);
-        Console.Write("___________|");
+        Console.Write("|            ║");
 
+        Console.SetCursorPosition(xPos, yPos + 5);
+        Console.Write("_____________║");
+
+
+    }
+
+    public static void PlaceCharacterHome(int xPos, int yPos)
+    {
+        Console.SetCursorPosition(xPos, yPos);
+        Console.Write("║ _________ ");
+        Console.SetCursorPosition(xPos, yPos + 1);
+        Console.Write("║/    /    \\");
+        Console.SetCursorPosition(xPos, yPos + 2);
+        Console.Write("║____/______\\");
+        Console.SetCursorPosition(xPos, yPos + 3);
+        Console.Write("║           |");
+        Console.SetCursorPosition(xPos, yPos + 4);
+        Console.SetCursorPosition(xPos, yPos + 5);
+        Console.Write("║____________");
 
     }
 
     public static void PlaceDecoration(int xPos, int yPos)
     {
-        
-        Random random = new Random();
+        Console.SetCursorPosition(xPos, yPos);
 
-
-        Console.SetCursorPosition(random.Next(), yPos);
+        Console.SetCursorPosition(xPos, yPos);
         for (int x = 0; x < 30; x++)
         {
             Console.Write("🪙");
@@ -114,6 +127,16 @@ public class Market
             System.Console.WriteLine(r);
             y++;
         }
+    }
+
+    public static bool IsCollision(int newX, int newY)
+    {
+        if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
+        {
+            return true;
+        }
+
+        return false;
     }
 
 

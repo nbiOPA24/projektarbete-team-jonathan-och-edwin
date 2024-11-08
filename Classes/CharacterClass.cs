@@ -55,6 +55,7 @@ public class Character
             DisplayPlayerInventory();
 
             int itemToSell = int.Parse(Console.ReadLine());
+            
 
             System.Console.WriteLine($"Okej, du vill sälja {PlayerInventory[itemToSell - 1].Name}.");
             System.Console.WriteLine($"Hur många {PlayerInventory[itemToSell - 1].Name} vill du sälja?");
