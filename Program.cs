@@ -7,13 +7,14 @@ using MarketMaster1.Classes;
 
 public class Program
 {
-    public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
+    
     public static void Main()
     {
 
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
+        Console.Clear();
         NewDayLoop();
 
         Thread.Sleep(1800);
@@ -29,6 +30,7 @@ public class Program
         int NumberOfRounds = 10;
         for (int day = 1; day <= NumberOfRounds; day++)
         {
+            
             Console.Clear();
             System.Console.WriteLine($"======================= DAG {day} =======================");
             System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej. Små bokstäver.");
@@ -46,6 +48,8 @@ public class Program
                 };
 
                 System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
+                System.Console.WriteLine("Tryck [ENTER] för att äntra marknaden...");
+                Console.ReadKey();
                 GameLoop();
 
             }
@@ -79,21 +83,21 @@ public class Program
         System.Console.ReadKey();
 
     }
-    //Metod för att få skrivmaskinseffekten på text. dvs en bokstav(char) i taget med 45 millisekunders mellanrum mellan varje utskrift.
+    
 
     public static void GameLoop()
     {
         // skapar en instans av Market som heter market
         Market market = new Market(25, 80);
 
-        // Skapa handlare
-        Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10, 10, 10000);
-        Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 20, 20, 10000);
-
         //Skapa player character samt ger den en position på spelbrädet.
         Character character = new Character("Busiga investeraren", 1000);
         int posX = 2; // här startar spelaren (bredd)
         int posY = 2; // här startar spelaren (höjd)
+
+         // Skapa handlare
+        Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
+        Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 10000);
 
         // Skapa marknad och metaller
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);
@@ -105,6 +109,16 @@ public class Program
         Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, "-30% - +30%", 10);
         Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, "-15% - +15%", 10);
 
+        StableMetalMerchant.UpdatePrice(Gold);
+        StableMetalMerchant.UpdatePrice(Silver);
+        StableMetalMerchant.UpdatePrice(Platinum);
+        StableMetalMerchant.UpdatePrice(Palladium);
+
+        VolatileMetalMerchant.UpdatePrice(Bronze);  
+        VolatileMetalMerchant.UpdatePrice(Copper);
+        VolatileMetalMerchant.UpdatePrice(Indium);
+        VolatileMetalMerchant.UpdatePrice(Tin);
+
         // Lägg till metaller till handlare
         StableMetalMerchant.ItemsForSale.Add(Gold);
         StableMetalMerchant.ItemsForSale.Add(Silver);
@@ -114,6 +128,15 @@ public class Program
         StableMetalMerchant.ItemsForSale.Add(Palladium);
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
+
+        Merchant.DisplayDetailedProductInfo(Gold);
+        Merchant.DisplayDetailedProductInfo(Silver);
+        Merchant.DisplayDetailedProductInfo(Bronze);
+        Merchant.DisplayDetailedProductInfo(Copper);
+        Merchant.DisplayDetailedProductInfo(Platinum);
+        Merchant.DisplayDetailedProductInfo(Palladium);
+        Merchant.DisplayDetailedProductInfo(Indium);
+        Merchant.DisplayDetailedProductInfo(Tin);
 
         while (true)
         {
@@ -200,6 +223,10 @@ public class Program
                     Console.ReadKey();
                     break;
 
+                case ConsoleKey.Z:
+                    Merchant.DisplayDetailedProductInfo(Gold);
+                    break;
+
                 case ConsoleKey.Escape:
                     Environment.Exit(0);
                     return;
@@ -237,21 +264,19 @@ public class Program
 
     public static void MakeTheMarketSleep()
     {
-            Market.AdjustTextToTheRight(0);
-            System.Console.WriteLine("Vill du starta nästa dag?");
-            string answer = Console.ReadLine();
+        Market.AdjustTextToTheRight(0);
+        System.Console.WriteLine("Vill du starta nästa dag?");
+        string answer = Console.ReadLine();
 
-            if (answer.ToLower() == "JA" || answer.ToLower() == "YES")
-            {
-                Console.Clear();
-            }
-            else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
-            {
-                GameLoop();
-            }
+        if (answer.ToLower() == "JA" || answer.ToLower() == "YES")
+        {
+            Console.Clear();
+        }
+        else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
+        {
+            GameLoop();
+        }
     }
-
-
 }
 
 

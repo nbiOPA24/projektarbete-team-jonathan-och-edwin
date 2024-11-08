@@ -6,22 +6,19 @@ public class Merchant
 {
 
     public string Name { get; set; }
-    public int XPos { get; set; } // försäljarens placering på spelplanens x-axel
-    public int YPos { get; set; } // försäljarens placering på spelplanens y-axel
-
     public double MerchantAccountBalance { get; set; }
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
+    public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
 
 
-    public Merchant(string name, int xPos, int yPos, double merchantAccountBalance)
+    public Merchant(string name, double merchantAccountBalance)
     {
         Name = name;
-        XPos = xPos;
-        YPos = yPos;
-        ItemsForSale = new List<Merchandise>();
         MerchantAccountBalance = merchantAccountBalance;
+        ItemsForSale = new List<Merchandise>();
+
     }
 
 
@@ -59,7 +56,7 @@ public class Merchant
 
 
     // denna metod använder "RandomizePercentage" ovan för att räkna ut ett nytt pris för varje ädelmetall i listan "ItemsForSale" i Market-klassen.
-    public void UpdatePrice()
+    public void UpdatePrice(Merchandise merchandise)
     {
         foreach (var i in ItemsForSale)
         {
@@ -67,7 +64,6 @@ public class Merchant
             double randomValue = RandomizePercentage(random, i.VolatilityNumLow, i.VolatilityNumHigh);
             double newPrice = randomValue * i.Value;
             i.Value = newPrice;
-            System.Console.WriteLine($"Det nya priset för {i.Name} är {newPrice}.");
         }
     }
 
@@ -207,25 +203,38 @@ public class Merchant
                 Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
                 Market.AdjustTextToTheRight(38);
                 System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
+                character.AccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
                 Console.ReadKey();
                 break;
             }
         }
     }
 
-    public static void DisplayDetailedProductInfo()
+    public static void DisplayDetailedProductInfo(Merchandise merchandise)
     {
-        int x = 0; // används för att kolla varje index i itemsfordisplay-listan
-
-        foreach (var i in Program.ItemsForDisplay)
+        for (int j = 0; j < ItemsForDisplay.Count; j++)
         {
-            Market.AdjustTextToTheRight(0);
-            System.Console.WriteLine($"Metall: {Program.ItemsForDisplay[x].Name}");
-            Market.AdjustTextToTheRight(2);
-            System.Console.WriteLine($"Värde denna runda: {Program.ItemsForDisplay[x].Value}kr");
-            Market.AdjustTextToTheRight(4);
-            System.Console.WriteLine($"Prisförändring varje runda: {Program.ItemsForDisplay[x].VolatilityInAString}");
-            x++;
+            ConsoleKeyInfo keyInfo;
+            keyInfo = Console.ReadKey(true);
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.Spacebar:
+                    int x = 0; // används för att kolla varje index i itemsfordisplay-listan
+
+                    foreach (var i in ItemsForDisplay)
+                    {
+                        Market.AdjustTextToTheRight(0);
+                        System.Console.WriteLine($"Metall: {ItemsForDisplay[x].Name}");
+                        Market.AdjustTextToTheRight(2);
+                        System.Console.WriteLine($"Värde denna runda: {ItemsForDisplay[x].Value}kr");
+                        Market.AdjustTextToTheRight(4);
+                        System.Console.WriteLine($"Prisförändring varje runda: {ItemsForDisplay[x].VolatilityInAString}");
+
+                    }
+                x++;
+                break;
+            }
         }
+
     }
 }

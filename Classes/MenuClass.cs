@@ -46,6 +46,8 @@ public class MenuClass
 
     // }
 
+
+    //Metod för att få skrivmaskinseffekten på text. dvs en bokstav(char) i taget med 45 millisekunders mellanrum mellan varje utskrift.
     public static void TypeWrite(string text, int delay = 45)
     {
         foreach (char c in text)

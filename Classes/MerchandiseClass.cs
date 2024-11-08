@@ -25,5 +25,4 @@ public class Merchandise
     {
         return $"Metall: {Name}\nVärde: {Value}\nMängd hos handlare: {AmountAvailable}\nMängd i spelarens inventory: {Quantity} st.";
     }
-
 }

@@ -72,14 +72,12 @@ public class Market
         string text2 = "* Mellan varje runda kommer priset för varje metall slumpas...";
         string text3 = "* Vissa metaller svänger mer än andra i pris.";
         string text4 = "* För att läsa mer om volatiliteten, gå till ❓";
-        string text5 = "* Du kan alltid öppna din ryggsäck, genom att trycka på siffran i på tangentbordet";
         string text6 = "* För att gå till nästa runda kan du alltid gå till sängen.";
         string text7 = "  Då sover marknaden och nästa runda startar efter en kort stund...";
         ruleList.Add(text1);
         ruleList.Add(text2);
         ruleList.Add(text3);
         ruleList.Add(text4);
-        ruleList.Add(text5);
         ruleList.Add(text6);
         ruleList.Add(text7);
 
