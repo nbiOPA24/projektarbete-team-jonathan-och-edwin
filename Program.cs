@@ -12,7 +12,7 @@ public class Program
     {
         // Introduktion
         Console.Clear();
-        MenuClass.StartMenu();
+        // MenuClass.StartMenu();
         Console.ReadKey();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
@@ -154,7 +154,7 @@ public class Program
             System.Console.WriteLine();
             // ritat färdigt ramen
             Market.AdjustTextToTheBottom(0);
-            // Market.DisplayInfo();
+            Market.DisplayInfo();
 
             // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
             Console.SetCursorPosition(posX, posY);

@@ -17,8 +17,7 @@ public class Merchandise
         VolatilityNumHigh = volatilityNumHigh;
         VolatilityInAString = volatilityInAString;
         AmountAvailable = amountAvailable;
-        Quantity = 0;
-        
+        Quantity = 0;   
     }
 
     // Såhär representeras en ädelmetall när vi "skriver ut" klassen
