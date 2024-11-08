@@ -156,10 +156,6 @@ public class Program
             Market.PlaceMerchantsBuilding(66, 13);
             Market.PlaceMerchantsBuilding(66, 17);
 
-            // Market.PlaceDecoration(11, 38);
-
-
-
             // Målar ut försäljare av volatila metaller
             Console.SetCursorPosition(70, 3);
             System.Console.WriteLine("🧙‍♂️");
@@ -220,11 +216,10 @@ public class Program
                 StableMetalMerchant.Sell(character);
             }
 
-            if (posX == 68 && (posY == 21 || posY == 22 || posY == 23))
-            {
-                Merchant.DisplayDetailedProductInfo();
-                Merchant.DisplayDetailedProductInfo();
-            }
+            // if (posX == 68 && (posY == 21 || posY == 22 || posY == 23))
+            // {
+            //     MakeTheMarketSleep();   
+            // }
 
 
         }
@@ -238,6 +233,22 @@ public class Program
         }
 
         return false;
+    }
+
+    public static void MakeTheMarketSleep()
+    {
+            Market.AdjustTextToTheRight(0);
+            System.Console.WriteLine("Vill du starta nästa dag?");
+            string answer = Console.ReadLine();
+
+            if (answer.ToLower() == "JA" || answer.ToLower() == "YES")
+            {
+                Console.Clear();
+            }
+            else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
+            {
+                GameLoop();
+            }
     }
 
 
