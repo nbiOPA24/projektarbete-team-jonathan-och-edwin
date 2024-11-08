@@ -110,9 +110,5 @@ public class Market
         Console.SetCursorPosition(0, 48);
         System.Console.WriteLine("esc = avsluta spelet");
 
-    }
-
-    
-    
-  
+    }   
 }

@@ -10,25 +10,13 @@ public class Program
     public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
     public static void Main()
     {
-        // Introduktion
+
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
         NewDayLoop();
-        //Skapar två olika handlare som säljer olika metaller
 
         Thread.Sleep(1800);
-
-        // Kontrollerar att spelaren inte går på någon av försäljarna
-        bool IsCollision(int newX, int newY)
-        {
-            if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
-            {
-                return true;
-            }
-
-            return false;
-        }
 
     }
 
@@ -242,7 +230,17 @@ public class Program
         }
     }
 
-   
+    public bool IsCollision(int newX, int newY)
+    {
+        if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }
 
 
