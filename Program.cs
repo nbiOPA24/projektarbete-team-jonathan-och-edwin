@@ -239,6 +239,11 @@ public class Program
                 StableMetalMerchant.Sell(character);
             }
 
+            if (Math.Abs(posX - 35) < 1 && Math.Abs(posY - 15) <= 1)
+            {
+                MakeTheMarketSleep();
+            }
+
             // if (posX == 68 && (posY == 21 || posY == 22 || posY == 23))
             // {
             //     MakeTheMarketSleep();   
@@ -264,9 +269,13 @@ public class Program
         System.Console.WriteLine("Vill du starta nästa dag?");
         string answer = Console.ReadLine();
 
-        if (answer.ToLower() == "JA" || answer.ToLower() == "YES")
+        if (answer.ToLower() == "ja" || answer.ToLower() == "yes")
         {
             Console.Clear();
+            MenuClass.TypeWrite("Marknaden sover nu...");
+            System.Console.WriteLine();
+            MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
+            Console.ReadKey();
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
         {
