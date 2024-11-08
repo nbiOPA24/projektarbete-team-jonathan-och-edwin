@@ -71,13 +71,11 @@ public class Market
         string text1 = "  Spelet pågår i 10 rundor...";
         string text2 = "* Mellan varje runda kommer priset för varje metall slumpas...";
         string text3 = "* Vissa metaller svänger mer än andra i pris.";
-        string text4 = "* För att läsa mer om volatiliteten, gå till ❓";
         string text6 = "* För att gå till nästa runda kan du alltid gå till sängen.";
         string text7 = "  Då sover marknaden och nästa runda startar efter en kort stund...";
         ruleList.Add(text1);
         ruleList.Add(text2);
         ruleList.Add(text3);
-        ruleList.Add(text4);
         ruleList.Add(text6);
         ruleList.Add(text7);
 
@@ -90,13 +88,13 @@ public class Market
             y++;
         }
 
-        Console.SetCursorPosition(0, 45);
+        Console.SetCursorPosition(0, 39);
         System.Console.WriteLine("KOMMANDON");
-        Console.SetCursorPosition(0, 46);
+        Console.SetCursorPosition(0, 40);
         System.Console.WriteLine("i = öppna inventory");
-        Console.SetCursorPosition(0, 47);
+        Console.SetCursorPosition(0, 41);
         System.Console.WriteLine("p = se din kontobalans");
-        Console.SetCursorPosition(0, 48);
+        Console.SetCursorPosition(0, 42);
         System.Console.WriteLine("esc = avsluta spelet");
 
     }   

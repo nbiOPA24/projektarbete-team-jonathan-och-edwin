@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using MarketMaster1.Classes;
 public class Merchant
 {
 
@@ -184,9 +185,9 @@ public class Merchant
             else
             {
                 Market.AdjustTextToTheRight(34);
-                System.Console.WriteLine($"Okej, du vill köpa {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
+                MenuClass.TypeWrite($"Okej, du köpte {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
                 Market.AdjustTextToTheRight(35);
-                System.Console.WriteLine($"Den kostar just nu {ItemsForSale[chosenMetal - 1].Value}kr.");
+                MenuClass.TypeWrite($"Den kostade {ItemsForSale[chosenMetal - 1].Value}kr.");
 
                 int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
                 ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
@@ -194,16 +195,23 @@ public class Merchant
                 double updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
                 double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
 
-                Market.AdjustTextToTheRight(36);
-                System.Console.WriteLine($"Ditt konto: {updatedAccountBalance}kr");
+                Thread.Sleep(1500);
                 Market.AdjustTextToTheRight(37);
-                System.Console.WriteLine($"Säljarens konto: {updatedMerchantAccountBalance}kr");
+                MenuClass.TypeWrite($"Ditt konto: {updatedAccountBalance}kr.");
+                Market.AdjustTextToTheRight(38);
+                MenuClass.TypeWrite($"Säljarens konto: {updatedMerchantAccountBalance}kr.");
 
                 Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
                 Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
-                Market.AdjustTextToTheRight(38);
-                System.Console.WriteLine($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
+                
+                Thread.Sleep(1500);
+                Market.AdjustTextToTheRight(40);
+                MenuClass.TypeWrite($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
                 character.AccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+
+                Market.AdjustTextToTheRight(42);
+                Thread.Sleep(1000);
+                System.Console.WriteLine("Klicka [ENTER] för att fortsätta spela.");
                 Console.ReadKey();
                 break;
             }

@@ -187,10 +187,6 @@ public class Program
             Console.SetCursorPosition(70, 15);
             System.Console.WriteLine("👴");
 
-            // Målar ut ett frågetecken där spelaren kan läsa om varje metall
-            Console.SetCursorPosition(70, 22);
-            System.Console.WriteLine("❓");
-
             ConsoleKeyInfo keyInfo;
             keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
 
