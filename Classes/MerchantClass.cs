@@ -123,9 +123,9 @@ public class Merchant
             // Kontrollerar att det finns tillräckligt många i lager...
             if (amountOfMetal > ItemsForSale[chosenMetal - 1].AmountAvailable)
             {
-                Market.AdjustTextToTheRight(33);
-                System.Console.WriteLine("Du har köpt för många...");
                 Market.AdjustTextToTheRight(34);
+                System.Console.WriteLine("Du har köpt för många...");
+                Market.AdjustTextToTheRight(35);
                 System.Console.WriteLine($"Just nu har vi bara {ItemsForSale[chosenMetal - 1].AmountAvailable} {ItemsForSale[chosenMetal - 1].Name} i lager.");
                 Market.AdjustTextToTheRight(35);
                 System.Console.WriteLine("Klicka på en tangent för att försöka igen.");
@@ -230,7 +230,18 @@ public class Merchant
                 System.Console.WriteLine("Klicka [ENTER] för att fortsätta spela.");
                 Console.ReadKey();
                 break;
+
+
             }
+        }
+    }
+    // Metod för att rensa köpinformationen specifikt utan att röra spelplanen
+    public static void CleanTextToTheRight()
+    {
+        for (int i = 0; i <= 39; i++) // Radintervallet för köpinformation
+        {
+            Market.AdjustTextToTheRight(i); // Justerar för att rensa texten till höger
+            Console.Write(new string(' ', Console.WindowWidth - 81)); // Rensar varje rad under handlarens text
         }
     }
 

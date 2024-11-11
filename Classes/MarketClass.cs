@@ -1,4 +1,7 @@
 using System.Runtime.InteropServices;
+using MarketMaster1.Classes;
+using System;
+using System.Security.Cryptography.X509Certificates;
 
 public class Market
 {
@@ -10,11 +13,6 @@ public class Market
     {
         Height = height;
         Width = width;
-
-    }
-
-    public void DisplayMarket()
-    {
 
     }
 
@@ -33,14 +31,51 @@ public class Market
         return numberOfRounds;
     }
 
-    public static void PlaceMerchantsBuilding(int xPos, int yPos)
+    public static void PlaceMerchantsBuildings(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
-        for (int x = 0; x < 12; x++)
-        {
-            Console.Write("-");
-        }
+        Console.Write("  _________ ");
+        Console.SetCursorPosition(xPos, yPos + 1);
+        Console.Write(" /    /    \\");
+        Console.SetCursorPosition(xPos, yPos + 2);
+        Console.Write("/____/______\\");
+        Console.SetCursorPosition(xPos, yPos + 3);
+        Console.Write("|            ║");
+
+        Console.SetCursorPosition(xPos, yPos + 5);
+        Console.Write("_____________║");
+
+
     }
+
+    public static void PlaceCharacterHome(int xPos, int yPos)
+    {
+        Console.SetCursorPosition(xPos, yPos);
+        Console.Write("║ _________ ");
+        Console.SetCursorPosition(xPos, yPos + 1);
+        Console.Write("║/    /    \\");
+        Console.SetCursorPosition(xPos, yPos + 2);
+        Console.Write("║____/______\\");
+        Console.SetCursorPosition(xPos, yPos + 3);
+        Console.Write("║           |");
+        Console.SetCursorPosition(xPos, yPos + 4);
+        Console.SetCursorPosition(xPos, yPos + 5);
+        Console.Write("║____________");
+
+    }
+
+    public static void PlaceDecoration(int xPos, int yPos)
+    {
+        Console.SetCursorPosition(xPos, yPos);
+        for (int x = 0; x < 30; x++)
+        {
+            Console.Write("🪙");
+        }
+
+
+
+    }
+
 
     // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
     public static void AdjustTextToTheRight(int y)
@@ -98,4 +133,17 @@ public class Market
         System.Console.WriteLine("esc = avsluta spelet");
 
     }   
+    
+
+    public static bool IsCollision(int newX, int newY)
+    {
+        if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+
 }

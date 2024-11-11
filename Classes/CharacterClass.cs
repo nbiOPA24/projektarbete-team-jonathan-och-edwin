@@ -44,6 +44,10 @@ public class Character
         }
         Console.SetCursorPosition(81, Console.CursorTop);
         System.Console.WriteLine("===========================================================================");
+        Console.SetCursorPosition(81, Console.CursorTop);
+        Console.WriteLine("Klicka på valfri knapp för att få bort inventoryt.");
+        Console.ReadKey();
+        Merchant.CleanTextToTheRight();
     }
 
     public static void DisplayAccountBalance(Character character)
@@ -74,6 +78,7 @@ public class Character
             DisplayPlayerInventory();   
 
             int itemToSell = int.Parse(Console.ReadLine());
+            
 
             System.Console.WriteLine($"Okej, du vill sälja {PlayerInventory[itemToSell - 1].Name}.");
             System.Console.WriteLine($"Hur många {PlayerInventory[itemToSell - 1].Name} vill du sälja?");

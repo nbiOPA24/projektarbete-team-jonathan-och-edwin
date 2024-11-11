@@ -2,6 +2,7 @@
 
 using System.Media;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using MarketMaster1.Classes;
 
 
@@ -17,6 +18,7 @@ public class Program
         NewDayLoop();
 
         Thread.Sleep(1800);
+
 
     }
 
@@ -89,18 +91,20 @@ public class Program
     public static void GameLoop()
     {
         // skapar en instans av Market som heter market
-        Market market = new Market(25, 80);
+        Market market = new Market(27, 80);
 
         //Skapa player character samt ger den en position på spelbrädet.
         Character character = new Character("Busiga investeraren", 1000);
-        int posX = 2; // här startar spelaren (bredd)
-        int posY = 2; // här startar spelaren (höjd)
 
-         // Skapa handlare
+        // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 10000);
 
         // Skapa marknad och metaller
+        int posX = 2, posY = 2;
+        int previousPosX = posX, previousPosY = posY;
+
+        // Skapa metaller
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);
         Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10);
         Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10);
@@ -130,89 +134,70 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
-        Merchant.DisplayDetailedProductInfo(Gold);
-        Merchant.DisplayDetailedProductInfo(Silver);
-        Merchant.DisplayDetailedProductInfo(Bronze);
-        Merchant.DisplayDetailedProductInfo(Copper);
-        Merchant.DisplayDetailedProductInfo(Platinum);
-        Merchant.DisplayDetailedProductInfo(Palladium);
-        Merchant.DisplayDetailedProductInfo(Indium);
-        Merchant.DisplayDetailedProductInfo(Tin);
+        //Skriv ut spelplanen:
+        DrawGameBoard(market);
 
+        Market.DisplayInfo();
+
+        // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
+        Console.SetCursorPosition(posX, posY);
+        System.Console.WriteLine("🧑");
+
+        //SpelKaraktärens Hus
+        Market.PlaceCharacterHome(0, 13);
+
+        // Trollkarlen
+        Market.PlaceMerchantsBuildings(66, 1);
+
+
+        // Gubben
+        Market.PlaceMerchantsBuildings(66, 13);
+
+
+        // Market.PlaceDecoration(11, 38);
+
+
+
+        // Målar ut försäljare av volatila metaller
+        Console.SetCursorPosition(72, 5);
+        System.Console.WriteLine("🧙‍♂️");
+
+        // Målar ut försäljare av stabila metaller
+        Console.SetCursorPosition(72, 17);
+        System.Console.WriteLine("👴");
+
+        Console.SetCursorPosition(2, 17);
+        System.Console.WriteLine("🛏️");
+
+        // Målar ut ett frågetecken där spelaren kan läsa om varje metall
+        Console.SetCursorPosition(70, 22);
+        System.Console.WriteLine("❓");
+
+        // Spelloopen
         while (true)
         {
-            System.Console.Clear();
+            // Läs tangenttryckning
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-            // Ritar ut ramen
-            for (int x = 0; x < market.Width; x++)
-            {
-                Console.Write("-");
-            }
-            Console.WriteLine();
-
-            for (int z = 0; z < market.Height; z++)
-            {
-                Console.Write("|");
-                System.Console.WriteLine("                                                                              |");
-            }
-
-            for (int x = 0; x < market.Width; x++)
-            {
-                Console.Write("-");
-            }
-
-            System.Console.WriteLine();
-            System.Console.WriteLine();
-            System.Console.WriteLine();
-            // ritat färdigt ramen
-            Market.AdjustTextToTheBottom(0);
-            Market.DisplayInfo();
-
-            // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
-            Console.SetCursorPosition(posX, posY);
-            System.Console.WriteLine("🧑");
-
-            // Trollkarlen
-            Market.PlaceMerchantsBuilding(66, 1);
-            Market.PlaceMerchantsBuilding(66, 5);
-
-            // Gubben
-            Market.PlaceMerchantsBuilding(66, 13);
-            Market.PlaceMerchantsBuilding(66, 17);
-
-            // Målar ut försäljare av volatila metaller
-            Console.SetCursorPosition(70, 3);
-            System.Console.WriteLine("🧙‍♂️");
-
-            // Målar ut försäljare av stabila metaller
-            Console.SetCursorPosition(70, 15);
-            System.Console.WriteLine("👴");
-
-            ConsoleKeyInfo keyInfo;
-            keyInfo = Console.ReadKey(true); // Console.ReadKey(true) gör här att vi läser in ett ENSKILT tangenttryck från användaren. "true" gör att tangenten som trycks in skrivs ut på skärmen
-
+            // Hantera rörelser
             switch (keyInfo.Key)
             {
-                case ConsoleKey.UpArrow: // Så länge muspekarens Y-värde (lodrätt) är större än 1 får spelaren gå uppåt. Detta kontrollerar att användaren inte går utanför banan uppåt
-                    if (posY > 1) posY--;
+                case ConsoleKey.UpArrow:
+                    if (posY > 1 && !Market.IsCollision(posX, posY - 1)) posY--;
                     break;
-
-                case ConsoleKey.DownArrow: // Så länge muspekarens Y-värde (lodrätt) är större eller lika med 0 får spelaren gå nedåt. Detta kontrollerar att användaren inte går utanför banan nedåt
-                    if (posY >= 0 && posY <= 24) posY++;
+                case ConsoleKey.DownArrow:
+                    if (posY < market.Height - 2 && !Market.IsCollision(posX, posY + 1)) posY++;
                     break;
-
-                case ConsoleKey.RightArrow: // Samma som "DownArrow" fast vågrätt
-                    if (posX >= 0 && posX <= 76) posX++;
+                case ConsoleKey.LeftArrow:
+                    if (posX > 1 && !Market.IsCollision(posX - 1, posY)) posX--;
                     break;
-
-                case ConsoleKey.LeftArrow: // Samma som "UpArrow" fast vågrätt
-                    if (posX > 1) posX--;
+                case ConsoleKey.RightArrow:
+                    if (posX < market.Width - 2 && !Market.IsCollision(posX + 1, posY)) posX++;
                     break;
-
                 case ConsoleKey.I:
                     Character.DisplayPlayerInventory();
                     System.Console.WriteLine();
-                    System.Console.ReadKey();
+                    System.Console.ReadKey(true);
                     break;
 
                 case ConsoleKey.P:
@@ -229,13 +214,29 @@ public class Program
                     return;
             }
 
+            // Endast uppdatera om spelaren flyttat sig
+            if (posX != previousPosX || posY != previousPosY)
+            {
+                // Rensa den tidigare positionen
+                Console.SetCursorPosition(previousPosX, previousPosY);
+                Console.Write(" ");
 
-            if (Math.Abs(posX - 68) < 1 && Math.Abs(posY - 3) <= 1)
+                // Rita ut spelaren på den nya positionen
+                Console.SetCursorPosition(posX, posY);
+                Console.Write("🧑");
+
+                // Uppdatera tidigare position
+                previousPosX = posX;
+                previousPosY = posY;
+            }
+
+            // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
+            if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
                 VolatileMetalMerchant.Sell(character);
             }
 
-            if (Math.Abs(posX - 68) < 1 && Math.Abs(posY - 15) <= 1)
+            if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
                 StableMetalMerchant.Sell(character);
             }
@@ -278,6 +279,33 @@ public class Program
         {
             GameLoop();
         }
+    }
+    
+    private static void DrawGameBoard(Market market)
+    {
+        Console.Clear();
+        // Övre kant
+        Console.Write("╔");
+        for (int x = 0; x < market.Width - 2; x++) Console.Write("═");
+        Console.WriteLine("╗");
+
+        // Sidor
+        for (int z = 0; z < market.Height - 2; z++)
+        {
+            Console.Write("║");
+            for (int x = 0; x < market.Width - 2; x++) Console.Write(" ");
+            Console.WriteLine("║");
+        }
+
+        // Nedre kant
+        Console.Write("╚");
+        for (int x = 0; x < market.Width - 2; x++) Console.Write("═");
+        Console.WriteLine("╝");
+    }
+
+    public void CheckFault()
+    {
+
     }
 }
 
