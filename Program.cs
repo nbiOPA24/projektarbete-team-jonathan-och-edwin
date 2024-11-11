@@ -7,7 +7,6 @@ using MarketMaster1.Classes;
 
 public class Program
 {
-    
     public static void Main()
     {
 
@@ -49,8 +48,10 @@ public class Program
 
                 System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
                 System.Console.WriteLine("Tryck [ENTER] för att äntra marknaden...");
+                
                 Console.ReadKey();
                 GameLoop();
+                continue;
 
             }
             else if (answer == "nej")
@@ -242,14 +243,8 @@ public class Program
             if (Math.Abs(posX - 35) < 1 && Math.Abs(posY - 15) <= 1)
             {
                 MakeTheMarketSleep();
+                return;
             }
-
-            // if (posX == 68 && (posY == 21 || posY == 22 || posY == 23))
-            // {
-            //     MakeTheMarketSleep();   
-            // }
-
-
         }
     }
 
@@ -265,8 +260,10 @@ public class Program
 
     public static void MakeTheMarketSleep()
     {
+        
         Market.AdjustTextToTheRight(0);
         System.Console.WriteLine("Vill du starta nästa dag?");
+        Market.AdjustTextToTheRight(1);
         string answer = Console.ReadLine();
 
         if (answer.ToLower() == "ja" || answer.ToLower() == "yes")

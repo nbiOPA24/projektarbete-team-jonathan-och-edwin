@@ -22,7 +22,6 @@ public class Merchant
 
     }
 
-
     public void DisplayAllItems()
     {
         int y = 1;
@@ -59,13 +58,11 @@ public class Merchant
     // denna metod använder "RandomizePercentage" ovan för att räkna ut ett nytt pris för varje ädelmetall i listan "ItemsForSale" i Market-klassen.
     public void UpdatePrice(Merchandise merchandise)
     {
-        foreach (var i in ItemsForSale)
-        {
-            Random random = new Random();
-            double randomValue = RandomizePercentage(random, i.VolatilityNumLow, i.VolatilityNumHigh);
-            double newPrice = randomValue * i.Value;
-            i.Value = newPrice;
-        }
+        Random random = new Random();
+        double randomValue = RandomizePercentage(random, merchandise.VolatilityNumLow, merchandise.VolatilityNumHigh);
+        double newPrice = randomValue * merchandise.Value;
+        double roundedNewPrice = Math.Round(newPrice, 2);
+        merchandise.Value = roundedNewPrice;
     }
 
 
@@ -79,8 +76,7 @@ public class Merchant
     {
         while (true)
         {
-
-
+            Character.DisplayAccountBalance(character);
             DisplayAllItems();
             Market.AdjustTextToTheRight(20);
             System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
@@ -185,15 +181,18 @@ public class Merchant
             else
             {
                 Market.AdjustTextToTheRight(34);
-                MenuClass.TypeWrite($"Okej, du köpte {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}.");
+                MenuClass.TypeWrite($"Okej, du köpte {amountOfMetal} st. {ItemsForSale[chosenMetal - 1].Name}."); // visar hur många du köpt av vad
                 Market.AdjustTextToTheRight(35);
-                MenuClass.TypeWrite($"Den kostade {ItemsForSale[chosenMetal - 1].Value}kr.");
+                MenuClass.TypeWrite($"Denna kostade {ItemsForSale[chosenMetal - 1].Value}kr/st."); // visar vad det kostade
 
                 int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
                 ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
 
                 double updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+                character.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
+
                 double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+
 
                 Thread.Sleep(1500);
                 Market.AdjustTextToTheRight(37);
@@ -203,7 +202,7 @@ public class Merchant
 
                 Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
                 Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
-                
+
                 Thread.Sleep(1500);
                 Market.AdjustTextToTheRight(40);
                 MenuClass.TypeWrite($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
@@ -239,8 +238,8 @@ public class Merchant
                         System.Console.WriteLine($"Prisförändring varje runda: {ItemsForDisplay[x].VolatilityInAString}");
 
                     }
-                x++;
-                break;
+                    x++;
+                    break;
             }
         }
 
