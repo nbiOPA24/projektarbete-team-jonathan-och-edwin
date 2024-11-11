@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using MarketMaster1.Classes;
+
 public class Merchant
 {
 
@@ -189,7 +190,7 @@ public class Merchant
                 ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
 
                 double updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
-                character.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
+                character.AccountBalance = Math.Round(updatedAccountBalance, 1); // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
 
                 double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
 
@@ -200,8 +201,24 @@ public class Merchant
                 Market.AdjustTextToTheRight(38);
                 MenuClass.TypeWrite($"Säljarens konto: {updatedMerchantAccountBalance}kr.");
 
-                Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
-                Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                Merchandise chosenMerchandise = ItemsForSale[chosenMetal - 1];
+                
+
+                bool containsMetal = Character.PlayerInventory.Any(m => m.Name == ItemsForSale[chosenMetal - 1].Name);
+
+                if (containsMetal)
+                {
+                    Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                }
+                else if (!containsMetal)
+                {
+                    Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
+                    Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                }
+
+
+                
+                
 
                 Thread.Sleep(1500);
                 Market.AdjustTextToTheRight(40);

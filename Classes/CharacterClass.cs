@@ -99,7 +99,6 @@ public class Character
                 System.Console.WriteLine($"Detta ger dig {valueOfSoldItems}kr kvar.");
                 break;
             }
-
         }
     }
 }
