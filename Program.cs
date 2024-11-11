@@ -19,7 +19,7 @@ public class Program
 
         // Introduktion
         Console.Clear();
-        MenuClass.StartMenu();
+        // MenuClass.StartMenu();
         NewDayLoop();
         //Skapar två olika handlare som säljer olika metaller
 
@@ -109,9 +109,7 @@ public class Program
         int posX = 2, posY = 2;
         int previousPosX = posX, previousPosY = posY;
 
-        // Skapa marknad och metaller
-
-
+        // Skapa metaller
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);
         Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10);
         Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10);
@@ -170,65 +168,67 @@ public class Program
         Console.SetCursorPosition(70, 22);
         System.Console.WriteLine("❓");
 
-            // Spelloopen
-    while (true)
-    {
-        // Läs tangenttryckning
-        ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-
-        // Hantera rörelser
-        switch (keyInfo.Key)
+        // Spelloopen
+        while (true)
         {
-            case ConsoleKey.UpArrow:
-                if (posY > 1 && !Market.IsCollision(posX, posY - 1)) posY--;
-                break;
-            case ConsoleKey.DownArrow:
-                if (posY < market.Height - 2 && !Market.IsCollision(posX, posY + 1)) posY++;
-                break;
-            case ConsoleKey.LeftArrow:
-                if (posX > 1 && !Market.IsCollision(posX - 1, posY)) posX--;
-                break;
-            case ConsoleKey.RightArrow:
-                if (posX < market.Width - 2 && !Market.IsCollision(posX + 1, posY)) posX++;
-                break;
-            case ConsoleKey.I:
-                Character.DisplayPlayerInventory();
-                System.Console.WriteLine();
-                System.Console.ReadKey();
-                break;
-            case ConsoleKey.Escape:
-                Environment.Exit(0);
-                return;
-        }
+            // Läs tangenttryckning
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 
-        // Endast uppdatera om spelaren flyttat sig
-        if (posX != previousPosX || posY != previousPosY)
-        {
-            // Rensa den tidigare positionen
-            Console.SetCursorPosition(previousPosX, previousPosY);
-            Console.Write(" ");
+            // Hantera rörelser
+            switch (keyInfo.Key)
+            {
+                case ConsoleKey.UpArrow:
+                    if (posY > 1 && !Market.IsCollision(posX, posY - 1)) posY--;
+                    break;
+                case ConsoleKey.DownArrow:
+                    if (posY < market.Height - 2 && !Market.IsCollision(posX, posY + 1)) posY++;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    if (posX > 1 && !Market.IsCollision(posX - 1, posY)) posX--;
+                    break;
+                case ConsoleKey.RightArrow:
+                    if (posX < market.Width - 2 && !Market.IsCollision(posX + 1, posY)) posX++;
+                    break;
+                case ConsoleKey.I:
+                    Character.DisplayPlayerInventory();
+                    System.Console.WriteLine();
+                    System.Console.ReadKey(true);
+                    break;
+                case ConsoleKey.Escape:
+                    Environment.Exit(0);
+                    return;
+            }
 
-            // Rita ut spelaren på den nya positionen
-            Console.SetCursorPosition(posX, posY);
-            Console.Write("🧑");
+            // Endast uppdatera om spelaren flyttat sig
+            if (posX != previousPosX || posY != previousPosY)
+            {
+                // Rensa den tidigare positionen
+                Console.SetCursorPosition(previousPosX, previousPosY);
+                Console.Write(" ");
 
-            // Uppdatera tidigare position
-            previousPosX = posX;
-            previousPosY = posY;
-        }
-                // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
-        if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
-        {
-            VolatileMetalMerchant.Sell();
-        }
+                // Rita ut spelaren på den nya positionen
+                Console.SetCursorPosition(posX, posY);
+                Console.Write("🧑");
 
-        if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
-        {
-            StableMetalMerchant.Sell();
+                // Uppdatera tidigare position
+                previousPosX = posX;
+                previousPosY = posY;
+            }
+
+            // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
+            if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
+            {
+                VolatileMetalMerchant.Sell();
+            }
+
+            if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
+            {
+                StableMetalMerchant.Sell();
+            }
+
+
         }
-        
     }
-}
 
 
     public static void TypeWrite(string text, int delay = 45)
@@ -241,7 +241,8 @@ public class Program
     }
 
     private static void DrawGameBoard(Market market)
-    {   Console.Clear();
+    {
+        Console.Clear();
         // Övre kant
         Console.Write("╔");
         for (int x = 0; x < market.Width - 2; x++) Console.Write("═");

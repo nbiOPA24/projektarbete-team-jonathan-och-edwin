@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using MarketMaster1.Classes;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public class Market
 {
@@ -66,8 +67,6 @@ public class Market
     public static void PlaceDecoration(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
-
-        Console.SetCursorPosition(xPos, yPos);
         for (int x = 0; x < 30; x++)
         {
             Console.Write("🪙");
@@ -81,7 +80,7 @@ public class Market
     // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
     public static void AdjustTextToTheRight(int y)
     {
-        Console.SetCursorPosition(90, y);
+        Console.SetCursorPosition(81, y);
     }
 
     public static void AdjustTextToTheBottom(int x)
@@ -108,7 +107,7 @@ public class Market
         string text2 = "* Mellan varje runda kommer priset för varje metall slumpas...";
         string text3 = "* Vissa metaller svänger mer än andra i pris.";
         string text4 = "* För att läsa mer om volatiliteten, gå till ❓";
-        string text5 = "* Du kan alltid öppna din ryggsäck, genom att trycka på siffran i på tangentbordet";
+        string text5 = "* Du kan öppna din ryggsäck genom att trycka på [i] på tangentbordet";
         string text6 = "* För att gå till nästa runda kan du alltid gå till sängen.";
         string text7 = "  Då sover marknaden och nästa runda startar efter en kort stund...";
         ruleList.Add(text1);

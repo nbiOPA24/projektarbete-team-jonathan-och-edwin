@@ -44,6 +44,10 @@ public class Character
         }
         Console.SetCursorPosition(81, Console.CursorTop);
         System.Console.WriteLine("===========================================================================");
+        Console.SetCursorPosition(81, Console.CursorTop);
+        Console.WriteLine("Klicka på valfri knapp för att få bort inventoryt.");
+        Console.ReadKey();
+        Merchant.CleanTextToTheRight();
     }
 
     // Låter spelaren sälja saker, just nu kommer de tas bort från "PlayerInventory" och läggas till i "ItemsForSale"
