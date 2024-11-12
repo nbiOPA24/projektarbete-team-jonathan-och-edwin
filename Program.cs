@@ -26,10 +26,10 @@ public class Program
     {
         Random random = new Random();
         int NumberOfRounds = 10;
-        Character.CheckForBankruptcy();
+        // Character.CheckForBankruptcy();
         for (int day = 1; day <= NumberOfRounds; day++)
         {
-            
+
             Console.Clear();
             System.Console.WriteLine($"======================= DAG {day} =======================");
             System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej. Små bokstäver.");
@@ -48,7 +48,7 @@ public class Program
 
                 System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
                 System.Console.WriteLine("Tryck [ENTER] för att äntra marknaden...");
-                
+
                 Console.ReadKey();
                 GameLoop();
                 continue;
@@ -80,19 +80,24 @@ public class Program
         System.Console.WriteLine("Nu är alla spelrundor slut! Hur bra gick det för dig? Press [Enter] för att få ditt slutgiltiga inventory, sedan [Enter] igen för att avsluta spelet!");
         System.Console.ReadKey();
         System.Console.Clear();
-        Character.DisplayPlayerInventory();
         System.Console.ReadKey();
 
     }
-    
+
 
     public static void GameLoop()
     {
         // skapar en instans av Market som heter market
         Market market = new Market(27, 80);
 
-        //Skapa player character samt ger den en position på spelbrädet.
-        Character character = new Character("Busiga investeraren", 1000);
+        // Skapar en karaktär och laddar in data från json-filen
+        Character character = Character.LoadFromJson("JsonHandler.json");
+
+        if (character == null)
+        {
+            // Om programmet inte hittar filen i datorn, skapa en ny karaktär
+            character = new Character();
+        }
 
         // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
@@ -103,21 +108,21 @@ public class Program
         int previousPosX = posX, previousPosY = posY;
 
         // Skapa metaller
-        Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);
-        Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10);
-        Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10);
-        Merchandise Copper = new Merchandise("Copper", 120, 0.85, 1.15, "-15% - +15%", 10);
-        Merchandise Platinum = new Merchandise("Platinum", 300, 0.92, 1.08, "-8% - +8%", 10);
-        Merchandise Palladium = new Merchandise("Palladium", 250, 0.9, 1.1, "-10% - +10%", 10);
-        Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, "-30% - +30%", 10);
-        Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, "-15% - +15%", 10);
+        Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10, 0);
+        Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10, 0);
+        Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10, 0);
+        Merchandise Copper = new Merchandise("Copper", 120, 0.85, 1.15, "-15% - +15%", 10, 0);
+        Merchandise Platinum = new Merchandise("Platinum", 300, 0.92, 1.08, "-8% - +8%", 10, 0);
+        Merchandise Palladium = new Merchandise("Palladium", 250, 0.9, 1.1, "-10% - +10%", 10, 0);
+        Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, "-30% - +30%", 10, 0);
+        Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, "-15% - +15%", 10, 0);
 
         StableMetalMerchant.UpdatePrice(Gold);
         StableMetalMerchant.UpdatePrice(Silver);
         StableMetalMerchant.UpdatePrice(Platinum);
         StableMetalMerchant.UpdatePrice(Palladium);
 
-        VolatileMetalMerchant.UpdatePrice(Bronze);  
+        VolatileMetalMerchant.UpdatePrice(Bronze);
         VolatileMetalMerchant.UpdatePrice(Copper);
         VolatileMetalMerchant.UpdatePrice(Indium);
         VolatileMetalMerchant.UpdatePrice(Tin);
@@ -164,12 +169,9 @@ public class Program
         Console.SetCursorPosition(72, 17);
         System.Console.WriteLine("👴");
 
+        // Målar ut säng dit spelaren kan gå för att sova och starta en ny dag, med nya priser
         Console.SetCursorPosition(2, 17);
         System.Console.WriteLine("🛏️");
-
-        // Målar ut ett frågetecken där spelaren kan läsa om varje metall
-        Console.SetCursorPosition(70, 22);
-        System.Console.WriteLine("❓");
 
         // Spelloopen
         while (true)
@@ -197,16 +199,21 @@ public class Program
                     break;
 
                 case ConsoleKey.I:
-                    Character.DisplayPlayerInventory();
+                    character.DisplayPlayerInventory(character);
                     System.Console.WriteLine();
                     System.Console.ReadKey(true);
                     break;
 
                 case ConsoleKey.P:
-                    Character.DisplayAccountBalance(character);
+                    character.DisplayAccountBalance(character);
                     System.Console.ReadKey(true);
                     Merchant.CleanTextToTheRight();
                     break;
+
+                // case ConsoleKey.S: // la till detta så spelaren kan spara spelet
+                //     character.SaveToJson("playerData.json");
+                //     Console.WriteLine("Spelet har sparats!");
+                //     break;
 
                 case ConsoleKey.Z:
                     Merchant.DisplayDetailedProductInfo(Gold);
@@ -246,6 +253,7 @@ public class Program
 
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
+                // Character.SaveToJson(character, "JsonHandler.json");
                 MakeTheMarketSleep();
                 return;
             }
@@ -275,7 +283,7 @@ public class Program
             MenuClass.TypeWrite("Marknaden sover nu...");
             System.Console.WriteLine();
             MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
-
+            
             Console.ReadKey();
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
@@ -283,7 +291,7 @@ public class Program
             GameLoop();
         }
     }
-    
+
     private static void DrawGameBoard(Market market)
     {
         Console.Clear();

@@ -8,14 +8,14 @@ public class Merchant
 {
 
     public string Name { get; set; }
-    public double MerchantAccountBalance { get; set; }
+    public int MerchantAccountBalance { get; set; }
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
     public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
 
 
-    public Merchant(string name, double merchantAccountBalance)
+    public Merchant(string name, int merchantAccountBalance)
     {
         Name = name;
         MerchantAccountBalance = merchantAccountBalance;
@@ -63,7 +63,7 @@ public class Merchant
         double randomValue = RandomizePercentage(random, merchandise.VolatilityNumLow, merchandise.VolatilityNumHigh);
         double newPrice = randomValue * merchandise.Value;
         double roundedNewPrice = Math.Round(newPrice, 2);
-        merchandise.Value = roundedNewPrice;
+        merchandise.Value = (int)roundedNewPrice;
     }
 
 
@@ -75,11 +75,11 @@ public class Merchant
     // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
 
     // VIKTIGT - Denna metod används för både "Merchant"-sell och "Character"-buy
-    public void Sell(Character Character)
+    public void Sell(Character character)
     {
         while (true)
         {
-            Character.DisplayAccountBalance(Character);
+            character.DisplayAccountBalance(character);
             DisplayAllItems();
             Market.AdjustTextToTheRight(17);
             System.Console.WriteLine("Vilken ädelmetall vill du köpa?");
@@ -132,9 +132,9 @@ public class Merchant
             }
 
             // Kontrollerar att värdet på mängden metall användaren köper inte överstiger användarens kontobalans
-            else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > Character.AccountBalance)
+            else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > character.AccountBalance)
             {
-                double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - Character.AccountBalance;
+                double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - character.AccountBalance;
                 // Market.AdjustTextToTheRight(26);
                 // System.Console.WriteLine("                                                             ");
                 // Market.AdjustTextToTheRight(27);
@@ -168,8 +168,8 @@ public class Merchant
                 int amountLeft = ItemsForSale[chosenMetal - 1].AmountAvailable - amountOfMetal;
                 ItemsForSale[chosenMetal - 1].AmountAvailable = amountLeft;
 
-                double updatedAccountBalance = Character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
-                Character.AccountBalance = Math.Round(updatedAccountBalance, 1); // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
+                int updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+                character.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
 
                 double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
 
@@ -184,22 +184,24 @@ public class Merchant
                 Merchandise chosenMerchandise = ItemsForSale[chosenMetal - 1];
                 
 
-                bool containsMetal = Character.PlayerInventory.Any(m => m.Name == ItemsForSale[chosenMetal - 1].Name);
+                bool containsMetal = character.PlayerInventory.Any(m => m.Name == ItemsForSale[chosenMetal - 1].Name);
 
                 if (containsMetal)
                 {
-                    Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                    character.PlayerInventory[chosenMetal - 1].Quantity = character.PlayerInventory[chosenMetal - 1].Quantity + amountOfMetal;
+                    Character.SaveToJson(character, "JsonHandler.json");
                 }
                 else if (!containsMetal)
                 {
-                    Character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
-                    Character.PlayerInventory[chosenMetal - 1].Quantity += amountOfMetal;
+                    character.PlayerInventory.Add(ItemsForSale[chosenMetal - 1]);
+                    character.PlayerInventory[chosenMetal - 1].Quantity = character.PlayerInventory[chosenMetal - 1].Quantity + amountOfMetal;
+                    Character.SaveToJson(character, "JsonHandler.json");
                 }
 
                 Thread.Sleep(1500);
                 Market.AdjustTextToTheRight(12);
                 MenuClass.TypeWrite($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal - 1].Name}!");
-                Character.AccountBalance = Character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
+                character.AccountBalance = character.AccountBalance - ItemsForSale[chosenMetal - 1].Value * amountOfMetal;
 
                 Market.AdjustTextToTheRight(13);
                 Thread.Sleep(1000);
