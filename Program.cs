@@ -116,7 +116,7 @@ public class Program
         Merchandise Palladium = new Merchandise("Palladium", 250, 0.9, 1.1, "-10% - +10%", 10, 0);
         Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, "-30% - +30%", 10, 0);
         Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, "-15% - +15%", 10, 0);
-
+       
         StableMetalMerchant.UpdatePrice(Gold);
         StableMetalMerchant.UpdatePrice(Silver);
         StableMetalMerchant.UpdatePrice(Platinum);
@@ -254,6 +254,8 @@ public class Program
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
                 // Character.SaveToJson(character, "JsonHandler.json");
+                character.UpdateInventoryPrices(StableMetalMerchant);
+                character.UpdateInventoryPrices(VolatileMetalMerchant);
                 MakeTheMarketSleep();
                 return;
             }
@@ -279,12 +281,15 @@ public class Program
 
         if (answer.ToLower() == "ja" || answer.ToLower() == "yes")
         {
+            
             Console.Clear();
             MenuClass.TypeWrite("Marknaden sover nu...");
+            Thread.Sleep(1000);
             System.Console.WriteLine();
             MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
-            
             Console.ReadKey();
+
+            
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
         {

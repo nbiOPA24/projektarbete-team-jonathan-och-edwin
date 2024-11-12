@@ -127,6 +127,14 @@ public class Character
         }
     }
 
+    public void UpdateInventoryPrices(Merchant merchant)
+    {
+        foreach (var m in PlayerInventory)
+        {
+            merchant.UpdatePrice(m);
+        }
+    }
+
     // public static string CheckForBankruptcy()
     // {
     //     if (character.AccountBalance < 0)

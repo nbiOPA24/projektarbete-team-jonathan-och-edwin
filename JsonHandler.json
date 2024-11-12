@@ -1,15 +1,24 @@
 {
   "Name": "Busiga investeraren",
-  "AccountBalance": 505,
+  "AccountBalance": 513,
   "PlayerInventory": [
     {
+      "Name": "Gold",
+      "Value": 207,
+      "VolatilityNumLow": 0.95,
+      "VolatilityNumHigh": 1.05,
+      "VolatilityInAString": "-5% - +5%",
+      "AmountAvailable": 8,
+      "Quantity": 3
+    },
+    {
       "Name": "Bronze",
-      "Value": 77,
+      "Value": 73,
       "VolatilityNumLow": 0.85,
       "VolatilityNumHigh": 1.15,
       "VolatilityInAString": "-15% - +15%",
       "AmountAvailable": 9,
-      "Quantity": 5
+      "Quantity": 0
     }
   ]
 }
