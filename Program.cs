@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.ComponentModel;
 using System.Media;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -10,7 +10,6 @@ public class Program
 {
     public static void Main()
     {
-
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
@@ -18,8 +17,6 @@ public class Program
         NewDayLoop();
 
         Thread.Sleep(1800);
-
-
     }
 
     //Kod för meddelande som visas efter ny påbörjad dag.
@@ -29,6 +26,7 @@ public class Program
     {
         Random random = new Random();
         int NumberOfRounds = 10;
+        Character.CheckForBankruptcy();
         for (int day = 1; day <= NumberOfRounds; day++)
         {
             
@@ -185,15 +183,19 @@ public class Program
                 case ConsoleKey.UpArrow:
                     if (posY > 1 && !Market.IsCollision(posX, posY - 1)) posY--;
                     break;
+
                 case ConsoleKey.DownArrow:
                     if (posY < market.Height - 2 && !Market.IsCollision(posX, posY + 1)) posY++;
                     break;
+
                 case ConsoleKey.LeftArrow:
                     if (posX > 1 && !Market.IsCollision(posX - 1, posY)) posX--;
                     break;
+
                 case ConsoleKey.RightArrow:
                     if (posX < market.Width - 2 && !Market.IsCollision(posX + 1, posY)) posX++;
                     break;
+
                 case ConsoleKey.I:
                     Character.DisplayPlayerInventory();
                     System.Console.WriteLine();
@@ -202,7 +204,8 @@ public class Program
 
                 case ConsoleKey.P:
                     Character.DisplayAccountBalance(character);
-                    Console.ReadKey();
+                    System.Console.ReadKey(true);
+                    Merchant.CleanTextToTheRight();
                     break;
 
                 case ConsoleKey.Z:
@@ -241,7 +244,7 @@ public class Program
                 StableMetalMerchant.Sell(character);
             }
 
-            if (Math.Abs(posX - 35) < 1 && Math.Abs(posY - 15) <= 1)
+            if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
                 MakeTheMarketSleep();
                 return;
@@ -261,7 +264,6 @@ public class Program
 
     public static void MakeTheMarketSleep()
     {
-        
         Market.AdjustTextToTheRight(0);
         System.Console.WriteLine("Vill du starta nästa dag?");
         Market.AdjustTextToTheRight(1);
@@ -273,6 +275,7 @@ public class Program
             MenuClass.TypeWrite("Marknaden sover nu...");
             System.Console.WriteLine();
             MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
+
             Console.ReadKey();
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")

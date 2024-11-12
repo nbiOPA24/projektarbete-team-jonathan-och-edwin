@@ -9,8 +9,7 @@ public class Character
 {
     
     public string Name {get; set;}
-    public double AccountBalance {get; set;}
-  
+    public static double AccountBalance {get; set;}  
     public static List<Merchandise> PlayerInventory {get; set;}
 
     public Character(string name, double accountBalance)
@@ -60,7 +59,7 @@ public class Character
         }
         
         Console.SetCursorPosition(81, 2);
-        System.Console.WriteLine($"| Kontobalans: {character.AccountBalance}kr |");
+        System.Console.WriteLine($"| Kontobalans: {Character.AccountBalance}kr |");
 
         Console.SetCursorPosition(81, 3);
         for (int i = 0; i < 23; i++)
@@ -105,5 +104,17 @@ public class Character
                 break;
             }
         }
+    }
+
+    public static string CheckForBankruptcy()
+    {
+        if (AccountBalance < 0)
+        {
+            string text = "Tyvärr... du kan inte gå in i en ny dag. Du saknar pengar...";
+            return text;
+        }
+
+        string text1 = "Du har pengar, välkommen in!";
+        return text1;
     }
 }

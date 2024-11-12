@@ -132,8 +132,8 @@ public class Market
         Console.SetCursorPosition(0, 42);
         System.Console.WriteLine("esc = avsluta spelet");
 
-    }   
-    
+    }
+
 
     public static bool IsCollision(int newX, int newY)
     {
@@ -144,6 +144,4 @@ public class Market
 
         return false;
     }
-
-
 }
