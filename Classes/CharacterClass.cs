@@ -1,7 +1,7 @@
 // Jonathan jobbar här
 
 using System;
-
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
 using MarketMaster1.Classes;
@@ -75,9 +75,9 @@ public class Character
     {
         while (true)
         {
-            System.Console.WriteLine("Vad vill du sälja?");
+            
             DisplayPlayerInventory();   
-
+            System.Console.WriteLine("Vad vill du sälja?");
             int itemToSell = int.Parse(Console.ReadLine());
             
 
