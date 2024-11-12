@@ -4,6 +4,7 @@ using System;
 
 using System.Collections.Generic;
 using System.Drawing;
+using MarketMaster1.Classes;
 
 public class Character
 {
@@ -30,43 +31,43 @@ public class Character
     // Visar spelarens inventory
     public static void DisplayPlayerInventory()
     {
-        Console.SetCursorPosition(81,1);
-        System.Console.WriteLine("=========================== Spelarens Inventory ===========================");
+        Console.SetCursorPosition(81,1);                                          
+        System.Console.WriteLine("╔══════════════════════════ Spelarens Inventory ══════════════════════════╗");
         Console.SetCursorPosition(81,Console.CursorTop);
-        System.Console.WriteLine("|    Item Name     | Quantity |    Värde   |Totalt värde |   Volatilitet  |");
+        System.Console.WriteLine("║    Item Name     ║ Quantity ║    Värde   ║Totalt värde ║   Volatilitet  ║");
         Console.SetCursorPosition(81,Console.CursorTop);
-        System.Console.WriteLine("|------------------|----------|------------|-------------|----------------|");
+        System.Console.WriteLine("║------------------║----------║------------║-------------║----------------║");
         foreach (var metal in Character.PlayerInventory)
         {
             double totalValue = metal.Value * metal.Quantity;
             Console.SetCursorPosition(81,Console.CursorTop);
-            System.Console.WriteLine($"| {metal.Name,-16} | {metal.Quantity,8} | {metal.Value,10:F2} | {totalValue,11:F2} | {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
+            System.Console.WriteLine($"║ {metal.Name,-16} ║ {metal.Quantity,8} ║ {metal.Value,10:F2} ║ {totalValue,11:F2} ║ {metal.VolatilityNumLow * 100,6:F0}% - {metal.VolatilityNumHigh * 100,3:F0}% |");
         }
         Console.SetCursorPosition(81, Console.CursorTop);
-        System.Console.WriteLine("===========================================================================");
+        System.Console.WriteLine("╚═════════════════════════════════════════════════════════════════════════╝");
         Console.SetCursorPosition(81, Console.CursorTop);
         Console.WriteLine("Klicka på valfri knapp för att få bort inventoryt.");
-        Console.ReadKey();
-        Merchant.CleanTextToTheRight();
+        Console.ReadKey(true);
+        MenuClass.CleanTextToTheRight();
     }
 
     public static void DisplayAccountBalance(Character character)
     {
+        // Console.SetCursorPosition(81, 1);
+        // for (int i = 0; i < 23; i++)
+        // {
+        //     System.Console.Write("═");
+        // }
         Console.SetCursorPosition(81, 1);
-
-        for (int i = 0; i < 23; i++)
-        {
-            System.Console.Write("=");
-        }
-        
+        System.Console.Write     ("╔═══════════════════════╗");
         Console.SetCursorPosition(81, 2);
-        System.Console.WriteLine($"| Kontobalans: {character.AccountBalance}kr |");
-
+        System.Console.WriteLine($"║  Kontobalans: {character.AccountBalance}kr ║");
         Console.SetCursorPosition(81, 3);
-        for (int i = 0; i < 23; i++)
-        {
-            System.Console.Write("=");
-        }
+        System.Console.Write     ("╚═══════════════════════╝");
+        // for (int i = 0; i < 23; i++)
+        // {
+        //     System.Console.Write("═");
+        // }
     }
 
     // Låter spelaren sälja saker, just nu kommer de tas bort från "PlayerInventory" och läggas till i "ItemsForSale"
