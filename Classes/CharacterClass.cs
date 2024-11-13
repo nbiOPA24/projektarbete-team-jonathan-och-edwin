@@ -127,6 +127,7 @@ public class Character
         }
     }
 
+
     public void UpdateInventoryPrices(Merchant merchant)
     {
         foreach (var m in PlayerInventory)
