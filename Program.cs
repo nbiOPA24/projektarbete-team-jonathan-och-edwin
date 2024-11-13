@@ -10,7 +10,7 @@ public class Program
 {
     public static void Main()
     {
-
+        //Skriver ut början av programmet genom att anropa menyklassen samt ha med loopen för en ny dag så att spelet kan börja.
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
@@ -26,21 +26,21 @@ public class Program
     //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
     //Även en loop inlagd så att det blir en ny dag.
     public static void NewDayLoop()
-    {
-        Random random = new Random();
-        int NumberOfRounds = 10;
-        for (int day = 1; day <= NumberOfRounds; day++)
+    {   
+        Random random = new Random(); //Random för att randomisera vilket av 5 meddelanden som ska returneras när man väljer ja eller nej.
+        int NumberOfRounds = 10; //Antar dagar som spelet pågår.
+        for (int day = 1; day <= NumberOfRounds; day++) // En for-loop som pågår tills rundorna är slut
         {
             
             Console.Clear();
             System.Console.WriteLine($"======================= DAG {day} =======================");
-            System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej. Små bokstäver.");
+            System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej.");
 
             //Ändrar om inmatningen till små bokstäver för att minska redundans.
             string answer = Console.ReadLine().ToLower();
             if (answer == "ja")
             {
-                string[] yesMessage = {
+                string[] yesMessage = { //En array med utskrifter som randomiseras vid ja svar.
                     "Perfekt, solen skiner och marknaden väntar på dig! Nu är det dags att göra några riktigt smarta affärer!",
                     "Modigt val! Marknadens dörrar öppnas för dig, och spänningen av köp och sälj ligger i luften. Låt oss se vad du kan göra!",
                     "Du hör hur marknadens sorl växer när du närmar dig. Handlarna är redo att förhandla, och guldet lockar. Lycka till!",
@@ -48,24 +48,24 @@ public class Program
                     "Marknaden öppnar upp som en färgstark värld fylld av ljud och dofter. Du känner adrenalinet pumpa - det är dags för handel!"
                 };
 
-                System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]);
+                System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]); // Skriver ut ett av meddelandena i Arrayn.
                 System.Console.WriteLine("Tryck [ENTER] för att äntra marknaden...");
-                
                 Console.ReadKey();
-                GameLoop();
+
+                GameLoop(); //Här skriver vi ut själva game-loopen.
                 continue;
 
             }
             else if (answer == "nej")
             {
-                string[] noMessage = {
+                string[] noMessage = { //Array med alla randomiserade svar om användaren skriver nej.
                     "Kanske är det bäst att ta en lugn dag. Vem vet, marknaden är en riskabel plats och ibland är det bättre att hålla pengarna i fickan.",
                     "Ett klokt beslut, alla dagar behöver inte innebära äventyr. En dag att vila kan vara precis vad du behöver.",
                     "Du ser mot marknaden, men något säger dig att idag inte är dagen. Du vänder tillbaka för att samla dina tankar inför framtida affärer.",
                     "Att inte gå till marknaden kan ibland vara det smartaste draget av alla. Ingen risk idag, bara trygghet. Imorgon kan vara din dag.",
                     "Du väljer att stanna borta från marknadens tumult. Lugnet idag kan ge dig fördelar när du nästa gång kliver in i handelsvärlden."
             };
-                System.Console.WriteLine(noMessage[random.Next(noMessage.Length)]);
+                System.Console.WriteLine(noMessage[random.Next(noMessage.Length)]); //Slumpar fram ett svar ur Arrayn.
                 System.Console.WriteLine("Press [Enter] för att gå vidare till nästa dag...");
                 System.Console.ReadKey();
                 //continue för att gå vidare till nästa dag.
@@ -79,6 +79,7 @@ public class Program
                 continue;
             }
         }
+        //Avslut på spelet. Skriver ut inventoryt så man kan se hur bra det gick för användaren.
         System.Console.WriteLine("Nu är alla spelrundor slut! Hur bra gick det för dig? Press [Enter] för att få ditt slutgiltiga inventory, sedan [Enter] igen för att avsluta spelet!");
         System.Console.ReadKey();
         System.Console.Clear();
@@ -95,14 +96,12 @@ public class Program
 
         //Skapa player character samt ger den en position på spelbrädet.
         Character character = new Character("Busiga investeraren", 1000);
+        int posX = 2, posY = 2;
+        int previousPosX = posX, previousPosY = posY;
 
         // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 10000);
-
-        // Skapa marknad och metaller
-        int posX = 2, posY = 2;
-        int previousPosX = posX, previousPosY = posY;
 
         // Skapa metaller
         Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10);

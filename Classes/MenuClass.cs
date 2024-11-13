@@ -5,8 +5,8 @@ namespace MarketMaster1.Classes;
 
 public class MenuClass
 {
-    // public static void StartMenu()
-    // {
+    // public static void StartMenu() //Startmeny som är det första som visas.
+    // {    //Menytexten ligger i en Array för att man ska kunna använda sig utan "Skrivmaskinseffekten" som skriver ut en bokstav åt gången med en liten paus mellan varje bokstav.
     //     string[] menuArray =
     //     [
     //         "****************************************",
@@ -23,12 +23,12 @@ public class MenuClass
     //         "Törs du satsa stort eller väljer du att spela försiktigt? \n",
     //         "Tryck [ENTER] för att äntra spelplanen..."
     //     ];
-
+            //Här ligger kod för att kunna använda sig utav System.Media, dvs låtar och liknande direkt i konsollen.
     //     string audioFile = @"C:\Users\jonat\AProject\MarketMaster1\MarketPirate.wav";
     //     using (SoundPlayer player = new SoundPlayer(audioFile))
     //     {
-    //         player.Load();    // Load the file
-    //         player.PlayLooping();    // Play the audio (PlaySync() to wait until it's finished)
+    //         player.Load();    // Laddar in ljudfilen
+    //         player.PlayLooping();    //Spelar upp ljudet i en loop.
     //     }
 
     //     int j = 0;

@@ -102,18 +102,18 @@ public class Merchant
                 continue;//Avbryter transaktionen och börjar om från början.
             }
             //Formler för att genomföra transaktionen
-            selectedItem.Quantity -= quantity;
+            selectedItem.Quantity -= quantity; 
             character.AccountBalance += totalSaleValue;
             MerchantAccountBalance -= totalSaleValue;
 
-            //Justerar säljarens lagersaldo
-            Merchandise merchantMetal = ItemsForSale.Find(metal => metal.Name == selectedItem.Name);
+            //Justerar säljarens lagersaldo med all nödvändig info.
+            Merchandise merchantMetal = ItemsForSale.Find(metal => metal.Name == selectedItem.Name); //Söker efter om varan redan finns genom att använda "Find" metoden.
             if (merchantMetal != null)
             {
-                merchantMetal.AmountAvailable += quantity;
+                merchantMetal.AmountAvailable += quantity; //Om varan redan finns i säljarens inventory så lägger vi till så många items som köpts från användaren/spelaren.
             }
             else
-            {
+            {   //Finns inte varan så lägger vi bara till varan samt all info om den.
                 ItemsForSale.Add(new Merchandise(selectedItem.Name, 
                 (int)selectedItem.Value, 
                 selectedItem.VolatilityNumLow, 
@@ -121,10 +121,12 @@ public class Merchant
                 selectedItem.VolatilityInAString, 
                 quantity));
             }
+            //Skriver ut text för vilken vara användaren sålt, samt antalet och för hur mycket.  
             System.Console.WriteLine($"Du sålde {quantity} {selectedItem.Name} för {totalSaleValue} kr.");
+            //Visar uppdaterat saldo och handlarens saldo.
             System.Console.WriteLine($"Ditt nya saldo är: {character.AccountBalance} kr. {Name}'s nya saldo {MerchantAccountBalance} kr.");
 
-            if (selectedItem.Quantity == 0)
+            if (selectedItem.Quantity == 0)//Om man inte har någon vara kvar av den typen(tex guld) så tas den bort ur ens inventory.
             {
                 Character.PlayerInventory.Remove(selectedItem);
             }
