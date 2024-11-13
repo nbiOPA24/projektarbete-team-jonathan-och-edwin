@@ -173,7 +173,7 @@ public class Program
         Console.SetCursorPosition(2, 17);
         System.Console.WriteLine("🛏️");
 
-        // Spelloopen
+        // dessa saker händer om och om igen tills användaren trycker på escape
         while (true)
         {
             // Läs tangenttryckning

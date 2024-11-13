@@ -135,18 +135,7 @@ public class Merchant
             else if (amountOfMetal * ItemsForSale[chosenMetal - 1].Value > character.AccountBalance)
             {
                 double missingMoney = amountOfMetal * ItemsForSale[chosenMetal - 1].Value - character.AccountBalance;
-                // Market.AdjustTextToTheRight(26);
-                // System.Console.WriteLine("                                                             ");
-                // Market.AdjustTextToTheRight(27);
-                // System.Console.WriteLine("                                                             ");
-                // Market.AdjustTextToTheRight(29);
-                // System.Console.WriteLine("                                                             ");
-                // Market.AdjustTextToTheRight(30);
-                // System.Console.WriteLine("                                                             ");
-                // Market.AdjustTextToTheRight(31);
-                // System.Console.WriteLine("                                                             ");
-                // Market.AdjustTextToTheRight(32);
-                // System.Console.WriteLine("                                                             ");
+
                 CleanTextToTheRight();
                 Market.AdjustTextToTheRight(6);
                 System.Console.WriteLine($"Du har för lite pengar. Det saknas tyvärr {missingMoney}kr för att du ska ha råd.");
@@ -213,6 +202,36 @@ public class Merchant
 
             }
         }
+    }
+
+    // min tanke är att kapsla in denna metod, för den ska bara kunna användas i sell-metoden och ingen annanstans. Denna metod gör koden mer modulär och minskar redundans.
+    private bool ValidatePurchase(int chosenMetalIndex, int amountOfMetal, Character character) 
+    {
+        if (chosenMetalIndex < 1 || chosenMetalIndex >= ItemsForSale.Count)
+        {
+            System.Console.WriteLine("Välj ett giltigt alternativ mellan 1 och " + ItemsForSale.Count);
+            return false;
+        }
+
+        Merchandise chosenMetal = ItemsForSale[chosenMetalIndex];
+
+        if (amountOfMetal > chosenMetal.AmountAvailable)
+        {
+            System.Console.WriteLine($"Det finns endast {chosenMetal.AmountAvailable} kvar i lager.");
+            return false;
+        }
+
+        int totalCost = chosenMetal.Value * amountOfMetal;
+
+        if (totalCost > character.AccountBalance)
+        {
+            int missingMoney = totalCost - character.AccountBalance;
+            System.Console.WriteLine($"Du har för lite pengar. Det saknas {missingMoney}kr.");
+            return false;
+        }
+
+        // Om spelaren köp går igenom alla tre ovan kontroller så genomförs köpet. Detta gör koden mer modulär genom att man endast kallar på metoden för att validera köpet.
+        return true;
     }
 
     // Metod för att rensa köpinformationen specifikt utan att röra spelplanen
