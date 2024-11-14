@@ -39,3 +39,6 @@
 *.vspscc
 *.vssscc
 *.scc
+
+# JSON
+JsonHandler.json
