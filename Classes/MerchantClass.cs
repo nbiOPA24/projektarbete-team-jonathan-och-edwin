@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.ConstrainedExecution;
+using System.Xml.Serialization;
 using MarketMaster1.Classes;
 
 public class Merchant
@@ -69,6 +71,75 @@ public class Merchant
 
 
 
+    public void BuyFromCharacter(Character character)
+    {
+        while (true)
+        {
+            //Visa spelarens inventory och fråga om vilken vara kunden/användaren vill sälja.
+            character.DisplayPlayerInventory(character);
+            System.Console.WriteLine($"{Name}-'Vad har vill du försöka sälja tillbaka idag då?'");
+            System.Console.WriteLine("Ange ett nummer eller 0 för att avbryta säljet. ");
+            if (!int.TryParse(Console.ReadLine(),out int itemIndex) || itemIndex < 0 || itemIndex > character.PlayerInventory.Count)
+            {
+                //Skickar ett felmeddelande om användaren angivit ett felaktigt val.
+                System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
+                continue;
+            }
+            if (itemIndex == 0) break;
+
+            Merchandise selectedItem = character.PlayerInventory[itemIndex - 1];
+
+            //Fråga hur många items användaren vill sälja till handlaren inklusive felhantering
+            System.Console.WriteLine($"Hur många {selectedItem.Name} vill du sälja?");
+            if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0 || quantity > selectedItem.QuantityInPlayerInventory)
+            {
+                System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
+                continue;
+            }
+            //Kolla om säljaren faktiskt kan köpa varorna användaren vill sälja
+            int totalSaleValue = selectedItem.Value * quantity;                                                       
+
+            if (totalSaleValue > MerchantAccountBalance)
+            {
+                System.Console.WriteLine($"{Name} har tyvärr inte tillräckligt med pengar i sin kassa för att genomföra köpet...");
+                continue;//Avbryter transaktionen och börjar om från början.
+            }
+            //Formler för att genomföra transaktionen
+            selectedItem.QuantityInPlayerInventory -= quantity; 
+            character.AccountBalance += totalSaleValue;
+            MerchantAccountBalance -= totalSaleValue;
+
+            //Justerar säljarens lagersaldo med all nödvändig info.
+            Merchandise merchantMetal = ItemsForSale.Find(metal => metal.Name == selectedItem.Name); //Söker efter om varan redan finns genom att använda "Find" metoden.
+            if (merchantMetal != null)
+            {
+                merchantMetal.AmountAvailableAtMerchant += quantity; //Om varan redan finns i säljarens inventory så lägger vi till så många items som köpts från användaren/spelaren.
+            }
+            else
+            {   //Finns inte varan så lägger vi bara till varan samt all info om den.
+                ItemsForSale.Add
+                (new Merchandise(selectedItem.Name, (int)selectedItem.Value, selectedItem.VolatilityNumLow, selectedItem.VolatilityNumHigh, selectedItem.VolatilityInAString, selectedItem.AmountAvailableAtMerchant, selectedItem.QuantityInPlayerInventory));
+            }
+            //Skriver ut text för vilken vara användaren sålt, samt antalet och för hur mycket.  
+            System.Console.WriteLine($"Du sålde {quantity} {selectedItem.Name} för {totalSaleValue} kr.");
+            //Visar uppdaterat saldo och handlarens saldo.
+            System.Console.WriteLine($"Ditt nya saldo är: {character.AccountBalance} kr. {Name}'s nya saldo {MerchantAccountBalance} kr.");
+
+            if (selectedItem.QuantityInPlayerInventory == 0)//Om man inte har någon vara kvar av den typen(tex guld) så tas den bort ur ens inventory.
+            {
+                character.PlayerInventory.Remove(selectedItem);
+            }
+            System.Console.WriteLine("Vill du sälja något mer eller är du nöjd? Svara ja eller nej.");
+            if (Console.ReadLine()?.ToLower() != "ja")
+            {
+                break; //Avslutar metoden helt om användaren inte skriver ja.
+            }
+
+
+        }
+    }
+
+
 
 
     // Nedanstående metod gör att "Merchanten" kan sälja produkter. Saker tas från "ItemsForSale" och läggs i "PlayerInventory"
@@ -110,8 +181,8 @@ public class Merchant
                 Market.AdjustTextToTheRight(7);
                 MenuClass.TypeWrite($"Denna kostade {ItemsForSale[chosenMetal].Value}kr/st."); // visar vad det kostade
 
-                int amountLeft = ItemsForSale[chosenMetal].AmountAvailable - amountOfMetal;
-                ItemsForSale[chosenMetal].AmountAvailable = amountLeft;
+                int amountLeft = ItemsForSale[chosenMetal].AmountAvailableAtMerchant - amountOfMetal;
+                ItemsForSale[chosenMetal].AmountAvailableAtMerchant = amountLeft;
 
                 int updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal].Value * amountOfMetal;
                 character.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
@@ -131,13 +202,13 @@ public class Merchant
 
                 if (containsMetal)
                 {
-                    character.PlayerInventory[chosenMetal].Quantity = character.PlayerInventory[chosenMetal].Quantity + amountOfMetal;
+                    character.PlayerInventory[chosenMetal].QuantityInPlayerInventory = character.PlayerInventory[chosenMetal].QuantityInPlayerInventory + amountOfMetal;
                     Character.SaveToJson(character, "JsonHandler.json");
                 }
                 else if (!containsMetal)
                 {
                     character.PlayerInventory.Add(ItemsForSale[chosenMetal]);
-                    character.PlayerInventory[chosenMetal].Quantity = character.PlayerInventory[chosenMetal].Quantity + amountOfMetal;
+                    character.PlayerInventory[chosenMetal].QuantityInPlayerInventory = character.PlayerInventory[chosenMetal].QuantityInPlayerInventory + amountOfMetal;
                     Character.SaveToJson(character, "JsonHandler.json");
                 }
 
@@ -171,12 +242,12 @@ public class Merchant
 
         Merchandise chosenMetal = ItemsForSale[chosenMetalIndex];
 
-        if (amountOfMetal > chosenMetal.AmountAvailable || amountOfMetal < 1)
+        if (amountOfMetal > chosenMetal.AmountAvailableAtMerchant || amountOfMetal < 1)
         {
-            if (amountOfMetal > chosenMetal.AmountAvailable)
+            if (amountOfMetal > chosenMetal.AmountAvailableAtMerchant)
             {
                 Market.AdjustTextToTheRight(22);
-                System.Console.WriteLine($"Felkod: Det finns endast {chosenMetal.AmountAvailable} kvar i lager.");
+                System.Console.WriteLine($"Felkod: Det finns endast {chosenMetal.AmountAvailableAtMerchant} kvar i lager.");
                 Console.ReadKey();
                 CleanTextToTheRight();
                 return false;

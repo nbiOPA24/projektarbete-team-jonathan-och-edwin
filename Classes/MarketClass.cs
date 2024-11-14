@@ -82,13 +82,13 @@ public class Market
     {
         Console.SetCursorPosition(81, y);
     }
-
+    //Samma som ovan fast man skickar inparameter om x-axeln.
     public static void AdjustTextToTheBottom(int x)
     {
         Console.SetCursorPosition(x, 27);
     }
 
-    public static void DisplayInfo()
+    public static void DisplayInfo() // skriver ut spelets regler samt vilken position det ska skrivas ut på.
     {
         AdjustTextToTheBottom(0);
         System.Console.WriteLine("Spelets regler:");
@@ -99,7 +99,7 @@ public class Market
 
     }
 
-    public static void DisplayRules()
+    public static void DisplayRules() //Lista med regler och info om kommandon som skrivs ut i DisplayInfo metoden.
     {
         List<string> ruleList = new List<string>();
 
@@ -116,7 +116,7 @@ public class Market
 
         int y = 1;
 
-        foreach (var r in ruleList)
+        foreach (var r in ruleList) //Skriver ut listan med en foreach-loop och bestämmer på vilka rader de ska skrivas ut.
         {
 
             System.Console.WriteLine(r);
@@ -132,9 +132,15 @@ public class Market
         Console.SetCursorPosition(0, 42);
         System.Console.WriteLine("esc = avsluta spelet");
 
+<<<<<<< HEAD
     }
 
 
+=======
+    }   
+    
+    //Kollisionsmetod som kontrollerar att användaren inte kan gå på hus, handlare eller säng. samt inte kunna gå utanför spelplanen.
+>>>>>>> origin/EdwinBranch
     public static bool IsCollision(int newX, int newY)
     {
         if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))
