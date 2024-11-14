@@ -64,7 +64,7 @@ public class Merchant
         double newPrice = randomValue * merchandise.Value;
         double roundedNewPrice = Math.Round(newPrice, 2);
         merchandise.Value = (int)roundedNewPrice;
-    }
+            }
 
 
 
