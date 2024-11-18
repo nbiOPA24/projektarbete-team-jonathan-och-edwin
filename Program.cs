@@ -267,14 +267,46 @@ public class Program
             // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
-                player.Buy(player, StableMetalMerchant);
                 HelpClass.SaveToJson(player, "JsonHandler.json");
+                Market.AdjustTextToTheRight(0);
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
+                if (Console.ReadLine()?.ToLower() == "köpa")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    player.Buy(player,VolatileMetalMerchant);
+                }
+                else if (Console.ReadLine()?.ToLower() == "sälja")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    player.Sell(player);
+                }
+                else
+                {
+                    Market.AdjustTextToTheRight(0);
+                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                }
             }
 
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
-                player.Buy(player, VolatileMetalMerchant);
                 HelpClass.SaveToJson(player, "JsonHandler.json");
+                Market.AdjustTextToTheRight(0);
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
+                if (Console.ReadLine()?.ToLower() == "köpa")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    player.Buy(player,StableMetalMerchant);
+                }
+                else if (Console.ReadLine()?.ToLower() == "sälja")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    player.Sell(player);
+                }
+                else
+                {
+                    Market.AdjustTextToTheRight(0);
+                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                }
             }
 
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
