@@ -48,7 +48,7 @@ public class Market
 
     }
 
-    public static void PlaceCharacterHome(int xPos, int yPos)
+    public static void PlacePlayerHome(int xPos, int yPos)
     {
         Console.SetCursorPosition(xPos, yPos);
         Console.Write("║ _________ ");
@@ -132,15 +132,9 @@ public class Market
         Console.SetCursorPosition(0, 42);
         System.Console.WriteLine("esc = avsluta spelet");
 
-<<<<<<< HEAD
-    }
-
-
-=======
     }   
     
     //Kollisionsmetod som kontrollerar att användaren inte kan gå på hus, handlare eller säng. samt inte kunna gå utanför spelplanen.
->>>>>>> origin/EdwinBranch
     public static bool IsCollision(int newX, int newY)
     {
         if ((newX == 70 && newY == 3) || (newX == 70 && newY == 28))

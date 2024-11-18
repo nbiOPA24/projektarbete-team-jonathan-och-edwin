@@ -10,12 +10,12 @@ public class Merchant
 {
 
     public string Name { get; set; }
-    public int MerchantAccountBalance { get; set; }
+    public double MerchantAccountBalance { get; set; }
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
     public static List<Merchandise> ItemsForDisplay = new List<Merchandise>();
-
+    private static Random random = new Random();
 
     public Merchant(string name, int merchantAccountBalance)
     {
@@ -40,203 +40,16 @@ public class Merchant
         }
     }
 
-    //denna metod randomiserar vad nuvarande "värde" på ädelmetallen ska multipliceras med. Algoritmen gör även att det är större chans att priset går UPP än NER
-    public double RandomizePercentage(Random random, double minValue, double maxValue)
-    {
-        Random random1 = new Random();
-        int randomNum = random1.Next(0, 101);
-
-        if (randomNum > 30)
-        {
-            return random.NextDouble() * (maxValue - 1) + 1;
-        }
-        else
-        {
-            return random.NextDouble() * (maxValue - minValue) + minValue;
-        }
-    }
 
 
-
-    // denna metod använder "RandomizePercentage" ovan för att räkna ut ett nytt pris för varje ädelmetall i listan "ItemsForSale" i Market-klassen.
-    public void UpdatePrice(Merchandise merchandise)
-    {
-        Random random = new Random();
-        double randomValue = RandomizePercentage(random, merchandise.VolatilityNumLow, merchandise.VolatilityNumHigh);
-        double newPrice = randomValue * merchandise.Value;
-        double roundedNewPrice = Math.Round(newPrice, 2);
-        merchandise.Value = (int)roundedNewPrice;
-            }
-
-
-
-
-    public void BuyFromCharacter(Character character)
-    {
-        while (true)
-        {
-            //Visa spelarens inventory och fråga om vilken vara kunden/användaren vill sälja.
-            character.DisplayPlayerInventory(character);
-            System.Console.WriteLine($"{Name}-'Vad har vill du försöka sälja tillbaka idag då?'");
-            System.Console.WriteLine("Ange ett nummer eller 0 för att avbryta säljet. ");
-            if (!int.TryParse(Console.ReadLine(),out int itemIndex) || itemIndex < 0 || itemIndex > character.PlayerInventory.Count)
-            {
-                //Skickar ett felmeddelande om användaren angivit ett felaktigt val.
-                System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
-                continue;
-            }
-            if (itemIndex == 0) break;
-
-            Merchandise selectedItem = character.PlayerInventory[itemIndex - 1];
-
-            //Fråga hur många items användaren vill sälja till handlaren inklusive felhantering
-            System.Console.WriteLine($"Hur många {selectedItem.Name} vill du sälja?");
-            if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0 || quantity > selectedItem.QuantityInPlayerInventory)
-            {
-                System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
-                continue;
-            }
-            //Kolla om säljaren faktiskt kan köpa varorna användaren vill sälja
-            int totalSaleValue = selectedItem.Value * quantity;                                                       
-
-            if (totalSaleValue > MerchantAccountBalance)
-            {
-                System.Console.WriteLine($"{Name} har tyvärr inte tillräckligt med pengar i sin kassa för att genomföra köpet...");
-                continue;//Avbryter transaktionen och börjar om från början.
-            }
-            //Formler för att genomföra transaktionen
-            selectedItem.QuantityInPlayerInventory -= quantity; 
-            character.AccountBalance += totalSaleValue;
-            MerchantAccountBalance -= totalSaleValue;
-
-            //Justerar säljarens lagersaldo med all nödvändig info.
-            Merchandise merchantMetal = ItemsForSale.Find(metal => metal.Name == selectedItem.Name); //Söker efter om varan redan finns genom att använda "Find" metoden.
-            if (merchantMetal != null)
-            {
-                merchantMetal.AmountAvailableAtMerchant += quantity; //Om varan redan finns i säljarens inventory så lägger vi till så många items som köpts från användaren/spelaren.
-            }
-            else
-            {   //Finns inte varan så lägger vi bara till varan samt all info om den.
-                ItemsForSale.Add
-                (new Merchandise(selectedItem.Name, (int)selectedItem.Value, selectedItem.VolatilityNumLow, selectedItem.VolatilityNumHigh, selectedItem.VolatilityInAString, selectedItem.AmountAvailableAtMerchant, selectedItem.QuantityInPlayerInventory));
-            }
-            //Skriver ut text för vilken vara användaren sålt, samt antalet och för hur mycket.  
-            System.Console.WriteLine($"Du sålde {quantity} {selectedItem.Name} för {totalSaleValue} kr.");
-            //Visar uppdaterat saldo och handlarens saldo.
-            System.Console.WriteLine($"Ditt nya saldo är: {character.AccountBalance} kr. {Name}'s nya saldo {MerchantAccountBalance} kr.");
-
-            if (selectedItem.QuantityInPlayerInventory == 0)//Om man inte har någon vara kvar av den typen(tex guld) så tas den bort ur ens inventory.
-            {
-                character.PlayerInventory.Remove(selectedItem);
-            }
-            System.Console.WriteLine("Vill du sälja något mer eller är du nöjd? Svara ja eller nej.");
-            if (Console.ReadLine()?.ToLower() != "ja")
-            {
-                break; //Avslutar metoden helt om användaren inte skriver ja.
-            }
-
-
-        }
-    }
-
-
-
-
-    // Nedanstående metod gör att "Merchanten" kan sälja produkter. Saker tas från "ItemsForSale" och läggs i "PlayerInventory"
-    // Summa subtraheras från "AccountBalance" och summa adderas till "MerchantAccountBalance", för att visualisera flödet av pengar
-
-    // VIKTIGT - Denna metod används för både "Merchant"-sell och "Character"-buy
-    public void Sell(Character character)
-    {
-        while (true)
-        {
-            // GetUserSelection(); // kallar inte på denna ännu
-
-            DisplayAllItems();
-            character.DisplayAccountBalance(character);
-
-            Market.AdjustTextToTheRight(17);
-            System.Console.WriteLine("Vilken ädelmetall vill du köpa (1-4)?");
-
-            Market.AdjustTextToTheRight(18);
-            int chosenMetal = int.Parse(Console.ReadLine()) - 1;
-
-            Market.AdjustTextToTheRight(19);
-            System.Console.WriteLine("Hur många vill du köpa?");
-
-            Market.AdjustTextToTheRight(20);
-            int amountOfMetal = int.Parse(Console.ReadLine());
-
-            if (!ValidatePurchase(chosenMetal, amountOfMetal, character))
-            {
-                Console.ReadKey();
-                return;
-            }
-
-            if (ValidatePurchase(chosenMetal, amountOfMetal, character))
-            {
-                CleanTextToTheRight();
-                Market.AdjustTextToTheRight(6);
-                MenuClass.TypeWrite($"Okej, du köpte {amountOfMetal} st. {ItemsForSale[chosenMetal].Name}."); // visar hur många du köpt av vad
-                Market.AdjustTextToTheRight(7);
-                MenuClass.TypeWrite($"Denna kostade {ItemsForSale[chosenMetal].Value}kr/st."); // visar vad det kostade
-
-                int amountLeft = ItemsForSale[chosenMetal].AmountAvailableAtMerchant - amountOfMetal;
-                ItemsForSale[chosenMetal].AmountAvailableAtMerchant = amountLeft;
-
-                int updatedAccountBalance = character.AccountBalance - ItemsForSale[chosenMetal].Value * amountOfMetal;
-                character.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
-
-                double updatedMerchantAccountBalance = MerchantAccountBalance + ItemsForSale[chosenMetal].Value * amountOfMetal;
-
-                Thread.Sleep(1500);
-                Market.AdjustTextToTheRight(9);
-                MenuClass.TypeWrite($"Ditt konto: {updatedAccountBalance}kr.");
-                Market.AdjustTextToTheRight(10);
-                MenuClass.TypeWrite($"Säljarens konto: {updatedMerchantAccountBalance}kr.");
-
-                Merchandise chosenMerchandise = ItemsForSale[chosenMetal];
-
-                // denna bool är skriven för att se om metallen redan finns i spelarens inventory, isåfall vill vi ju bara plusa på quantity och inte lägga till en extra sådan
-                bool containsMetal = character.PlayerInventory.Any(m => m.Name == ItemsForSale[chosenMetal].Name);
-
-                if (containsMetal)
-                {
-                    character.PlayerInventory[chosenMetal].QuantityInPlayerInventory = character.PlayerInventory[chosenMetal].QuantityInPlayerInventory + amountOfMetal;
-                    Character.SaveToJson(character, "JsonHandler.json");
-                }
-                else if (!containsMetal)
-                {
-                    character.PlayerInventory.Add(ItemsForSale[chosenMetal]);
-                    character.PlayerInventory[chosenMetal].QuantityInPlayerInventory = character.PlayerInventory[chosenMetal].QuantityInPlayerInventory + amountOfMetal;
-                    Character.SaveToJson(character, "JsonHandler.json");
-                }
-
-                Thread.Sleep(1500);
-                Market.AdjustTextToTheRight(12);
-                MenuClass.TypeWrite($"Kolla din inventory! Nu har du köpt {ItemsForSale[chosenMetal].Name}!");
-                character.AccountBalance = character.AccountBalance - ItemsForSale[chosenMetal].Value * amountOfMetal;
-
-                Market.AdjustTextToTheRight(13);
-                Thread.Sleep(1000);
-                System.Console.WriteLine("Klicka [ENTER] för att fortsätta spela.");
-                Console.ReadKey();
-                CleanTextToTheRight();
-
-                break;
-            }
-        }
-    }
-
-    // min tanke är att kapsla in denna metod, för den ska bara kunna användas i sell-metoden och ingen annanstans. Denna metod gör koden mer modulär och minskar redundans.
-    private bool ValidatePurchase(int chosenMetalIndex, int amountOfMetal, Character character)
+    public bool ValidatePurchase(int chosenMetalIndex, int amountOfMetal, Player player)
     {
         if (chosenMetalIndex < 0 || chosenMetalIndex >= ItemsForSale.Count)
         {
             Market.AdjustTextToTheRight(22);
             System.Console.WriteLine("Felkod: Vänligen välj ett giltigt alternativ mellan 1 och " + ItemsForSale.Count);
             Console.ReadKey();
-            CleanTextToTheRight();
+            HelpClass.CleanTextToTheRight();
             return false;
         }
 
@@ -249,7 +62,7 @@ public class Merchant
                 Market.AdjustTextToTheRight(22);
                 System.Console.WriteLine($"Felkod: Det finns endast {chosenMetal.AmountAvailableAtMerchant} kvar i lager.");
                 Console.ReadKey();
-                CleanTextToTheRight();
+                HelpClass.CleanTextToTheRight();
                 return false;
             }
             else if (amountOfMetal < 1)
@@ -257,20 +70,20 @@ public class Merchant
                 Market.AdjustTextToTheRight(22);
                 System.Console.WriteLine("Du kan inte köpa 0 st.");
                 Console.ReadKey();
-                CleanTextToTheRight();
+                HelpClass.CleanTextToTheRight();
                 return false;
             }
         }
 
-        int totalCost = chosenMetal.Value * amountOfMetal;
+        double totalCost = chosenMetal.Value * amountOfMetal;
 
-        if (totalCost > character.AccountBalance)
+        if (totalCost > player.AccountBalance)
         {
-            int missingMoney = totalCost - character.AccountBalance;
+            double missingMoney = totalCost - player.AccountBalance;
             Market.AdjustTextToTheRight(22);
             System.Console.WriteLine($"Felkod: Du har för lite pengar. Det saknas {missingMoney}kr.");
             Console.ReadKey();
-            CleanTextToTheRight();
+            HelpClass.CleanTextToTheRight();
             return false;
         }
 
@@ -278,15 +91,8 @@ public class Merchant
         return true;
     }
 
-    // Metod för att rensa köpinformationen specifikt utan att röra spelplanen
-    public static void CleanTextToTheRight()
-    {
-        for (int i = 0; i <= 39; i++) // Radintervallet för köpinformation
-        {
-            Market.AdjustTextToTheRight(i); // Justerar för att rensa texten till höger
-            Console.Write(new string(' ', Console.WindowWidth - 81)); // Rensar varje rad under handlarens text
-        }
-    }
+
+
 
     public static void DisplayDetailedProductInfo(Merchandise merchandise)
     {
@@ -355,4 +161,13 @@ public class Merchant
         Market.AdjustTextToTheRight(22);
         System.Console.WriteLine($"Hur många {ItemsForSale[chosenMetal - 1].Name} vill du köpa?");
     }
+
+    // public static double GenerateDailyUpdateFactor(Merchandise merchandise)
+    // {
+    //     Random random = new Random();
+
+    //     double randomFactor = random.NextDouble() * (merchandise.VolatilityNumHigh - merchandise.VolatilityNumLow) + merchandise.VolatilityNumLow;
+
+    //     return randomFactor;
+    // }
 }

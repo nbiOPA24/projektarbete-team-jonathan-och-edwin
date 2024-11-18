@@ -10,10 +10,7 @@ public class Program
 {
     public static void Main()
     {
-<<<<<<< HEAD
-=======
         //Skriver ut början av programmet genom att anropa menyklassen samt ha med loopen för en ny dag så att spelet kan börja.
->>>>>>> origin/EdwinBranch
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
@@ -27,18 +24,10 @@ public class Program
     //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
     //Även en loop inlagd så att det blir en ny dag.
     public static void NewDayLoop()
-<<<<<<< HEAD
     {
-        Random random = new Random();
-        int NumberOfRounds = 10;
-        // Character.CheckForBankruptcy();
-        for (int day = 1; day <= NumberOfRounds; day++)
-=======
-    {   
         Random random = new Random(); //Random för att randomisera vilket av 5 meddelanden som ska returneras när man väljer ja eller nej.
         int NumberOfRounds = 10; //Antar dagar som spelet pågår.
         for (int day = 1; day <= NumberOfRounds; day++) // En for-loop som pågår tills rundorna är slut
->>>>>>> origin/EdwinBranch
         {
 
             Console.Clear();
@@ -59,10 +48,7 @@ public class Program
 
                 System.Console.WriteLine(yesMessage[random.Next(yesMessage.Length)]); // Skriver ut ett av meddelandena i Arrayn.
                 System.Console.WriteLine("Tryck [ENTER] för att äntra marknaden...");
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/EdwinBranch
                 Console.ReadKey();
 
                 GameLoop(); //Här skriver vi ut själva game-loopen.
@@ -103,50 +89,32 @@ public class Program
 
     public static void GameLoop()
     {
-        // skapar en instans av Market som heter market
         Market market = new Market(27, 80);
 
-<<<<<<< HEAD
         // Skapar en karaktär och laddar in data från json-filen
-        Character character = Character.LoadFromJson("JsonHandler.json");
+        Player player = HelpClass.LoadFromJson("JsonHandler.json");
 
-        if (character == null)
+        if (player == null)
         {
             // Om programmet inte hittar filen i datorn, skapa en ny karaktär
-            character = new Character();
+            player = new Player();
         }
-=======
-        //Skapa player character samt ger den en position på spelbrädet.
-        Character character = new Character("Busiga investeraren", 1000);
+
         int posX = 2, posY = 2;
         int previousPosX = posX, previousPosY = posY;
->>>>>>> origin/EdwinBranch
 
-        // Skapa handlare
         Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 10000);
 
-        // Skapa metaller
-        Merchandise Gold = new Merchandise("Gold", 200, 0.95, 1.05, "-5% - +5%", 10, 0);
+        Merchandise Gold = new Merchandise("Guld", 200, 0.95, 1.05, "-5% - +5%", 10, 0);
         Merchandise Silver = new Merchandise("Silver", 180, 0.93, 1.07, "-7% - +7%", 10, 0);
-        Merchandise Bronze = new Merchandise("Bronze", 70, 0.85, 1.15, "-15% - +15%", 10, 0);
-        Merchandise Copper = new Merchandise("Copper", 120, 0.85, 1.15, "-15% - +15%", 10, 0);
+        Merchandise Bronze = new Merchandise("Brons", 70, 0.85, 1.15, "-15% - +15%", 10, 0);
+        Merchandise Copper = new Merchandise("Koppar", 120, 0.85, 1.15, "-15% - +15%", 10, 0);
         Merchandise Platinum = new Merchandise("Platinum", 300, 0.92, 1.08, "-8% - +8%", 10, 0);
         Merchandise Palladium = new Merchandise("Palladium", 250, 0.9, 1.1, "-10% - +10%", 10, 0);
         Merchandise Indium = new Merchandise("Indium", 150, 0.7, 1.3, "-30% - +30%", 10, 0);
-        Merchandise Tin = new Merchandise("Tin", 100, 0.85, 1.15, "-15% - +15%", 10, 0);
-       
-        StableMetalMerchant.UpdatePrice(Gold);
-        StableMetalMerchant.UpdatePrice(Silver);
-        StableMetalMerchant.UpdatePrice(Platinum);
-        StableMetalMerchant.UpdatePrice(Palladium);
+        Merchandise Tin = new Merchandise("Tenn", 100, 0.85, 1.15, "-15% - +15%", 10, 0);
 
-        VolatileMetalMerchant.UpdatePrice(Bronze);
-        VolatileMetalMerchant.UpdatePrice(Copper);
-        VolatileMetalMerchant.UpdatePrice(Indium);
-        VolatileMetalMerchant.UpdatePrice(Tin);
-
-        // Lägg till metaller till handlare
         StableMetalMerchant.ItemsForSale.Add(Gold);
         StableMetalMerchant.ItemsForSale.Add(Silver);
         VolatileMetalMerchant.ItemsForSale.Add(Bronze);
@@ -155,6 +123,24 @@ public class Program
         StableMetalMerchant.ItemsForSale.Add(Palladium);
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
+
+        PriceHandler.CalculateNewPrice(Gold);
+        PriceHandler.CalculateNewPrice(Silver);
+        PriceHandler.CalculateNewPrice(Bronze);
+        PriceHandler.CalculateNewPrice(Copper);
+        PriceHandler.CalculateNewPrice(Platinum);
+        PriceHandler.CalculateNewPrice(Palladium);
+        PriceHandler.CalculateNewPrice(Indium);
+        PriceHandler.CalculateNewPrice(Tin);
+
+        PriceHandler.SetNewPrice(Gold);
+        PriceHandler.SetNewPrice(Silver);
+        PriceHandler.SetNewPrice(Bronze);
+        PriceHandler.SetNewPrice(Copper);
+        PriceHandler.SetNewPrice(Platinum);
+        PriceHandler.SetNewPrice(Palladium);
+        PriceHandler.SetNewPrice(Indium);
+        PriceHandler.SetNewPrice(Tin);
 
         //Skriv ut spelplanen:
         DrawGameBoard(market);
@@ -166,7 +152,7 @@ public class Program
         System.Console.WriteLine("🧑");
 
         //SpelKaraktärens Hus
-        Market.PlaceCharacterHome(0, 13);
+        Market.PlacePlayerHome(0, 13);
 
         // Trollkarlen
         Market.PlaceMerchantsBuildings(66, 1);
@@ -218,21 +204,16 @@ public class Program
                     break;
 
                 case ConsoleKey.I:
-                    character.DisplayPlayerInventory(character);
+                    player.DisplayPlayerInventory(player);
                     System.Console.WriteLine();
                     System.Console.ReadKey(true);
                     break;
 
                 case ConsoleKey.P:
-                    character.DisplayAccountBalance(character);
+                    player.DisplayAccountBalance(player);
                     System.Console.ReadKey(true);
-                    Merchant.CleanTextToTheRight();
+                    HelpClass.CleanTextToTheRight();
                     break;
-
-                // case ConsoleKey.S: // la till detta så spelaren kan spara spelet
-                //     character.SaveToJson("playerData.json");
-                //     Console.WriteLine("Spelet har sparats!");
-                //     break;
 
                 case ConsoleKey.Z:
                     Merchant.DisplayDetailedProductInfo(Gold);
@@ -262,19 +243,17 @@ public class Program
             // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
-                VolatileMetalMerchant.Sell(character);
+                player.Buy(player, StableMetalMerchant);
             }
 
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
-                StableMetalMerchant.Sell(character);
+                player.Buy(player, VolatileMetalMerchant);
             }
 
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
-                // Character.SaveToJson(character, "JsonHandler.json");
-                character.UpdateInventoryPrices(StableMetalMerchant);
-                character.UpdateInventoryPrices(VolatileMetalMerchant);
+                // Player.SaveToJson(player, "JsonHandler.json");
                 MakeTheMarketSleep();
                 return;
             }
@@ -300,15 +279,17 @@ public class Program
 
         if (answer.ToLower() == "ja" || answer.ToLower() == "yes")
         {
-            
             Console.Clear();
             MenuClass.TypeWrite("Marknaden sover nu...");
+            Thread.Sleep(1000);
+            System.Console.WriteLine();
+            MenuClass.TypeWrite("Uppdaterar priser på marknadens metaller...");
             Thread.Sleep(1000);
             System.Console.WriteLine();
             MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
             Console.ReadKey();
 
-            
+
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
         {
