@@ -26,12 +26,12 @@ public class Program
     //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
     //Även en loop inlagd så att det blir en ny dag.
     public static void NewDayLoop()
-    {   
+    {
         Random random = new Random(); //Random för att randomisera vilket av 5 meddelanden som ska returneras när man väljer ja eller nej.
         int NumberOfRounds = 10; //Antar dagar som spelet pågår.
         for (int day = 1; day <= NumberOfRounds; day++) // En for-loop som pågår tills rundorna är slut
         {
-            
+
             Console.Clear();
             System.Console.WriteLine($"======================= DAG {day} =======================");
             System.Console.WriteLine("Vill du gå till marknaden idag eller inte tro?\nSkriv ja eller nej.");
@@ -87,7 +87,7 @@ public class Program
         System.Console.ReadKey();
 
     }
-    
+
 
     public static void GameLoop()
     {
@@ -118,7 +118,7 @@ public class Program
         StableMetalMerchant.UpdatePrice(Platinum);
         StableMetalMerchant.UpdatePrice(Palladium);
 
-        VolatileMetalMerchant.UpdatePrice(Bronze);  
+        VolatileMetalMerchant.UpdatePrice(Bronze);
         VolatileMetalMerchant.UpdatePrice(Copper);
         VolatileMetalMerchant.UpdatePrice(Indium);
         VolatileMetalMerchant.UpdatePrice(Tin);
@@ -232,12 +232,44 @@ public class Program
             // Kontrollera om spelaren är nära någon av handlarna för att möjliggöra köp
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
-                VolatileMetalMerchant.Sell(character);
+                Market.AdjustTextToTheRight(0);
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
+                if (Console.ReadLine()?.ToLower() == "köpa")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    character.Buy(VolatileMetalMerchant);
+                }
+                else if (Console.ReadLine()?.ToLower() == "sälja")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    character.Sell(VolatileMetalMerchant);
+                }
+                else
+                {
+                    Market.AdjustTextToTheRight(0);
+                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                }
             }
 
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
-                StableMetalMerchant.Sell(character);
+                Market.AdjustTextToTheRight(0);
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
+                if (Console.ReadLine()?.ToLower() == "köpa")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    character.Buy(StableMetalMerchant);
+                }
+                else if (Console.ReadLine()?.ToLower() == "sälja")
+                {
+                    HelpClass.CleanTextToTheRight();
+                    character.Sell(StableMetalMerchant);
+                }
+                else
+                {
+                    Market.AdjustTextToTheRight(0);
+                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                }
             }
 
             if (Math.Abs(posX - 35) < 1 && Math.Abs(posY - 15) <= 1)
@@ -260,7 +292,7 @@ public class Program
 
     public static void MakeTheMarketSleep()
     {
-        
+
         Market.AdjustTextToTheRight(0);
         System.Console.WriteLine("Vill du starta nästa dag?");
         Market.AdjustTextToTheRight(1);
@@ -279,7 +311,7 @@ public class Program
             GameLoop();
         }
     }
-    
+
     private static void DrawGameBoard(Market market)
     {
         Console.Clear();
