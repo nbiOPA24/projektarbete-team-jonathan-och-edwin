@@ -6,9 +6,9 @@ using MarketMaster1.Classes;
 
 public class Player
 {
-    //Deklarerar Namn,Pengar på användarens konto samt skapar en lista för användarens inventory
+    // Deklarerar Namn, Pengar på användarens konto samt skapar en lista för användarens inventory
     public string Name { get; set; }
-    public double AccountBalance { get; set; }
+    public int AccountBalance { get; set; }
     public List<Merchandise> PlayerInventory { get; set; }
     
     public Player()
@@ -143,7 +143,7 @@ public class Player
                 int amountLeft = merchant.ItemsForSale[chosenMetal].AmountAvailableAtMerchant - amountOfMetal;
                 merchant.ItemsForSale[chosenMetal].AmountAvailableAtMerchant = amountLeft;
 
-                double updatedAccountBalance = player.AccountBalance - merchant.ItemsForSale[chosenMetal].Value * amountOfMetal;
+                int updatedAccountBalance = player.AccountBalance - merchant.ItemsForSale[chosenMetal].Value * amountOfMetal;
                 player.AccountBalance = updatedAccountBalance; // sätter egenskapen "AccountBalance" till variabeln updatedAccountBalance, så att det uppdateras varje varv
 
                 double updatedMerchantAccountBalance = merchant.MerchantAccountBalance + merchant.ItemsForSale[chosenMetal].Value * amountOfMetal;
@@ -178,15 +178,12 @@ public class Player
                     // Hitta objektet i inventoryt och uppdatera mängden
                     var metal = player.PlayerInventory.First(m => m.Name == merchant.ItemsForSale[chosenMetal].Name);
                     metal.QuantityInPlayerInventory += amountOfMetal;
-                    HelpClass.SaveToJson(player, "JsonHandler.json");
                 }
                 else
                 {
                     // Lägg till objektet i inventoryt (referens, inte kopia)
                     var metalToAdd = merchant.ItemsForSale[chosenMetal];
                     player.PlayerInventory.Add(metalToAdd); // Detta garanterar att inventoryt får samma referens som marknaden.
-
-                    HelpClass.SaveToJson(player, "JsonHandler.json");
                 }
 
 
@@ -231,7 +228,7 @@ public class Player
                 continue;
             }
             //Kolla om säljaren faktiskt kan köpa varorna användaren vill sälja
-            double totalSaleValue = selectedItem.Value * quantity;
+            int totalSaleValue = selectedItem.Value * quantity;
 
             if (totalSaleValue > merchant.MerchantAccountBalance)
             {

@@ -123,24 +123,54 @@ public class Program
         StableMetalMerchant.ItemsForSale.Add(Palladium);
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
+        
 
-        PriceHandler.CalculateNewPrice(Gold);
-        PriceHandler.CalculateNewPrice(Silver);
-        PriceHandler.CalculateNewPrice(Bronze);
-        PriceHandler.CalculateNewPrice(Copper);
-        PriceHandler.CalculateNewPrice(Platinum);
-        PriceHandler.CalculateNewPrice(Palladium);
-        PriceHandler.CalculateNewPrice(Indium);
-        PriceHandler.CalculateNewPrice(Tin);
+        Gold.Value = (int)PriceHandler.CalculateNewPrice(Gold);
+        Silver.Value = (int)PriceHandler.CalculateNewPrice(Silver);
+        Bronze.Value = (int)PriceHandler.CalculateNewPrice(Bronze);
+        Copper.Value = (int)PriceHandler.CalculateNewPrice(Copper);
+        Platinum.Value = (int)PriceHandler.CalculateNewPrice(Platinum);
+        Palladium.Value = (int)PriceHandler.CalculateNewPrice(Palladium);
+        Indium.Value = (int)PriceHandler.CalculateNewPrice(Indium);
+        Tin.Value = (int)PriceHandler.CalculateNewPrice(Tin);
 
-        PriceHandler.SetNewPrice(Gold);
-        PriceHandler.SetNewPrice(Silver);
-        PriceHandler.SetNewPrice(Bronze);
-        PriceHandler.SetNewPrice(Copper);
-        PriceHandler.SetNewPrice(Platinum);
-        PriceHandler.SetNewPrice(Palladium);
-        PriceHandler.SetNewPrice(Indium);
-        PriceHandler.SetNewPrice(Tin);
+        foreach (var m in player.PlayerInventory)
+        {
+            if (m.Name == "Guld")
+            {
+                m.Value = Gold.Value;
+            }
+            else if (m.Name == "Silver")
+            {
+                m.Value = Silver.Value;
+            }
+            else if (m.Name == "Brons")
+            {
+                m.Value = Bronze.Value;
+            }
+            else if (m.Name == "Koppar")
+            {
+                m.Value = Copper.Value;
+            }
+            else if (m.Name == "Platinum")
+            {
+                m.Value = Platinum.Value;
+            }
+            else if (m.Name == "Palladium")
+            {
+                m.Value = Palladium.Value;
+            }
+            else if (m.Name == "Indium")
+            {
+                m.Value = Indium.Value;
+            }
+            else if (m.Name == "Tin")
+            {
+                m.Value = Tin.Value;
+            }
+        }
+        
+        HelpClass.SaveToJson(player, "JsonHandler.json");
 
         //Skriv ut spelplanen:
         DrawGameBoard(market);
@@ -157,14 +187,8 @@ public class Program
         // Trollkarlen
         Market.PlaceMerchantsBuildings(66, 1);
 
-
         // Gubben
         Market.PlaceMerchantsBuildings(66, 13);
-
-
-        // Market.PlaceDecoration(11, 38);
-
-
 
         // Målar ut försäljare av volatila metaller
         Console.SetCursorPosition(72, 5);
@@ -244,16 +268,18 @@ public class Program
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
                 player.Buy(player, StableMetalMerchant);
+                HelpClass.SaveToJson(player, "JsonHandler.json");
             }
 
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
                 player.Buy(player, VolatileMetalMerchant);
+                HelpClass.SaveToJson(player, "JsonHandler.json");
             }
 
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
-                // Player.SaveToJson(player, "JsonHandler.json");
+                HelpClass.SaveToJson(player, "JsonHandler.json");
                 MakeTheMarketSleep();
                 return;
             }

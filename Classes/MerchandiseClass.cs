@@ -3,9 +3,7 @@ using Newtonsoft.Json;
 public class Merchandise
 {
     public string Name { get; set; }
-
-    [JsonConverter(typeof(IntToDoubleConverter))] // detta låter JSON läsa vår double value som en integer
-    public double Value { get; set; }
+    public int Value { get; set; }
     public double VolatilityNumLow { get; set; } // Används för att räkna ut nytt pris på valfri ädelmetall, detta används som den lägre siffran för att räkna ut procent
     public double VolatilityNumHigh { get; set; } // Används för att räkna ut nytt pris på valfri ädelmetall, detta används som den högre siffran för att räkna ut procent
     public string VolatilityInAString {get; set;} // för att visa användaren hur mycket/lite en metall svänger i pris

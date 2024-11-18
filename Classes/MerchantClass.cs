@@ -10,7 +10,7 @@ public class Merchant
 {
 
     public string Name { get; set; }
-    public double MerchantAccountBalance { get; set; }
+    public int MerchantAccountBalance { get; set; }
 
     // Lista som lagrar alla metaller som säljs av handlarn
     public List<Merchandise> ItemsForSale { get; set; }
