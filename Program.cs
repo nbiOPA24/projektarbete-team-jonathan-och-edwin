@@ -228,7 +228,7 @@ public class Program
                     break;
 
                 case ConsoleKey.I:
-                    player.DisplayPlayerInventory(player);
+                    player.DisplayPlayerInventory(player, 1);
                     System.Console.WriteLine();
                     System.Console.ReadKey(true);
                     break;
@@ -269,22 +269,25 @@ public class Program
             {
                 HelpClass.SaveToJson(player, "JsonHandler.json");
                 Market.AdjustTextToTheRight(0);
-                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
-                if (Console.ReadLine()?.ToLower() == "köpa")
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv '1' för att köpa eller '2' för att sälja.");
+                Market.AdjustTextToTheRight(1);
+
+                int input = int.Parse(Console.ReadLine());
+                if (input == 1)
                 {
                     HelpClass.CleanTextToTheRight();
                     player.Buy(player,VolatileMetalMerchant);
                 }
-                else if (Console.ReadLine()?.ToLower() == "sälja")
+                else if (input == 2)
                 {
                     HelpClass.CleanTextToTheRight();
                     player.Sell(player);
                 }
-                else
-                {
-                    Market.AdjustTextToTheRight(0);
-                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
-                }
+                // else
+                // {
+                //     Market.AdjustTextToTheRight(0);
+                //     System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                // }
             }
 
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
@@ -292,6 +295,7 @@ public class Program
                 HelpClass.SaveToJson(player, "JsonHandler.json");
                 Market.AdjustTextToTheRight(0);
                 System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
+                Market.AdjustTextToTheRight(1);
                 if (Console.ReadLine()?.ToLower() == "köpa")
                 {
                     HelpClass.CleanTextToTheRight();
