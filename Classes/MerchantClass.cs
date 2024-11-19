@@ -32,7 +32,7 @@ public class Merchant
 
         foreach (var i in ItemsForSale)
         {
-            Market.AdjustTextToTheRight(j);
+            HelpClass.AdjustTextToTheRight(j);
             System.Console.Write(y + ". " + "Metall: " + i.Name + ", Nuvarande värde: " + i.Value + "kr");
 
             j += 3;
@@ -46,7 +46,7 @@ public class Merchant
     {
         if (chosenMetalIndex < 0 || chosenMetalIndex >= ItemsForSale.Count)
         {
-            Market.AdjustTextToTheRight(22);
+            HelpClass.AdjustTextToTheRight(22);
             System.Console.WriteLine("Felkod: Vänligen välj ett giltigt alternativ mellan 1 och " + ItemsForSale.Count);
             Console.ReadKey();
             HelpClass.CleanTextToTheRight();
@@ -59,7 +59,7 @@ public class Merchant
         {
             if (amountOfMetal > chosenMetal.AmountAvailableAtMerchant)
             {
-                Market.AdjustTextToTheRight(22);
+                HelpClass.AdjustTextToTheRight(22);
                 System.Console.WriteLine($"Felkod: Det finns endast {chosenMetal.AmountAvailableAtMerchant} kvar i lager.");
                 Console.ReadKey();
                 HelpClass.CleanTextToTheRight();
@@ -67,7 +67,7 @@ public class Merchant
             }
             else if (amountOfMetal < 1)
             {
-                Market.AdjustTextToTheRight(22);
+                HelpClass.AdjustTextToTheRight(22);
                 System.Console.WriteLine("Du kan inte köpa 0 st.");
                 Console.ReadKey();
                 HelpClass.CleanTextToTheRight();
@@ -80,7 +80,7 @@ public class Merchant
         if (totalCost > player.AccountBalance)
         {
             double missingMoney = totalCost - player.AccountBalance;
-            Market.AdjustTextToTheRight(22);
+            HelpClass.AdjustTextToTheRight(22);
             System.Console.WriteLine($"Felkod: Du har för lite pengar. Det saknas {missingMoney}kr.");
             Console.ReadKey();
             HelpClass.CleanTextToTheRight();
@@ -107,11 +107,11 @@ public class Merchant
 
                     foreach (var i in ItemsForDisplay)
                     {
-                        Market.AdjustTextToTheRight(0);
+                        HelpClass.AdjustTextToTheRight(0);
                         System.Console.WriteLine($"Metall: {ItemsForDisplay[x].Name}");
-                        Market.AdjustTextToTheRight(2);
+                        HelpClass.AdjustTextToTheRight(2);
                         System.Console.WriteLine($"Värde denna runda: {ItemsForDisplay[x].Value}kr");
-                        Market.AdjustTextToTheRight(4);
+                        HelpClass.AdjustTextToTheRight(4);
                         System.Console.WriteLine($"Prisförändring varje runda: {ItemsForDisplay[x].VolatilityInAString}");
 
                     }
@@ -128,17 +128,17 @@ public class Merchant
         {
             DisplayAllItems();
 
-            Market.AdjustTextToTheRight(17);
+            HelpClass.AdjustTextToTheRight(17);
             System.Console.WriteLine("Vilken metall vill du köpa (1-4)?");
 
-            Market.AdjustTextToTheRight(18);
+            HelpClass.AdjustTextToTheRight(18);
             string input = Console.ReadLine();
 
             if (int.TryParse(input, out int chosenMetal))
             {
                 if (chosenMetal >= 1 && chosenMetal <= ItemsForSale.Count)
                 {
-                    Market.AdjustTextToTheRight(20);
+                    HelpClass.AdjustTextToTheRight(20);
                     System.Console.WriteLine($"Du har valt att köpa {ItemsForSale[chosenMetal - 1].Name}.");
                     AskForAmount(chosenMetal);
 
@@ -158,7 +158,7 @@ public class Merchant
 
     public void AskForAmount(int chosenMetal)
     {
-        Market.AdjustTextToTheRight(22);
+        HelpClass.AdjustTextToTheRight(22);
         System.Console.WriteLine($"Hur många {ItemsForSale[chosenMetal - 1].Name} vill du köpa?");
     }
 

@@ -16,9 +16,9 @@ vecka 45:
 
 [❌]. [E] Kolla om man kan förstora ikoner för gubbar osv.
 
-[❌]. [JE] Kolla in Json.
-[❌]. [JE] Kolla in kontobalansen som står efter du köpt
-[❌]. [JE] Kolla in kontobalansen som står när du trycker på P
+[✔️]. [JE] Kolla in Json.
+[✔️]. [JE] Kolla in kontobalansen som står efter du köpt
+[✔️]. [JE] Kolla in kontobalansen som står när du trycker på P
 
 
 
@@ -26,7 +26,7 @@ vecka 46:
 
 [❌]. [JE] Fixa Exeptions.
 
-[❌]. [JE] Fixa småsaker.
+[✔️]. [JE] Fixa småsaker.
 
 [❌]. 
 

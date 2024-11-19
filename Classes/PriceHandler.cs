@@ -14,6 +14,7 @@ public class PriceHandler
 
             return merchandiseNewValue;    
     }
+    
 
     // public static void SetNewPrice(Merchandise merchandise)
     // {

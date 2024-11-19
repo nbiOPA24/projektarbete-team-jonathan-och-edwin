@@ -62,7 +62,7 @@ public class MenuClass
     {
         for (int i = 0; i <= 39; i++) // Radintervallet för köpinformation
         {
-            Market.AdjustTextToTheRight(i); // Justerar för att rensa texten till höger
+            HelpClass.AdjustTextToTheRight(i); // Justerar för att rensa texten till höger
             Console.Write(new string(' ', Console.WindowWidth - 81)); // Rensar varje rad under handlarens text
         }
     }

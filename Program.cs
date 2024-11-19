@@ -10,6 +10,7 @@ public class Program
 {
     public static void Main()
     {
+        Console.CursorVisible = false;
         //Skriver ut början av programmet genom att anropa menyklassen samt ha med loopen för en ny dag så att spelet kan börja.
         Console.Clear();
         // MenuClass.StartMenu();
@@ -123,7 +124,7 @@ public class Program
         StableMetalMerchant.ItemsForSale.Add(Palladium);
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
-        
+
 
         Gold.Value = (int)PriceHandler.CalculateNewPrice(Gold);
         Silver.Value = (int)PriceHandler.CalculateNewPrice(Silver);
@@ -169,7 +170,7 @@ public class Program
                 m.Value = Tin.Value;
             }
         }
-        
+
         HelpClass.SaveToJson(player, "JsonHandler.json");
 
         //Skriv ut spelplanen:
@@ -268,20 +269,20 @@ public class Program
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 5) <= 1)
             {
                 HelpClass.SaveToJson(player, "JsonHandler.json");
-                Market.AdjustTextToTheRight(0);
+                HelpClass.AdjustTextToTheRight(0);
                 System.Console.WriteLine("Vill du Köpa eller sälja? Skriv '1' för att köpa eller '2' för att sälja.");
-                Market.AdjustTextToTheRight(1);
+                HelpClass.AdjustTextToTheRight(1);
 
                 int input = int.Parse(Console.ReadLine());
                 if (input == 1)
                 {
                     HelpClass.CleanTextToTheRight();
-                    player.Buy(player,VolatileMetalMerchant);
+                    player.Buy(player, VolatileMetalMerchant);
                 }
                 else if (input == 2)
                 {
                     HelpClass.CleanTextToTheRight();
-                    player.Sell(player);
+                    player.Sell(player, VolatileMetalMerchant);
                 }
                 // else
                 // {
@@ -293,26 +294,30 @@ public class Program
             if (Math.Abs(posX - 70) < 2 && Math.Abs(posY - 17) <= 1)
             {
                 HelpClass.SaveToJson(player, "JsonHandler.json");
-                Market.AdjustTextToTheRight(0);
-                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv 'Köpa' eller 'Sälja'.");
-                Market.AdjustTextToTheRight(1);
-                if (Console.ReadLine()?.ToLower() == "köpa")
+                HelpClass.AdjustTextToTheRight(0);
+                System.Console.WriteLine("Vill du Köpa eller sälja? Skriv '1' för att köpa eller '2' för att sälja.");
+                HelpClass.AdjustTextToTheRight(1);
+
+                if (int.TryParse(Console.ReadLine(), out int input))
                 {
-                    HelpClass.CleanTextToTheRight();
-                    player.Buy(player,StableMetalMerchant);
-                }
-                else if (Console.ReadLine()?.ToLower() == "sälja")
-                {
-                    HelpClass.CleanTextToTheRight();
-                    player.Sell(player);
-                }
-                else
-                {
-                    Market.AdjustTextToTheRight(0);
-                    System.Console.WriteLine("Du har skrivit fel. Vänligen skriv Köpa eller Sälja.");
+                    if (input < 0 || input > 2)
+                    {
+                        System.Console.WriteLine("Ange 1 eller 2.");
+                        return;
+                    }
+                    else if (input == 1)
+                    {
+                        HelpClass.CleanTextToTheRight();
+                        player.Buy(player, StableMetalMerchant);
+                    }
+                    else if (input == 2)
+                    {
+                        HelpClass.CleanTextToTheRight();
+                        player.Sell(player, StableMetalMerchant);
+                    }
                 }
             }
-
+            
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
                 HelpClass.SaveToJson(player, "JsonHandler.json");
@@ -334,9 +339,9 @@ public class Program
 
     public static void MakeTheMarketSleep()
     {
-        Market.AdjustTextToTheRight(0);
+        HelpClass.AdjustTextToTheRight(0);
         System.Console.WriteLine("Vill du starta nästa dag?");
-        Market.AdjustTextToTheRight(1);
+        HelpClass.AdjustTextToTheRight(1);
         string answer = Console.ReadLine();
 
         if (answer.ToLower() == "ja" || answer.ToLower() == "yes")
@@ -362,6 +367,8 @@ public class Program
     private static void DrawGameBoard(Market market)
     {
         Console.Clear();
+        Console.BackgroundColor = ConsoleColor.Yellow;
+        Console.ForegroundColor = ConsoleColor.Black;
         // Övre kant
         Console.Write("╔");
         for (int x = 0; x < market.Width - 2; x++) Console.Write("═");

@@ -77,20 +77,11 @@ public class Market
     }
 
 
-    // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
-    public static void AdjustTextToTheRight(int y)
-    {
-        Console.SetCursorPosition(81, y);
-    }
-    //Samma som ovan fast man skickar inparameter om x-axeln.
-    public static void AdjustTextToTheBottom(int x)
-    {
-        Console.SetCursorPosition(x, 27);
-    }
+
 
     public static void DisplayInfo() // skriver ut spelets regler samt vilken position det ska skrivas ut på.
     {
-        AdjustTextToTheBottom(0);
+        HelpClass.AdjustTextToTheBottom(0);
         System.Console.WriteLine("Spelets regler:");
         System.Console.WriteLine();
         DisplayRules();
