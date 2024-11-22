@@ -8,10 +8,13 @@ using MarketMaster1.Classes;
 
 public class Program
 {
+    
+    private static Player player;
     public static void Main()
     {
+        //Tar bort "muspekaren"
         Console.CursorVisible = false;
-        //Skriver ut början av programmet genom att anropa menyklassen samt ha med loopen för en ny dag så att spelet kan börja.
+        
         Console.Clear();
         // MenuClass.StartMenu();
         Console.ReadKey();
@@ -20,10 +23,6 @@ public class Program
 
         Thread.Sleep(1800);
     }
-
-    //Kod för meddelande som visas efter ny påbörjad dag.
-    //slumpar fram ett av följande meddelanden beroende på om personen vill gå till marknaden idag eller inte.
-    //Även en loop inlagd så att det blir en ny dag.
     public static void NewDayLoop()
     {
         Random random = new Random(); //Random för att randomisera vilket av 5 meddelanden som ska returneras när man väljer ja eller nej.
@@ -81,6 +80,7 @@ public class Program
         }
         //Avslut på spelet. Skriver ut inventoryt så man kan se hur bra det gick för användaren.
         System.Console.WriteLine("Nu är alla spelrundor slut! Hur bra gick det för dig? Press [Enter] för att få ditt slutgiltiga inventory, sedan [Enter] igen för att avsluta spelet!");
+        MenuClass.EndGameScreen(player);
         System.Console.ReadKey();
         System.Console.Clear();
         System.Console.ReadKey();
@@ -90,21 +90,8 @@ public class Program
 
     public static void GameLoop()
     {
-        Market market = new Market(27, 80);
-
-        // Skapar en karaktär och laddar in data från json-filen
-        Player player = HelpClass.LoadFromJson("JsonHandler.json");
-
-        if (player == null)
-        {
-            // Om programmet inte hittar filen i datorn, skapa en ny karaktär
-            player = new Player();
-        }
-
-        int posX = 2, posY = 2;
-        int previousPosX = posX, previousPosY = posY;
-
-        Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
+        player = HelpClass.LoadFromJson("JsonHandler.json");
+                Merchant StableMetalMerchant = new Merchant("Stable metal merchant", 10000);
         Merchant VolatileMetalMerchant = new Merchant("Volatile metal merchant", 10000);
 
         Merchandise Gold = new Merchandise("Guld", 200, 0.95, 1.05, "-5% - +5%", 10, 0);
@@ -125,7 +112,6 @@ public class Program
         VolatileMetalMerchant.ItemsForSale.Add(Indium);
         VolatileMetalMerchant.ItemsForSale.Add(Tin);
 
-
         Gold.Value = (int)PriceHandler.CalculateNewPrice(Gold);
         Silver.Value = (int)PriceHandler.CalculateNewPrice(Silver);
         Bronze.Value = (int)PriceHandler.CalculateNewPrice(Bronze);
@@ -134,6 +120,13 @@ public class Program
         Palladium.Value = (int)PriceHandler.CalculateNewPrice(Palladium);
         Indium.Value = (int)PriceHandler.CalculateNewPrice(Indium);
         Tin.Value = (int)PriceHandler.CalculateNewPrice(Tin);
+        
+        Market market = new Market(27, 80);
+
+        int posX = 2, posY = 2;
+        int previousPosX = posX, previousPosY = posY;
+
+
 
         foreach (var m in player.PlayerInventory)
         {
@@ -171,12 +164,22 @@ public class Program
             }
         }
 
+        Gold.UpdatePriceHistory(Gold.Value);
+        Silver.UpdatePriceHistory(Silver.Value);
+        Bronze.UpdatePriceHistory(Bronze.Value);
+        Copper.UpdatePriceHistory(Copper.Value);
+        Platinum.UpdatePriceHistory(Platinum.Value);
+        Palladium.UpdatePriceHistory(Palladium.Value);
+        Indium.UpdatePriceHistory(Indium.Value);
+        Tin.UpdatePriceHistory(Tin.Value);
+
         HelpClass.SaveToJson(player, "JsonHandler.json");
 
         //Skriv ut spelplanen:
         DrawGameBoard(market);
 
-        Market.DisplayInfo();
+        Market.DisplayInfo(market);
+        Market.DisplayRules(market);
 
         // detta sätter muspekaren på olika platser varje varv i loopen efter det uppdateras nedan (posX++, posY++ osv.)
         Console.SetCursorPosition(posX, posY);
@@ -240,8 +243,52 @@ public class Program
                     HelpClass.CleanTextToTheRight();
                     break;
 
-                case ConsoleKey.Z:
-                    Merchant.DisplayDetailedProductInfo(Gold);
+                case ConsoleKey.D1:
+                    Gold.DisplayPriceGraph(Gold, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D2:
+                    Silver.DisplayPriceGraph(Silver, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D3:
+                    Bronze.DisplayPriceGraph(Bronze, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D4:
+                    Copper.DisplayPriceGraph(Copper, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D5:
+                    Platinum.DisplayPriceGraph(Platinum, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D6:
+                    Palladium.DisplayPriceGraph(Palladium, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D7:
+                    Indium.DisplayPriceGraph(Indium, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
+                    break;
+
+                case ConsoleKey.D8:
+                    Tin.DisplayPriceGraph(Tin, market, player);
+                    Console.ReadKey(true);
+                    HelpClass.CleanTextToTheRight();
                     break;
 
                 case ConsoleKey.Escape:
@@ -317,10 +364,11 @@ public class Program
                     }
                 }
             }
-            
+
             if (Math.Abs(posX - 6) < 1 && Math.Abs(posY - 17) <= 1)
             {
                 HelpClass.SaveToJson(player, "JsonHandler.json");
+
                 MakeTheMarketSleep();
                 return;
             }
@@ -345,7 +393,9 @@ public class Program
         string answer = Console.ReadLine();
 
         if (answer.ToLower() == "ja" || answer.ToLower() == "yes")
-        {
+        {   
+
+            Merchandise.xOnGraph += 5;
             Console.Clear();
             MenuClass.TypeWrite("Marknaden sover nu...");
             Thread.Sleep(1000);
@@ -355,8 +405,6 @@ public class Program
             System.Console.WriteLine();
             MenuClass.TypeWrite("Tryck [ENTER] för att starta nästa dag... med nya priser");
             Console.ReadKey();
-
-
         }
         else if (answer.ToLower() == "NEJ" || answer.ToLower() == "NO")
         {
@@ -387,11 +435,6 @@ public class Program
         for (int x = 0; x < market.Width - 2; x++) Console.Write("═");
         Console.WriteLine("╝");
     }
-
-    public void CheckFault()
-    {
-
-    }
 }
 
 
@@ -402,11 +445,3 @@ public class Program
 
 
 
-// nedanstående ligger här för att snabbt kunna se vad bredden och höjden är på fönstret och buffern 
-
-// int bufferHeight = Console.BufferHeight;
-// int bufferWidth = Console.BufferWidth;
-// int windowHeight = Console.WindowHeight;
-// int windowWidth = Console.WindowWidth;
-
-// System.Console.WriteLine($"{bufferHeight} {bufferWidth} {windowHeight} {windowWidth}");

@@ -14,7 +14,7 @@ public class HelpClass
         }
     }
 
-        public static void SaveToJson(Player player, string fileName)
+    public static void SaveToJson(Player player, string fileName)
     {
         string json = JsonConvert.SerializeObject(player, Formatting.Indented);
         File.WriteAllText(fileName, json);
@@ -32,7 +32,7 @@ public class HelpClass
         return player;
     }
 
-        // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
+    // Detta är en metod du kan kalla på var du vill om du vill "högerjustera" texten! Du måste dock slänga in en siffra för att välja vart på y-axeln den ska hamna
     public static void AdjustTextToTheRight(int y)
     {
         Console.SetCursorPosition(81, y);

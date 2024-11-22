@@ -235,7 +235,6 @@ public class Player
                     HelpClass.SaveToJson(player, "JsonHandler.json");
                 }
 
-
                 Thread.Sleep(1500);
                 HelpClass.AdjustTextToTheRight(12);
                 MenuClass.TypeWrite($"Kolla din inventory! Nu har du köpt {merchant.ItemsForSale[chosenMetal].Name}!");
@@ -251,93 +250,4 @@ public class Player
             }
         }
     }
-    // public void Sell(Player player, Merchant merchant, List<Merchandise> itemsForSale)
-    // {
-    //     while (true)
-    //     {
-    //         //Visa spelarens inventory och fråga om vilken vara kunden/användaren vill sälja.
-    //         player.DisplayPlayerInventory(player, 0);
-    //         System.Console.WriteLine($"{Name}-'Vad har vill du försöka sälja tillbaka idag då?'");
-    //         System.Console.WriteLine("Ange ett nummer eller 0 för att avbryta säljet. ");
-    //         if (!int.TryParse(Console.ReadLine(), out int itemIndex) || itemIndex < 0 || itemIndex > player.PlayerInventory.Count)
-    //         {
-    //             //Skickar ett felmeddelande om användaren angivit ett felaktigt val.
-    //             System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
-    //             continue;
-    //         }
-    //         if (itemIndex == 0) break;
-
-    //         Merchandise selectedItem = player.PlayerInventory[itemIndex - 1];
-
-    //         //Fråga hur många items användaren vill sälja till handlaren inklusive felhantering
-    //         System.Console.WriteLine($"Hur många {selectedItem.Name} vill du sälja?");
-    //         if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0 || quantity > selectedItem.QuantityInPlayerInventory)
-    //         {
-    //             System.Console.WriteLine("Du har angett ett ogiltigt val. Testa en gång till :).");
-    //             continue;
-    //         }
-    //         //Kolla om säljaren faktiskt kan köpa varorna användaren vill sälja
-    //         int totalSaleValue = selectedItem.Value * quantity;
-
-    //         if (totalSaleValue > merchant.MerchantAccountBalance)
-    //         {
-    //             System.Console.WriteLine($"{Name} har tyvärr inte tillräckligt med pengar i sin kassa för att genomföra köpet...");
-    //             continue;//Avbryter transaktionen och börjar om från början.
-    //         }
-    //         //Formler för att genomföra transaktionen
-    //         selectedItem.QuantityInPlayerInventory -= quantity;
-    //         player.AccountBalance += totalSaleValue;
-    //         merchant.MerchantAccountBalance -= totalSaleValue;
-
-    //         //Justerar säljarens lagersaldo med all nödvändig info.
-    //         Merchandise merchantMetal = merchant.ItemsForSale.Find(metal => metal.Name == selectedItem.Name); //Söker efter om varan redan finns genom att använda "Find" metoden.
-    //         if (merchantMetal != null)
-    //         {
-    //             merchantMetal.AmountAvailableAtMerchant += quantity; //Om varan redan finns i säljarens inventory så lägger vi till så många items som köpts från användaren/spelaren.
-    //         }
-    //         else
-    //         {   //Finns inte varan så lägger vi bara till varan samt all info om den.
-    //             itemsForSale.Add
-    //             (new Merchandise(selectedItem.Name, (int)selectedItem.Value, selectedItem.VolatilityNumLow, selectedItem.VolatilityNumHigh, selectedItem.VolatilityInAString, selectedItem.AmountAvailableAtMerchant, selectedItem.QuantityInPlayerInventory));
-    //         }
-    //         //Skriver ut text för vilken vara användaren sålt, samt antalet och för hur mycket.  
-    //         System.Console.WriteLine($"Du sålde {quantity} {selectedItem.Name} för {totalSaleValue} kr.");
-    //         //Visar uppdaterat saldo och handlarens saldo.
-    //         System.Console.WriteLine($"Ditt nya saldo är: {player.AccountBalance} kr. {Name}'s nya saldo {merchant.MerchantAccountBalance} kr.");
-
-    //         if (selectedItem.QuantityInPlayerInventory == 0)//Om man inte har någon vara kvar av den typen(tex guld) så tas den bort ur ens inventory.
-    //         {
-    //             player.PlayerInventory.Remove(selectedItem);
-    //         }
-    //         System.Console.WriteLine("Vill du sälja något mer eller är du nöjd? Svara ja eller nej.");
-    //         if (Console.ReadLine()?.ToLower() != "ja")
-    //         {
-    //             break; //Avslutar metoden helt om användaren inte skriver ja.
-    //         }
-
-
-    //     }
-
-
-
-
-    // public void UpdateInventoryPrices(Merchant merchant)
-    // {
-    //     foreach (var m in PlayerInventory)
-    //     {
-    //         merchant.UpdatePrice(m);
-    //     }
-    // }
-
-    // public static string CheckForBankruptcy()
-    // {
-    //     if (player.AccountBalance < 0)
-    //     {
-    //         string text = "Tyvärr... du kan inte gå in i en ny dag. Du saknar pengar...";
-    //         return text;
-    //     }
-
-    //     string text1 = "Du har pengar, välkommen in!";
-    //     return text1;
-    // }
 }

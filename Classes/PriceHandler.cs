@@ -10,25 +10,11 @@ public class PriceHandler
 
             double merchandiseNewValue = merchandise.Value * randomizedValue;
 
-            merchandise.Value = (int)merchandiseNewValue;  
+            merchandise.Value = (int)merchandiseNewValue;
 
-            return merchandiseNewValue;    
-    }
-    
+            merchandise.PriceHistory.Add((int)merchandiseNewValue); // en lista som lagrar gamla värden på metaller, för att kunna skapa en graf
 
-    // public static void SetNewPrice(Merchandise merchandise)
-    // {
-    //     merchandise.Value = CalculateNewPrice(merchandise);
-    // }
-
-    // public static void SettNewPrice(Player player,Merchant merchant)
-    // {
-    //     foreach (var metal in player.PlayerInventory)
-    //     {
-    //         foreach (var metall in merchant.ItemsForSale)
-    //         {
-    //             metal.Value = CalculateNewPrice(metal);
-    //         }
-    //     }
-    // }
+            return merchandiseNewValue;
+    }  
 }
+  
